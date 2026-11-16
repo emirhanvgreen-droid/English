@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gramer Kartları</title>
+<meta name="theme-color" content="#f6f2ea">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="İngilizce">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+
+<style>
+:root{--bg:#f6f2ea;--card:#fffdf8;--ink:#2b2622;--mut:#7a7068;--line:#e4dccf;--acc:#b5562f;--acc2:#f3dfd3;--ok:#4f7a4a;--ok2:#e1ecdc;--no:#a8452f;--no2:#f5ddd6}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:560px;margin:0 auto;padding:14px 14px 70px}
+header{display:flex;align-items:flex-end;gap:8px}
+header h1{font-size:22px;margin:4px 0 2px;font-weight:800}
+header .sub{color:var(--mut);font-size:14px}
+header a{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--acc);text-decoration:none;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:5px 9px;white-space:nowrap}
+.days{display:flex;gap:6px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.day{flex:0 0 auto;border:2px solid var(--line);background:var(--card);border-radius:12px;padding:6px 11px;font:800 13px Nunito,sans-serif;color:var(--ink);cursor:pointer;text-align:center;line-height:1.15}
+.day small{display:block;font-weight:600;font-size:11px;color:var(--mut)}
+.day.on{background:var(--ink);border-color:var(--ink);color:#fff}.day.on small{color:#d8d0c4}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:10px 0;background:#ebe4d8;padding:4px;border-radius:12px}
+.tabs button{border:0;background:transparent;padding:9px 2px;border-radius:9px;font:700 13.5px Nunito,sans-serif;color:var(--mut);cursor:pointer}
+.tabs button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.tabs button:nth-child(4){grid-column:1 / span 1}
+.badge{display:inline-block;min-width:18px;padding:0 5px;border-radius:9px;background:var(--no);color:#fff;font-size:11px;margin-left:3px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:6px 11px;font:700 13px Nunito,sans-serif;color:var(--ink);cursor:pointer}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip.done{border-color:#9dbb95}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 15px;box-shadow:0 2px 10px rgba(60,40,20,.06);position:relative}
+.tno{font-size:12px;font-weight:800;color:var(--mut);letter-spacing:.4px}
+.ttl{font-size:23px;font-weight:800;margin:2px 0 8px;line-height:1.15}
+.sec{font-size:12px;font-weight:800;color:var(--acc);letter-spacing:.5px;text-transform:uppercase;margin:14px 0 5px}
+.txt{font-size:15px;line-height:1.45}
+.askb{background:#fbf1dc;border-radius:12px;padding:9px 12px;font-size:14.5px;line-height:1.4;margin-top:8px}
+.askb b{color:#8a5a14}
+.form{margin:7px 0 10px}
+.form .lb{font-size:12px;font-weight:800;color:var(--mut);margin-bottom:4px}
+.parts{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.pt{padding:6px 9px;border-radius:9px;font-size:13.5px;font-weight:800;border:2px solid transparent}
+.pt.s{background:#d8ecea;color:#1f615b}.pt.v{background:var(--acc2);color:var(--acc)}.pt.n{background:var(--no2);color:var(--no)}
+.pt.k{background:#e6dcf3;color:#5d3d8f}.pt.e{background:#fbe7b8;color:#8a5a14}.pt.o{background:#efe9df;color:#5a524b}
+.plus{color:var(--mut);font-weight:800}
+.eg{font-size:15px;margin-top:5px;padding-left:2px}
+.hl{background:#ffe08a;border-radius:4px;padding:0 3px;font-weight:800}
+table.gt{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
+table.gt th{background:#2b2622;color:#fff;font-size:12px;padding:6px 7px;text-align:left}
+table.gt td{padding:6px 7px;border-bottom:1px solid var(--line)}
+table.gt td:nth-child(2){font-weight:800;color:var(--acc)}
+table.gt.sq td{font-weight:800}
+.scene{background:linear-gradient(#dff1fb,#f3fbff);border:2px solid #2b2622;border-radius:10px;padding:10px 8px 6px}
+.bub{display:flex;gap:7px;align-items:flex-start;margin-bottom:8px}
+.bub.r{flex-direction:row-reverse}
+.bub .av{font-size:30px;line-height:1;text-align:center;min-width:44px}
+.bub .av em{display:block;font-style:normal;font-size:10px;font-weight:800;margin-top:2px}
+.bub .b{background:#fff;border:2px solid #2b2622;border-radius:14px;padding:6px 10px;font-size:15px;font-weight:600;line-height:1.35}
+.bub .t{font-size:12.5px;color:var(--mut);font-style:italic;font-weight:600;margin-top:2px}
+.exr{background:#f3eee5;border-radius:12px;padding:8px 11px;margin-bottom:6px;font-size:15.5px}
+.exr .t{color:var(--mut);font-size:13.5px;margin-top:2px}
+.badr{border:1px solid var(--line);border-radius:12px;padding:8px 11px;margin-bottom:6px;font-size:15px}
+.badr .x{color:var(--no);text-decoration:line-through;text-decoration-thickness:2px}
+.badr .y{color:var(--ok);font-weight:800}
+.badr .w{font-size:13px;color:var(--mut);margin-top:2px}
+.spk{border:0;background:transparent;font-size:15px;cursor:pointer;padding:0 0 0 4px}
+.go{margin-top:12px;width:100%;border:0;background:var(--ink);color:#fff;border-radius:12px;padding:13px;font:800 15px Nunito,sans-serif;cursor:pointer}
+.go.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.go:disabled{opacity:.4}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.nav button{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 16px;font:700 14px Nunito,sans-serif;color:var(--ink);cursor:pointer}
+.nav span{font-size:13px;color:var(--mut)}
+.num{font-size:12px;color:var(--mut);font-weight:700;display:flex;justify-content:space-between}
+.num i{font-style:normal;background:#ece5d8;border-radius:10px;padding:2px 8px}
+.qk{font-size:13.5px;color:var(--mut);margin:12px 0 4px;text-align:center}
+.ctx{text-align:center;font-size:14px;font-weight:700;color:#5d3d8f;margin-top:4px}
+.qs{font-size:24px;font-weight:800;text-align:center;margin:8px 0 4px;line-height:1.3}
+.qs .gap{display:inline-block;min-width:54px;border-bottom:3px solid var(--acc);color:var(--acc)}
+.qtr{font-size:14px;color:var(--mut);text-align:center}
+.qtrb{font-size:22px;font-weight:800;color:var(--acc);text-align:center;margin:8px 0 10px;line-height:1.3}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px 4px;font:800 17px Nunito,sans-serif;color:var(--ink);cursor:pointer}
+.opts button.r{background:var(--ok2);border-color:var(--ok);color:var(--ok)}
+.opts button.w{background:var(--no2);border-color:var(--no);color:var(--no)}
+.ans{min-height:54px;border:2px dashed var(--line);border-radius:12px;padding:7px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
+.ans.r{border-color:var(--ok);border-style:solid;background:var(--ok2)}.ans.w{border-color:var(--no);border-style:solid;background:var(--no2)}
+.ans .ph{color:var(--mut);font-size:13.5px;padding-left:4px}
+.pool{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:12px;min-height:44px}
+.tile{border:2px solid #2b2622;background:#fff;border-radius:10px;padding:8px 11px;font:800 16px Nunito,sans-serif;color:var(--ink);cursor:pointer;box-shadow:2px 2px 0 #2b2622}
+.tile.used{visibility:hidden}
+.fb{margin-top:12px;border-radius:12px;padding:10px 12px;font-size:15px;line-height:1.4}
+.fb.r{background:var(--ok2)}.fb.w{background:var(--no2)}
+.fb .hd{font-weight:800}.fb.r .hd{color:var(--ok)}.fb.w .hd{color:var(--no)}
+.fb .cs{font-weight:800;font-size:16.5px;margin:3px 0}
+.fb .wy{font-size:14px}
+.acts{display:flex;gap:8px;margin-top:12px}
+.acts button{flex:1;border:0;border-radius:12px;padding:13px 6px;font:800 15px Nunito,sans-serif;cursor:pointer}
+.b-ok{background:var(--ok2);color:var(--ok)}.b-no{background:var(--no2);color:var(--no)}.b-go{background:var(--ink);color:#fff}
+.b-add{background:#fff;color:var(--no);border:1.5px solid var(--line)!important;flex:0 0 auto!important;padding:13px 12px!important;font-size:13px!important}
+.b-add.on{background:var(--no2)}
+.note{font-size:13px;color:var(--mut);margin-top:8px;text-align:center}
+.score{font-size:46px;font-weight:800;color:var(--acc);text-align:center;margin:8px 0 0}
+.cen{text-align:center}
+.empty{padding:26px 10px;color:var(--mut);text-align:center}
+.revhead{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:14px;margin-bottom:10px}
+.revhead b{color:var(--no);font-size:18px}
+.li{background:var(--card);border:1px solid #e6b5a8;border-radius:14px;padding:9px 10px;display:flex;gap:9px;align-items:center;margin-bottom:7px}
+.li .lt{flex:1;min-width:0}
+.li .w{font-weight:800;font-size:15px}
+.li .m{font-size:13px;color:var(--ok);font-weight:700}
+.li .dd{font-size:11px;color:var(--mut);font-weight:700}
+.rb{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font:800 12.5px Nunito,sans-serif;color:var(--ok);cursor:pointer;white-space:nowrap}
+.sum{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 13px;margin-bottom:9px}
+.sum h3{margin:0 0 6px;font-size:16px}
+.guide{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;font-size:14.5px;line-height:1.5}
+.guide h3{margin:12px 0 4px;font-size:16px}.guide h3:first-child{margin-top:0}
+.guide ol,.guide ul{padding-left:20px;margin:4px 0}.guide li{margin:3px 0}
+.reset{margin-top:12px;border:0;background:transparent;color:var(--mut);text-decoration:underline;font:600 13px Nunito,sans-serif;cursor:pointer}
+.case{border:1px solid var(--line);border-radius:12px;padding:9px 11px;margin-bottom:7px;background:#fff}
+.case h4{margin:0 0 3px;font-size:15px;line-height:1.25}
+.case h4 i{font-style:normal;display:inline-block;min-width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;background:#2b2622;color:#fff;font-size:12px;margin-right:6px}
+.case .d{font-size:14px;line-height:1.4;color:#4a433d}
+.case .cx{font-size:14.5px;margin-top:5px;padding-left:9px;border-left:3px solid #ffe08a}
+.case .cx .t{color:var(--mut);font-size:13px}
+.case .cn{font-size:14px;margin-top:6px}
+.case .cn .x{color:var(--no);text-decoration:line-through;text-decoration-thickness:2px}.case .cn .y{color:var(--ok);font-weight:800}
+.jump{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 10px;font:800 13px Nunito,sans-serif;color:var(--acc);cursor:pointer;margin-top:9px}
+.hide{display:none!important}
+
+.appnav{display:flex;gap:4px;background:#ebe4d8;padding:4px;border-radius:12px;margin:0 0 10px}
+.appnav a{flex:1;text-align:center;text-decoration:none;font:800 14px system-ui,sans-serif;color:#7a7068;padding:8px 4px;border-radius:9px}
+.appnav a.on{background:#fffdf8;color:#2b2622;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="appnav"><a href="kelime.html">Kelime</a><a href="gramer.html" class="on">Gramer</a></nav>
+  <header>
+    <div><h1>Gramer Kartları</h1><div class="sub" id="sub"></div></div>
+  </header>
+  <div class="days" id="days"></div>
+  <div class="tabs" id="tabs">
+    <button data-tab="topics" class="on">Konular</button>
+    <button data-tab="prac">Alıştırma</button>
+    <button data-tab="review">Tekrar<span class="badge" id="revBadge">0</span></button>
+    <button data-tab="sum">Özet</button>
+    <button data-tab="guide" style="grid-column:2 / span 2">Nasıl çalışılır</button>
+  </div>
+
+  <section id="topics">
+    <div class="chips" id="chipsT"></div>
+    <div id="topicBox"></div>
+    <div class="nav"><button id="tprev">‹ Önceki konu</button><span id="tpos"></span><button id="tnext">Sonraki konu ›</button></div>
+  </section>
+
+  <section id="prac" class="hide">
+    <div class="chips" id="chipsP"></div>
+    <div id="pracBox"></div>
+  </section>
+
+  <section id="review" class="hide">
+    <div class="revhead" id="revHead"></div>
+    <div class="chips" id="chipsRM"></div>
+    <div id="revBox"></div>
+  </section>
+
+  <section id="sum" class="hide"><div id="sumBox"></div></section>
+
+  <section id="guide" class="hide">
+    <div class="guide">
+      <h3>Gramer nasıl öğrenilir?</h3>
+      <p>Gramer kelime gibi ezberlenmez. Kuralı okumak "anladım" hissi verir ama sınavda ve konuşurken işe yarayan, o kuralla hızlıca cümle kurabilmektir. Bu da ancak kendin cümle kurmaya zorlanınca gelişir. O yüzden burada her konuda kural kısa, alıştırma çok.</p>
+      <h3>Her konu için sıra (konu başına 5 dk)</h3>
+      <ol>
+        <li><b>Kalıba bak.</b> Renkli kutular cümlenin iskeletidir: yeşil özne, turuncu fiil, kırmızı not, mor anahtar kelime. Önce iskeleti gör, sonra örnekleri oku.</li>
+        <li><b>"Kendine sor" kutusunu oku.</b> Bu, soruyu çözerken kafanda geçirmen gereken kontroldür. Kuralı değil bu soruyu aklında tut.</li>
+        <li><b>Örnekleri sesli oku.</b> 🔊 ile dinle, aynı tonla tekrar et.</li>
+        <li><b>"Bütün durumlar"ı oku.</b> Kuralın kullanıldığı her durum ayrı ayrı yazılı, yanında örneği ve o durumda yapılan tipik hata var. İlk okumada hepsini ezberlemeye çalışma; alıştırmada yanlış yaptığında ilgili durumu dönüp tekrar oku.</li>
+        <li><b>Hemen alıştırmaya geç.</b> Üç tür soru var: boşluk doldurma (kuralı tanıyor musun), doğru mu yanlış mı (hatayı görüyor musun), cümle kurma (kendin üretebiliyor musun). En değerlisi cümle kurma.</li>
+        <li><b>Açıklamayı oku.</b> Her cevaptan sonra neden doğru ya da yanlış olduğu yazıyor. Doğru bilsen de oku: tahminle mi bildin, kuralla mı?</li>
+      </ol>
+      <h3>Tekrar</h3>
+      <p>Yanlış yaptığın sorular Tekrar sekmesine düşer. Her gün önce orayı çöz. Soruyu doğru cevaplasan da kararı sen verirsin: düşünmeden bildiysen "Öğrenildi", duraksadıysan "Yine tekrar". Öğrenildi diyene kadar her gün karşına gelir. Bir soruyu doğru bildiğin halde emin değilsen "+ Tekrar" ile kendin de ekleyebilirsin.</p>
+      <h3>Kelimelerle bağlantısı</h3>
+      <p>Buradaki cümleler o günün kelime kartlarındaki kelimelerle kurulu. Kelimeyi gramer cümlesinde, grameri bildiğin kelimeyle görürsün; ikisi birbirini pekiştirir. Önerilen sıra: önce gramer, sonra kelime kartları, akşam çizgi roman.</p>
+      <h3>Yapay zeka olmadan nasıl yaparım?</h3>
+      <ul>
+        <li>Bir konunun kalıbını kağıda kendi cümlenle yaz: bir olumlu, bir olumsuz, bir soru. Üçünü kurabiliyorsan konuyu anlamışsındır.</li>
+        <li>Gramer kitabındaki alıştırmayı çözerken cevabı yazmadan önce "neden" diye kendine sor. Nedenini söyleyemiyorsan tahmin ediyorsun demektir.</li>
+        <li>Yanlış yaptığın soruları ayrı bir sayfaya yaz, ertesi gün önce o sayfayı çöz.</li>
+        <li>Türkçe bir cümleyi İngilizceye çevir, sonra örnekle karşılaştır. Cümle kurma alıştırmasının kağıt hali budur.</li>
+      </ul>
+      <button class="reset" id="reset">Seçili günün işaretlemelerini sıfırla</button>
+    </div>
+  </section>
+</div>
+
+<script>
+const GDAYS=[{"n": 1, "iso": "2026-11-16", "date": "16 Kasım Pazartesi", "short": "16 Kas Pzt", "level": "A1", "topics": [{"no": 1, "title": "To be (am / is / are)", "when": "Kim olduğunu, nerede olduğunu, nasıl olduğunu söylerken kullanılır. Türkçedeki \"-im, -sin, -dir\" ekinin karşılığıdır. İngilizce cümle fiilsiz kurulamaz; başka fiil yoksa \"be\" gelir.", "ask": "Özne kim? I ise am. Tek kişi ya da tek şey ise is. You ve bütün çoğullar ise are.", "forms": [{"label": "Olumlu", "parts": [["Özne", "s"], ["am / is / are", "v"], ["...", "o"]], "eg": "I [[am]] a student."}, {"label": "Olumsuz", "parts": [["Özne", "s"], ["am / is / are", "v"], ["not", "n"], ["...", "o"]], "eg": "She [[is not]] at home."}, {"label": "Soru", "parts": [["Am / Is / Are", "v"], ["özne", "s"], ["...", "o"], ["?", "o"]], "eg": "[[Are]] you tired?"}], "table": {"head": ["Özne", "be", "Kısa hali", "Olumsuz"], "rows": [["I", "am", "I'm", "I'm not"], ["he, she, it", "is", "he's", "isn't"], ["you, we, they", "are", "we're", "aren't"]]}, "scene": [["mom", "[[Are]] you hungry, Ali?", "Aç mısın Ali?"], ["ali", "No, I [[am not]]. I [[am]] late!", "Hayır, değilim. Geç kaldım!"]], "ex": [["My mother [[is]] a teacher.", "Annem öğretmen."], ["We [[are not]] at home today.", "Bugün evde değiliz."], ["[[Is]] your father a driver?", "Baban şoför mü?"]], "bad": [["I student.", "I am a student.", "Türkçede fiil yok ama İngilizcede \"am\" şart."], ["She are my sister.", "She is my sister.", "She tek kişi: is."]], "qs": [{"t": "mc", "q": "My mother ___ a teacher.", "opts": ["am", "is", "are"], "a": 1, "tr": "Annem öğretmen.", "why": "\"My mother\" tek kişi, yani she: is."}, {"t": "mc", "q": "My parents ___ at home.", "opts": ["am", "is", "are"], "a": 2, "tr": "Annemle babam evde.", "why": "\"My parents\" iki kişi, yani they: are."}, {"t": "mc", "q": "___ you a student?", "opts": ["Am", "Is", "Are"], "a": 2, "tr": "Sen öğrenci misin?", "why": "Soruda be fiili başa gelir. Özne you: Are."}, {"t": "tf", "s": "I a doctor.", "ok": false, "fix": "I am a doctor.", "tr": "Ben doktorum.", "why": "Cümlede fiil yok. I ile \"am\" gelir."}, {"t": "tf", "s": "They aren't late.", "ok": true, "tr": "Onlar geç kalmadı.", "why": "They ile are; olumsuzu are not, kısaca aren't."}, {"t": "ord", "tr": "Babam şoför değil.", "a": "My father is not a driver.", "extra": ["are"], "why": "\"My father\" tek kişi: is. Olumsuzda not, be fiilinden sonra gelir."}, {"t": "ord", "tr": "Kız kardeşin on yaşında mı?", "a": "Is your sister ten?", "extra": ["are"], "why": "Soruda be fiili başa gelir. \"Your sister\" tek kişi: Is."}, {"t": "ord", "tr": "Biz bugün erkenciyiz.", "a": "We are early today.", "extra": ["is"], "alt": ["Today we are early."], "why": "We ile are gelir."}, {"t": "mc", "q": "___ is seven o'clock.", "opts": ["It", "He", "This"], "a": 0, "tr": "Saat yedi.", "why": "Saat söylerken gerçek özne yoktur, boş özne it kullanılır."}, {"t": "mc", "q": "I ___ hungry.", "opts": ["am", "have", "is"], "a": 0, "tr": "Acıktım.", "why": "hungry bir sıfat: be fiiliyle söylenir. \"have hungry\" denmez."}, {"t": "tf", "s": "Ali and Elif is students.", "ok": false, "fix": "Ali and Elif are students.", "tr": "Ali ve Elif öğrenci.", "why": "\"and\" ile iki kişi oldu, yani they: are."}, {"t": "ord", "tr": "Kaç yaşındasın?", "a": "How old are you?", "extra": ["is"], "why": "Yaş be fiiliyle sorulur. Sıra: soru kelimesi (How old) + be + özne."}, {"t": "tf", "s": "Are you a student? - Yes, I'm.", "ok": false, "fix": "Are you a student? - Yes, I am.", "tr": "Öğrenci misin? - Evet.", "why": "Olumlu kısa cevapta kısaltma yapılmaz: Yes, I am."}], "cases": [{"h": "Kimlik ve meslek: be + isim", "d": "Birinin kim ya da ne olduğunu söyler. Tekil isimden önce a / an gelir, çoğulda gelmez.", "ex": [["I am a student.", "Ben öğrenciyim."], ["They are doctors.", "Onlar doktor."]]}, {"h": "Özellik ve durum: be + sıfat", "d": "Nasıl olduğunu söyler. Sıfat hiçbir zaman çoğul eki almaz.", "ex": [["She is tall.", "O uzun boylu."], ["We are tired.", "Yorgunuz."]], "no": ["They are talls.", "They are tall."]}, {"h": "Yer: be + yer ifadesi", "d": "Bir kişinin ya da şeyin nerede olduğunu söyler.", "ex": [["He is at work.", "O işte."], ["The keys are on the table.", "Anahtarlar masada."]]}, {"h": "Yaş", "d": "Türkçede \"yirmi yaşındayım\" deriz, İngilizcede yaş da be fiiliyle söylenir. \"have\" kullanılmaz.", "ex": [["I am twenty.", "Yirmi yaşındayım."], ["My sister is ten years old.", "Kız kardeşim on yaşında."]], "no": ["I have twenty years.", "I am twenty."]}, {"h": "Açlık, susuzluk, üşüme, korku", "d": "Türkçede fiille söylediğimiz birçok durum İngilizcede be + sıfat ile söylenir: hungry, thirsty, cold, hot, afraid, late, sorry, right, wrong, ready.", "ex": [["I am hungry.", "Acıktım."], ["Are you cold?", "Üşüdün mü?"], ["You are right.", "Haklısın."]], "no": ["I have hungry.", "I am hungry."]}, {"h": "Saat, tarih, hava, mesafe: \"it\"", "d": "Bu cümlelerde gerçek bir özne yoktur ama İngilizce cümle öznesiz kurulamaz. Yerine boş özne \"it\" konur.", "ex": [["It is seven o'clock.", "Saat yedi."], ["It is Monday.", "Bugün pazartesi."], ["It is cold today.", "Bugün hava soğuk."]], "no": ["Is cold today.", "It is cold today."]}, {"h": "İsim özne olunca", "d": "Tek kişi ya da tek şey: is. Çoğul isim: are. \"and\" ile bağlanan iki kişi: are. people, children, police her zaman are alır. Sayılamayan isimler is alır.", "ex": [["My father is a driver.", "Babam şoför."], ["Ali and Elif are students.", "Ali ve Elif öğrenci."], ["The people are happy.", "İnsanlar mutlu."], ["The water is cold.", "Su soğuk."]], "no": ["Ali and Elif is students.", "Ali and Elif are students."]}, {"h": "Kısaltmalar", "d": "Konuşmada ve günlük yazıda kısaltılır. Olumsuz iki şekilde kısalır. \"am not\" kısaltılmaz, yalnızca I'm not denir.", "ex": [["I'm late.", "Geç kaldım."], ["He isn't here. / He's not here.", "O burada değil."], ["We aren't ready. / We're not ready.", "Hazır değiliz."]], "no": ["I amn't late.", "I'm not late."]}, {"h": "Kısa cevaplar", "d": "Evet / hayır sorusuna yalnızca Yes ya da No demek kaba kaçar; özne ve be fiili tekrar edilir. Olumlu kısa cevapta kısaltma yapılmaz.", "ex": [["Are you a student? - Yes, I am.", "Öğrenci misin? - Evet."], ["Is she at home? - No, she isn't.", "Evde mi? - Hayır."]], "no": ["Yes, I'm.", "Yes, I am."]}, {"h": "Soru kelimeli sorular", "d": "Sıra: soru kelimesi + be + özne. Soru kelimesi her zaman en başta durur.", "ex": [["Where are you?", "Neredesin?"], ["Who is that man?", "Şu adam kim?"], ["How old is your brother?", "Erkek kardeşin kaç yaşında?"], ["What is your name?", "Adın ne?"]], "no": ["Where you are?", "Where are you?"]}]}, {"no": 2, "title": "Kişi zamirleri ve iyelik sıfatları", "when": "Kişi zamiri cümlenin öznesidir, yani işi yapandır. İyelik sıfatı bir şeyin kime ait olduğunu söyler ve mutlaka bir isimden önce gelir.", "ask": "Boşluktan sonra ne var? Fiil varsa özne zamiri gelir (She is). İsim varsa iyelik sıfatı gelir (Her name).", "forms": [{"label": "Özne", "parts": [["Zamir", "s"], ["fiil", "v"], ["...", "o"]], "eg": "[[She]] is a nurse."}, {"label": "Sahiplik", "parts": [["İyelik sıfatı", "k"], ["isim", "o"]], "eg": "[[Her]] name is Ayşe."}], "table": {"head": ["Zamir", "Türkçesi", "İyelik", "Türkçesi"], "rows": [["I", "ben", "my", "benim"], ["you", "sen, siz", "your", "senin, sizin"], ["he", "o (erkek)", "his", "onun"], ["she", "o (kadın)", "her", "onun"], ["it", "o (nesne)", "its", "onun"], ["we", "biz", "our", "bizim"], ["they", "onlar", "their", "onların"]]}, "scene": [["ali", "This is [[my]] sister. [[Her]] name is Elif.", "Bu benim kız kardeşim. Onun adı Elif."], ["elif", "And this is [[our]] brother. [[His]] name is Can.", "Bu da bizim erkek kardeşimiz. Onun adı Can."]], "ex": [["[[He]] is my uncle. [[His]] wife is a nurse.", "O benim dayım. Onun eşi hemşire."], ["[[They]] love [[their]] grandmother.", "Onlar büyükannelerini seviyor."], ["[[We]] are in [[our]] house.", "Biz evimizdeyiz."]], "bad": [["He name is Ali.", "His name is Ali.", "\"name\" bir isim, önüne iyelik sıfatı gelir: his."], ["The dog is in it's house.", "The dog is in its house.", "its = onun. it's = it is. İkisi farklıdır."]], "qs": [{"t": "mc", "q": "This is my father. ___ name is Hasan.", "opts": ["He", "His", "Her"], "a": 1, "tr": "Bu benim babam. Onun adı Hasan.", "why": "Boşluktan sonra isim (name) var: iyelik sıfatı gerekir. Erkek için his."}, {"t": "mc", "q": "Elif and Can are children. ___ parents are at work.", "opts": ["They", "Their", "Our"], "a": 1, "tr": "Elif ve Can çocuk. Onların annesi babası işte.", "why": "\"parents\" isim, önüne iyelik gelir. Elif ve Can = they, iyeliği their."}, {"t": "mc", "q": "___ am a student.", "opts": ["I", "My", "Me"], "a": 0, "tr": "Ben öğrenciyim.", "why": "Boşluktan sonra fiil (am) var: özne zamiri gerekir."}, {"t": "tf", "s": "She is my aunt. She name is Ayşe.", "ok": false, "fix": "She is my aunt. Her name is Ayşe.", "tr": "O benim halam. Onun adı Ayşe.", "why": "\"name\" isimdir, önüne she değil her gelir."}, {"t": "tf", "s": "We love our grandmother.", "ok": true, "tr": "Büyükannemizi seviyoruz.", "why": "We özne, our ise \"grandmother\" isminden önce gelen iyelik sıfatı."}, {"t": "ord", "tr": "Onun (kadın) kocası doktor.", "a": "Her husband is a doctor.", "extra": ["she"], "why": "\"husband\" isim, önüne her gelir. She yalnızca özne olur."}, {"t": "ord", "tr": "Onların oğlu benim arkadaşım.", "a": "Their son is my friend.", "extra": ["they"], "why": "Hem \"son\" hem \"friend\" isim: önlerine their ve my gelir."}, {"t": "ord", "tr": "Senin adın ne?", "a": "What is your name?", "extra": ["you"], "why": "\"name\" isim: your name. Soru kelimesi What başa gelir."}, {"t": "mc", "q": "Ali loves ___ mother.", "opts": ["his", "her", "their"], "a": 0, "tr": "Ali annesini sever.", "why": "Sahip Ali, yani erkek: his. Sahip olunanın (mother) kadın olması önemli değil."}, {"t": "mc", "q": "Elif loves ___ father.", "opts": ["his", "her", "its"], "a": 1, "tr": "Elif babasını sever.", "why": "Sahip Elif, yani kadın: her."}, {"t": "tf", "s": "This is the my book.", "ok": false, "fix": "This is my book.", "tr": "Bu benim kitabım.", "why": "İyelik sıfatı ile the birlikte kullanılmaz."}, {"t": "ord", "tr": "Ellerini yıka.", "a": "Wash your hands.", "extra": ["the"], "why": "Vücudun parçalarıyla the değil iyelik sıfatı kullanılır: your hands."}, {"t": "mc", "q": "This is my phone. ___ is new.", "opts": ["He", "She", "It"], "a": 2, "tr": "Bu telefonum. O yeni.", "why": "Telefon bir nesne: it."}], "cases": [{"h": "Özne atılamaz", "d": "Türkçede fiilin eki özneyi gösterdiği için \"Geldim\" deriz. İngilizcede fiil özneyi göstermez, bu yüzden zamir her cümlede söylenir.", "ex": [["I am at home.", "Evdeyim."], ["She is a teacher.", "Öğretmen."]], "no": ["Am at home.", "I am at home."]}, {"h": "he / she / it", "d": "Türkçede üçü de \"o\". İngilizcede erkek için he, kadın için she, nesne ve hayvan için it. Cinsiyeti bilinen evcil hayvana he ya da she denebilir.", "ex": [["This is my father. He is a driver.", "Bu babam. O şoför."], ["This is my aunt. She is a nurse.", "Bu halam. O hemşire."], ["This is my phone. It is new.", "Bu telefonum. O yeni."]]}, {"h": "you: sen ve siz", "d": "Tek kişiye de çok kişiye de, samimi de resmi de you denir. Fiil her durumda are olur.", "ex": [["You are my friend.", "Sen benim arkadaşımsın."], ["You are my friends.", "Siz benim arkadaşlarımsınız."]]}, {"h": "they: insanlar ve nesneler", "d": "Çoğul olan her şey için they kullanılır; yalnızca insanlar için değil.", "ex": [["My parents are at work. They are busy.", "Annemle babam işte. Meşguller."], ["The books are new. They are on the table.", "Kitaplar yeni. Masadalar."]]}, {"h": "İyelik sıfatı sahibe göre seçilir", "d": "En çok karıştırılan nokta. his ya da her seçerken sahip olunan kişiye değil, sahibin kendisine bakılır.", "ex": [["Ali loves his mother.", "Ali annesini sever. (sahip Ali, erkek: his)"], ["Elif loves her father.", "Elif babasını sever. (sahip Elif, kadın: her)"]], "no": ["Ali loves her mother.", "Ali loves his mother."]}, {"h": "İyelik sıfatı değişmez", "d": "İsim çoğul olsa da iyelik sıfatı çoğul olmaz. Ayrıca a, an, the ile birlikte kullanılmaz.", "ex": [["our books", "kitaplarımız"], ["This is my book.", "Bu benim kitabım."]], "no": ["This is the my book.", "This is my book."]}, {"h": "Vücut ve giysilerle", "d": "Türkçede \"ellerini yıka\" deriz; İngilizcede de the değil iyelik sıfatı kullanılır.", "ex": [["Wash your hands.", "Ellerini yıka."], ["He is in his car.", "O arabasında."]], "no": ["Wash the hands.", "Wash your hands."]}, {"h": "Yazımı karışanlar", "d": "Okunuşları aynı ya da çok yakın ama anlamları farklıdır.", "ex": [["its = onun / it's = it is", "The dog is in its house. It's happy."], ["your = senin / you're = you are", "You're late. Where is your bag?"], ["their = onların / they're = they are / there = orada", "They're in their house over there."]]}, {"h": "Fiilden sonra başka zamir gelir", "d": "I, he, she, we, they yalnızca özne olur. Fiilden ya da edattan sonra me, him, her, us, them gelir. Bu, 13. konuda ayrıntılı işlenecek.", "ex": [["She loves me.", "O beni seviyor."], ["This is for them.", "Bu onlar için."]], "no": ["She loves I.", "She loves me."]}]}, {"no": 3, "title": "a / an / the (temel)", "when": "\"a / an\": tekil ve sayılabilen bir şeyden ilk kez ya da \"herhangi bir\" anlamında söz ederken. \"the\": hangi şeyden söz edildiği belliyse.", "ask": "Dinleyen hangisinden söz ettiğimi biliyor mu? Bilmiyorsa a / an. Biliyorsa ya da ondan tek bir tane varsa the. a mı an mı: sonraki kelimenin ilk sesine bak.", "forms": [{"label": "Sessiz ses", "parts": [["a", "k"], ["sessiz sesle başlayan isim", "o"]], "eg": "[[a]] car, [[a]] university"}, {"label": "Sesli ses", "parts": [["an", "k"], ["sesli sesle başlayan isim", "o"]], "eg": "[[an]] apple, [[an]] hour"}, {"label": "Belli olan", "parts": [["the", "k"], ["belli olan isim", "o"]], "eg": "[[the]] sun, [[the]] door"}], "table": null, "scene": [["ali", "I have [[a]] brother and [[a]] sister.", "Bir erkek ve bir kız kardeşim var."], ["kaya", "Is [[the]] brother [[a]] student?", "Erkek kardeş öğrenci mi?"], ["ali", "No, he is [[a]] baby!", "Hayır, o bebek!"]], "ex": [["I have [[a]] clock. [[The]] clock is on the wall.", "Bir saatim var. Saat duvarda."], ["She is [[an]] English teacher.", "O bir İngilizce öğretmeni."], ["[[The]] sun is hot.", "Güneş sıcak."]], "bad": [["He is doctor.", "He is a doctor.", "Meslek söylerken a / an unutulmaz."], ["It is a hour.", "It is an hour.", "Harfe değil sese bak: \"hour\" kelimesinde h okunmaz, sesli sesle başlar."]], "qs": [{"t": "mc", "q": "My uncle is ___ police officer.", "opts": ["a", "an", "(boş)"], "a": 0, "tr": "Dayım polis memuru.", "why": "Meslek söylüyoruz, \"police\" sessiz sesle başlıyor: a."}, {"t": "mc", "q": "The film is ___ hour long.", "opts": ["a", "an", "the"], "a": 1, "tr": "Film bir saat uzunluğunda.", "why": "\"hour\" yazıda h ile başlar ama h okunmaz. Ses sesli: an."}, {"t": "mc", "q": "I have a clock. ___ clock is on the wall.", "opts": ["A", "An", "The"], "a": 2, "tr": "Bir saatim var. Saat duvarda.", "why": "Saatten ikinci kez söz ediyoruz, artık hangisi olduğu belli: The."}, {"t": "tf", "s": "She is nurse.", "ok": false, "fix": "She is a nurse.", "tr": "O hemşire.", "why": "Türkçede \"bir\" demeyiz ama İngilizcede meslekten önce a / an şart."}, {"t": "tf", "s": "He is an adult.", "ok": true, "tr": "O bir yetişkin.", "why": "\"adult\" sesli sesle başlar: an."}, {"t": "ord", "tr": "O (kadın) bir İngilizce öğretmeni.", "a": "She is an English teacher.", "extra": ["a"], "why": "a / an kendinden sonraki kelimeye bakar. \"English\" sesli sesle başlar: an."}, {"t": "ord", "tr": "Dedem bir çiftçi.", "a": "My grandfather is a farmer.", "extra": ["an"], "why": "\"farmer\" sessiz sesle başlar: a."}, {"t": "ord", "tr": "Güneş sıcak.", "a": "The sun is hot.", "extra": ["a"], "why": "Güneşten tek bir tane var, hangisi olduğu belli: the."}, {"t": "mc", "q": "I like ___ music.", "opts": ["a", "the", "(boş)"], "a": 2, "tr": "Müziği severim.", "why": "Müzikten genel olarak söz ediyoruz. Genel anlamda sayılamayan isim artikel almaz."}, {"t": "mc", "q": "She has ___ old car.", "opts": ["a", "an", "(boş)"], "a": 1, "tr": "Onun eski bir arabası var.", "why": "Araya sıfat girince sıfatın ilk sesine bakılır: \"old\" sesli sesle başlar, an."}, {"t": "tf", "s": "I have breakfast at seven.", "ok": true, "tr": "Yedide kahvaltı yaparım.", "why": "Öğün adlarından önce artikel kullanılmaz: have breakfast."}, {"t": "tf", "s": "I have a books.", "ok": false, "fix": "I have books.", "tr": "Kitaplarım var.", "why": "a \"bir tane\" demektir, çoğul isimle kullanılamaz."}, {"t": "ord", "tr": "Kapıyı kapat lütfen.", "a": "Close the door please.", "extra": ["a"], "alt": ["Please close the door."], "why": "Odada hangi kapıdan söz edildiği belli: the door."}], "cases": [{"h": "a / an: herhangi bir", "d": "Tekil ve sayılabilen bir şeyden ilk kez söz ederken ya da hangisi olduğu önemli değilken kullanılır.", "ex": [["I have a car.", "Bir arabam var."], ["There is a man at the door.", "Kapıda bir adam var."]]}, {"h": "Meslek ve tanımlama", "d": "Birinin mesleğini ya da bir şeyin ne olduğunu söylerken tekil isimden önce mutlaka a / an gelir.", "ex": [["She is a doctor.", "O doktor."], ["It is a big house.", "Büyük bir ev."]], "no": ["She is doctor.", "She is a doctor."]}, {"h": "a mı an mı: yazıya değil sese bak", "d": "Sonraki kelime sesli sesle başlıyorsa an, sessiz sesle başlıyorsa a. Araya sıfat girerse sıfatın ilk sesine bakılır.", "ex": [["a university, a European country", "\"yu\" sesiyle başlar: a"], ["an hour, an honest man", "h okunmaz: an"], ["an old car, a big apple", "sıfata bakılır"]], "no": ["a old car", "an old car"]}, {"h": "Çoğulda ve sayılamayanda a / an olmaz", "d": "a / an \"bir tane\" demektir; çoğul ve sayılamayan isimlerle kullanılamaz. Yerine some gelir ya da hiçbir şey gelmez.", "ex": [["I have books. / I have some books.", "Kitaplarım var."], ["I drink water.", "Su içerim."]], "no": ["I have a books.", "I have books."]}, {"h": "the: ikinci kez söz edilen", "d": "İlk söylediğinde a / an, aynı şeyden tekrar söz ederken the. Çünkü artık hangisi olduğu belli.", "ex": [["I have a cat. The cat is black.", "Bir kedim var. Kedi siyah."]]}, {"h": "the: ortamda belli olan ya da tek olan", "d": "İkimizin de hangisini kastettiğimizi bildiği şeyler ve dünyada tek olanlar.", "ex": [["Close the door, please.", "Kapıyı kapat lütfen."], ["Where is the kitchen?", "Mutfak nerede?"], ["the sun, the moon, the world, the sky", "güneş, ay, dünya, gökyüzü"]]}, {"h": "the: sıra ve en üstünlük", "d": "first, second, last, same, best, biggest gibi kelimelerden önce the gelir.", "ex": [["the first day", "ilk gün"], ["the last month", "son ay"], ["the best friend", "en iyi arkadaş"]]}, {"h": "the: bazı kalıplar", "d": "Günün bölümlerinde ve müzik aletlerinde the kullanılır. \"at night\" ise the almaz.", "ex": [["in the morning, in the afternoon, in the evening", "sabah, öğleden sonra, akşam"], ["at night", "gece"], ["play the guitar", "gitar çalmak"]]}, {"h": "Artikel kullanılmayan yerler", "d": "Genel konuşurken çoğul ve sayılamayan isimler; öğünler; diller ve sporlar; şehirler ve ülkelerin çoğu; günler ve aylar; home, school, work, bed kalıpları. my, your, this, that ile birlikte de artikel gelmez.", "ex": [["I like music.", "Müziği severim. (genel)"], ["We have breakfast at seven.", "Yedide kahvaltı yaparız."], ["She speaks English and plays tennis.", "İngilizce konuşur, tenis oynar."], ["I live in Istanbul, in Turkey.", "İstanbul'da, Türkiye'de yaşıyorum."], ["I go to bed at eleven. I am at work.", "On birde yatarım. İşteyim."]], "no": ["I like the music.", "I like music."]}, {"h": "Ülke ve coğrafya adları", "d": "Ülkelerin çoğu artikelsizdir. Adında states, kingdom, republic geçenler ve çoğul adlar the alır. Nehir, deniz, okyanus ve sıradağlar the alır; tek dağ ve göl almaz.", "ex": [["Turkey, France, Japan", "artikelsiz"], ["the USA, the UK, the Netherlands", "the alır"], ["the Nile, the Black Sea, the Alps", "nehir, deniz, sıradağ"], ["Mount Ararat, Lake Van", "tek dağ, göl: artikelsiz"]]}, {"h": "a / an: \"her biri başına\"", "d": "Sıklık ve fiyat söylerken a / an \"başına\" anlamı verir.", "ex": [["twice a day", "günde iki kez"], ["fifty lira a kilo", "kilosu elli lira"], ["three times a week", "haftada üç kez"]]}]}, {"no": 4, "title": "Çoğul isimler", "when": "Birden fazla şeyden söz ederken isim çoğul yapılır. Türkçeden en büyük farkı: sayıdan sonra da isim çoğul olur. \"İki kitap\" İngilizcede \"two books\" olur.", "ask": "Birden fazla mı? Öyleyse çoğul yap. Kelimenin sonuna bak: -s, -sh, -ch, -x ise es; sessiz + y ise ies; değilse s. Düzensizleri ezberle.", "forms": [{"label": "Genel", "parts": [["isim", "o"], ["+ s", "e"]], "eg": "book → book[[s]], sister → sister[[s]]"}, {"label": "-s, -sh, -ch, -x", "parts": [["isim", "o"], ["+ es", "e"]], "eg": "bus → bus[[es]], watch → watch[[es]]"}, {"label": "Sessiz + y", "parts": [["isim", "o"], ["y → ies", "e"]], "eg": "baby → bab[[ies]], city → cit[[ies]]"}], "table": {"head": ["Tekil", "Çoğul", "Türkçesi"], "rows": [["man", "men", "adam"], ["woman", "women", "kadın"], ["child", "children", "çocuk"], ["person", "people", "kişi"], ["foot", "feet", "ayak"], ["tooth", "teeth", "diş"]]}, "scene": [["elif", "How many guests? Ten [[persons]]?", "Kaç misafir? On kişi mi?"], ["mom", "Ten [[people]], Elif. Two [[men]], three [[women]] and five [[children]].", "On kişi Elif. İki adam, üç kadın ve beş çocuk."]], "ex": [["I have two [[brothers]].", "İki erkek kardeşim var."], ["The [[babies]] are asleep.", "Bebekler uyuyor."], ["A week has seven [[days]].", "Bir haftada yedi gün var."]], "bad": [["I have two sister.", "I have two sisters.", "Sayıdan sonra isim çoğul olur."], ["The childs are happy.", "The children are happy.", "child düzensizdir: children."]], "qs": [{"t": "mc", "q": "I have three ___.", "opts": ["sister", "sisters", "sisteres"], "a": 1, "tr": "Üç kız kardeşim var.", "why": "Sayıdan (three) sonra çoğul. Genel kural: + s."}, {"t": "mc", "q": "There are two ___ in the family.", "opts": ["babys", "babies", "baby"], "a": 1, "tr": "Ailede iki bebek var.", "why": "baby: sessiz harf + y. y düşer, ies gelir."}, {"t": "mc", "q": "Five ___ are here.", "opts": ["mans", "men", "man"], "a": 1, "tr": "Beş adam burada.", "why": "man düzensizdir, çoğulu men."}, {"t": "tf", "s": "A week has seven day.", "ok": false, "fix": "A week has seven days.", "tr": "Bir haftada yedi gün var.", "why": "Türkçede \"yedi gün\" tekil kalır, İngilizcede sayıdan sonra çoğul: days."}, {"t": "tf", "s": "The children are happy.", "ok": true, "tr": "Çocuklar mutlu.", "why": "child kelimesinin çoğulu children; çoğul olduğu için fiil are."}, {"t": "ord", "tr": "İki erkek kardeşim var.", "a": "I have two brothers.", "extra": ["brother"], "why": "Sayıdan sonra çoğul: two brothers."}, {"t": "ord", "tr": "Kadınlar öğretmen.", "a": "The women are teachers.", "extra": ["woman"], "why": "woman düzensiz: women. Özne çoğul olunca meslek de çoğul olur: teachers."}, {"t": "ord", "tr": "Bir yılda on iki ay var.", "a": "A year has twelve months.", "extra": ["month"], "why": "twelve bir sayı, ardından çoğul gelir: months."}, {"t": "mc", "q": "My ___ are in my bag.", "opts": ["key", "keys", "keies"], "a": 1, "tr": "Anahtarlarım çantamda.", "why": "key kelimesinde y harfinden önce sesli harf (e) var: yalnızca s gelir."}, {"t": "mc", "q": "There are two ___ on the table.", "opts": ["knifes", "knives", "knife"], "a": 1, "tr": "Masada iki bıçak var.", "why": "-fe ile biten isimlerde f, v olur: knife - knives."}, {"t": "tf", "s": "The news are good.", "ok": false, "fix": "The news is good.", "tr": "Haber iyi.", "why": "news sayılamaz; s ile bitse de tekildir ve is alır."}, {"t": "tf", "s": "I have two big houses.", "ok": true, "tr": "İki büyük evim var.", "why": "Çoğul eki yalnızca isme gelir (houses); sıfat (big) değişmez."}, {"t": "ord", "tr": "Bu pantolon yeni.", "a": "These trousers are new.", "extra": ["is"], "why": "trousers her zaman çoğuldur: these ve are gelir."}], "cases": [{"h": "Genel kural: + s", "d": "Çoğu isim sonuna s alır. Okunuşu kelimenin son sesine göre üç türlüdür: s (books, cats), z (dogs, days), ız (buses, boxes).", "ex": [["book - books, car - cars, sister - sisters", ""]]}, {"h": "-s, -ss, -sh, -ch, -x ile bitenler: + es", "d": "Bu seslerin üstüne doğrudan s söylenemediği için araya e girer.", "ex": [["bus - buses, class - classes", "otobüs, sınıf"], ["dish - dishes, watch - watches, box - boxes", "tabak, saat, kutu"]]}, {"h": "-y ile bitenler", "d": "y harfinden önce sessiz harf varsa y düşer, ies gelir. Önce sesli harf varsa yalnızca s gelir.", "ex": [["baby - babies, city - cities, family - families", "sessiz + y"], ["day - days, boy - boys, key - keys", "sesli + y"]], "no": ["keies", "keys"]}, {"h": "-f, -fe ile bitenler: ves", "d": "f, v sesine döner. Birkaç istisnası vardır (roof - roofs).", "ex": [["wife - wives, knife - knives, life - lives", "eş, bıçak, hayat"], ["half - halves, leaf - leaves", "yarım, yaprak"]], "no": ["knifes", "knives"]}, {"h": "-o ile bitenler", "d": "Bir kısmı es, bir kısmı s alır; kelimeyle birlikte öğrenilir.", "ex": [["tomato - tomatoes, potato - potatoes", "es alanlar"], ["photo - photos, piano - pianos, radio - radios", "s alanlar"]]}, {"h": "Düzensiz çoğullar", "d": "Kural yok, ezberlenir. Bunlara ayrıca s eklenmez.", "ex": [["man - men, woman - women, child - children", "adam, kadın, çocuk"], ["person - people, foot - feet, tooth - teeth, mouse - mice", "kişi, ayak, diş, fare"]], "no": ["childrens, peoples", "children, people"]}, {"h": "Tekili ve çoğulu aynı olanlar", "d": "Bu kelimeler çoğulda değişmez; tekil mi çoğul mu olduğu sayıdan ya da fiilden anlaşılır.", "ex": [["one fish - two fish", "bir balık - iki balık"], ["one sheep - ten sheep", "bir koyun - on koyun"]]}, {"h": "Hep çoğul olanlar", "d": "İki parçalı eşyalar her zaman çoğuldur ve fiil are olur. Saymak için \"a pair of\" kullanılır.", "ex": [["My trousers are new.", "Pantolonum yeni."], ["Where are my glasses?", "Gözlüğüm nerede?"], ["a pair of jeans", "bir kot pantolon"]], "no": ["My trousers is new.", "My trousers are new."]}, {"h": "Çoğul yapılamayanlar: sayılamayan isimler", "d": "Tek tek sayılamayan şeyler çoğul eki almaz ve fiil is olur. Türkçede sayabildiğimiz bazıları da böyledir: information, advice, homework, furniture, money, news.", "ex": [["The information is useful.", "Bilgi yararlı."], ["The news is good.", "Haber iyi."]], "no": ["informations, homeworks", "information, homework"]}, {"h": "Sayı ve miktar kelimelerinden sonra", "d": "Türkçede \"iki kitap, çok kitap\" deriz ve isim tekil kalır. İngilizcede two, many, some, a lot of, these, those kelimelerinden sonra isim çoğul olur.", "ex": [["two books, many books, some books", "iki kitap, çok kitap, bazı kitaplar"], ["these students", "bu öğrenciler"]], "no": ["many book", "many books"]}, {"h": "Sıfat ve sayı kelimeleri çoğul olmaz", "d": "Çoğul eki yalnızca isme gelir. hundred, thousand, million da sayıdan sonra s almaz.", "ex": [["two big houses", "iki büyük ev"], ["three hundred people", "üç yüz kişi"]], "no": ["two bigs houses, three hundreds", "two big houses, three hundred"]}, {"h": "Çoğul eki ile 's karışmaz", "d": "Çoğul yaparken kesme işareti kullanılmaz. Kesme işaretli 's sahiplik bildirir.", "ex": [["two books", "iki kitap (çoğul)"], ["Ali's book", "Ali'nin kitabı (sahiplik)"]], "no": ["two book's", "two books"]}]}, {"no": 5, "title": "this / that / these / those", "when": "Bir şeyi göstererek söylerken kullanılır. Hangisinin seçileceği iki şeye bağlıdır: gösterdiğin şey yakın mı uzak mı, tek mi çok mu.", "ask": "İki soru sor. Yakın mı, uzak mı? Tek mi, çok mu? Tek ise fiil is, çok ise are.", "forms": [{"label": "Tekil", "parts": [["This / That", "k"], ["tekil isim", "o"], ["is", "v"], ["...", "o"]], "eg": "[[This]] girl [[is]] my sister."}, {"label": "Çoğul", "parts": [["These / Those", "k"], ["çoğul isim", "o"], ["are", "v"], ["...", "o"]], "eg": "[[Those]] men [[are]] workers."}], "table": {"head": ["", "Tek", "Çok"], "rows": [["Yakın 👉", "this (bu)", "these (bunlar)"], ["Uzak 👉 · · ·", "that (şu, o)", "those (şunlar, onlar)"]]}, "scene": [["ali", "Who is [[that]] man?", "Şu adam kim?"], ["mom", "[[That]] is our neighbour. And [[these]] are his children.", "O bizim komşumuz. Bunlar da onun çocukları."]], "ex": [["[[This]] is my friend.", "Bu benim arkadaşım."], ["[[That]] woman is a doctor.", "Şu kadın doktor."], ["[[These]] are my parents.", "Bunlar benim annemle babam."]], "bad": [["This are my friends.", "These are my friends.", "friends çoğul: these ve are gelir."], ["Those man is my uncle.", "That man is my uncle.", "man tekil: that ve is gelir."]], "qs": [{"t": "mc", "q": "___ is my sister.", "ctx": "👉 yakın, tek kişi", "opts": ["This", "These", "Those"], "a": 0, "tr": "Bu benim kız kardeşim.", "why": "Yakın ve tek: this. Fiil de is."}, {"t": "mc", "q": "___ people are my neighbours.", "ctx": "👉 · · · uzak, çok kişi", "opts": ["That", "This", "Those"], "a": 2, "tr": "Şu insanlar benim komşularım.", "why": "people çoğul ve uzakta: those."}, {"t": "mc", "q": "___ are my parents.", "ctx": "👉 yakın, iki kişi", "opts": ["This", "These", "That"], "a": 1, "tr": "Bunlar benim annemle babam.", "why": "Fiil are ve parents çoğul. Yakın çoğul: these."}, {"t": "tf", "s": "That are my cousins.", "ok": false, "fix": "Those are my cousins.", "tr": "Şunlar benim kuzenlerim.", "why": "cousins çoğul ve fiil are: that değil those gerekir."}, {"t": "tf", "s": "This girl is my daughter.", "ok": true, "tr": "Bu kız benim kızım.", "why": "girl tekil ve yakın: this, fiil is."}, {"t": "ord", "tr": "Bu benim arkadaşım.", "a": "This is my friend.", "extra": ["these"], "why": "Tek kişi ve yakın: this is."}, {"t": "ord", "tr": "Şu adam bir doktor.", "a": "That man is a doctor.", "extra": ["those"], "why": "man tekil ve uzakta: that. Meslekten önce a."}, {"t": "ord", "tr": "Bunlar benim erkek kardeşlerim.", "a": "These are my brothers.", "extra": ["this"], "why": "brothers çoğul ve yakın: these are."}, {"t": "mc", "q": "What is this? - ___ is a clock.", "opts": ["It", "They", "He"], "a": 0, "tr": "Bu ne? - Bir saat.", "why": "Tek bir nesneyi cevaplarken it kullanılır. They çoğul, he ise erkek kişi içindir."}, {"t": "mc", "q": "Hello, ___ is Ali.", "ctx": "📞 telefonda", "opts": ["this", "he", "I"], "a": 0, "tr": "Alo, ben Ali.", "why": "Telefonda kendini tanıtırken \"this is\" denir."}, {"t": "tf", "s": "This's my brother.", "ok": false, "fix": "This is my brother.", "tr": "Bu benim erkek kardeşim.", "why": "Yalnızca that kısalır (that's). this is kısaltılmaz."}, {"t": "ord", "tr": "Bu sabah erkenciyim.", "a": "I am early this morning.", "extra": ["that"], "alt": ["This morning I am early."], "why": "İçinde bulunduğumuz zaman için this: this morning."}, {"t": "mc", "q": "What are these? - ___ are keys.", "opts": ["It", "This", "They"], "a": 2, "tr": "Bunlar ne? - Anahtar.", "why": "Çoğul bir şeyi cevaplarken they kullanılır. It ve this tekildir, are ile kullanılmaz."}], "cases": [{"h": "İsimle birlikte", "d": "İsmin önüne gelir ve hangisi olduğunu gösterir. İsim tekilse this ya da that, çoğulsa these ya da those.", "ex": [["this book, that man", "bu kitap, şu adam"], ["these keys, those people", "bu anahtarlar, şu insanlar"]], "no": ["this books", "these books"]}, {"h": "Tek başına", "d": "İsim söylenmeden de kullanılır; o zaman \"bu, şu, bunlar, şunlar\" anlamına gelir.", "ex": [["This is my friend.", "Bu benim arkadaşım."], ["What is that?", "Şu ne?"], ["These are my keys.", "Bunlar benim anahtarlarım."]]}, {"h": "Tanıştırırken ve telefonda", "d": "Birini tanıştırırken \"He is\" değil \"This is\" denir. Telefonda kendini tanıtırken de this, karşıdakini sorarken that kullanılır.", "ex": [["Mum, this is Ali.", "Anne, bu Ali."], ["Hello, this is Ali.", "Alo, ben Ali."], ["Is that Elif?", "Elif misin?"]], "no": ["Hello, I am Ali. (telefonda)", "Hello, this is Ali."]}, {"h": "Soruya cevap verirken", "d": "Soruda this ya da that olsa da cevapta genellikle tekrar edilmez; tekil için it, çoğul için they kullanılır.", "ex": [["What is this? - It is a clock.", "Bu ne? - Bir saat."], ["What are these? - They are keys.", "Bunlar ne? - Anahtar."], ["Is that your car? - Yes, it is.", "Şu senin araban mı? - Evet."]]}, {"h": "Zaman ifadeleriyle", "d": "this içinde bulunduğumuz ya da gelen zamanı, that geçmişteki zamanı gösterir.", "ex": [["this morning, this week, this year", "bu sabah, bu hafta, bu yıl"], ["that day, that year", "o gün, o yıl"], ["these days", "bugünlerde"]]}, {"h": "Az önce söylenene atıf: that", "d": "Karşındakinin söylediği şeye tepki verirken that kullanılır.", "ex": [["That's a good idea.", "Bu iyi bir fikir."], ["That's right.", "Doğru."], ["That's all.", "Bu kadar."]]}, {"h": "Kısaltma", "d": "Yalnızca that kısalır: that's. this is ve these are kısaltılmaz.", "ex": [["That's my brother.", "O benim erkek kardeşim."], ["This is my brother.", "Bu benim erkek kardeşim."]], "no": ["This's my brother.", "This is my brother."]}, {"h": "one ile birlikte", "d": "İsmi tekrar etmemek için this one, that one denir.", "ex": [["Which bag? - This one.", "Hangi çanta? - Bu."], ["I like that one.", "Şunu beğendim."]]}, {"h": "Okunuş farkı", "d": "this kısa i ile ve s sesiyle (dis), these uzun i ile ve z sesiyle (diiz) okunur. Dinlerken en çok bu ikisi karışır; 🔊 ile ikisini art arda dinle.", "ex": [["this", "bu"], ["these", "bunlar"]]}]}]}];
+const CAST={"ali": ["🧑‍🎓", "Ali"], "mom": ["👩‍🏫", "Mum"], "dad": ["👨", "Dad"], "elif": ["👧", "Elif"], "can": ["👶", "Can"], "gma": ["👵", "Grandma"], "gpa": ["👴", "Grandpa"], "uncle": ["👮‍♂️", "Uncle Murat"], "aunt": ["👩‍⚕️", "Aunt Ayşe"], "doc": ["👨‍⚕️", "Doctor"], "kaya": ["👩‍🦳", "Mrs Kaya"], "mrkaya": ["👨‍🦳", "Mr Kaya"], "wk": ["👷", "Worker"], "wk2": ["👷", "Worker"], "waiter": ["🤵", "Waiter"], "efe": ["👦", "Efe"], "zey": ["👱‍♀️", "Zeynep"]};
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function hl(s){return esc(s).replace(/\[\[([^\]]+)\]\]/g,'<span class="hl">$1</span>')}
+function plain(s){return s.replace(/\[\[([^\]]+)\]\]/g,'$1')}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const DMAP={};GDAYS.forEach(d=>{DMAP[d.n]=d;d.topics.forEach(t=>t.qs.forEach((q,i)=>{q.id=t.no+'-'+i;q.d=d.n;q.topic=t}))});
+
+const ST={};
+GDAYS.forEach(d=>{try{ST[d.n]=JSON.parse(localStorage.getItem('ing-gram-g'+d.n)||'{}')||{}}catch(e){ST[d.n]={}}if(!ST[d.n].q)ST[d.n].q={};if(!ST[d.n].t)ST[d.n].t={}});
+function save(n){try{localStorage.setItem('ing-gram-g'+n,JSON.stringify(ST[n]))}catch(e){}}
+function getQ(q){return ST[q.d].q[q.id]}
+function setQ(q,v){if(v)ST[q.d].q[q.id]=v;else delete ST[q.d].q[q.id];save(q.d);updBadge()}
+
+let voice=null;
+function pick(){try{const v=speechSynthesis.getVoices();voice=v.find(x=>/en[-_]GB/i.test(x.lang))||v.find(x=>/^en/i.test(x.lang))||null}catch(e){}}
+try{pick();speechSynthesis.onvoiceschanged=pick}catch(e){}
+const canSay=(()=>{try{return 'speechSynthesis' in window}catch(e){return false}})();
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.85;if(voice)u.voice=voice;speechSynthesis.speak(u)}catch(e){}}
+function spk(t){return canSay?'<button class="spk" data-say="'+esc(t)+'" aria-label="Dinle">🔊</button>':''}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(b){e.stopPropagation();say(b.dataset.say)}});
+
+function todayIso(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+let D=GDAYS.find(d=>d.iso===todayIso());
+if(!D){let last=null;try{last=+localStorage.getItem('ing-gram-day')}catch(e){}D=DMAP[last]||GDAYS[GDAYS.length-1]}
+let tab='topics',ti=0,pf='mix',PR=null,rm='test',RT=null;
+
+function chips(id,list,cur,fn){const el=document.getElementById(id);el.innerHTML=list.map(([k,l,c])=>'<button class="chip'+(k===cur?' on':'')+(c?' '+c:'')+'" data-k="'+k+'">'+l+'</button>').join('');el.querySelectorAll('.chip').forEach(b=>b.onclick=()=>fn(b.dataset.k))}
+function renderHead(){
+  document.getElementById('sub').textContent=D.n+'. gün, '+D.date+' · '+D.level+' · '+D.topics.length+' konu';
+  document.getElementById('days').innerHTML=GDAYS.map(d=>'<button class="day'+(d===D?' on':'')+'" data-n="'+d.n+'">'+d.n+'. gün<small>'+d.short+'</small></button>').join('');
+  document.querySelectorAll('.day').forEach(b=>b.onclick=()=>{D=DMAP[+b.dataset.n];ti=0;pf='mix';PR=null;try{localStorage.setItem('ing-gram-day',D.n)}catch(e){}renderHead();renderTab()});
+}
+function revItems(){const out=[];GDAYS.forEach(d=>d.topics.forEach(t=>t.qs.forEach(q=>{if(ST[d.n].q[q.id]==='y')out.push(q)})));return out}
+function updBadge(){document.getElementById('revBadge').textContent=revItems().length}
+
+// ---- shared blocks
+function formsHTML(t){return t.forms.map(f=>'<div class="form"><div class="lb">'+esc(f.label)+'</div><div class="parts">'+f.parts.map((p,i)=>(i&&p[0]!=='?'?'<span class="plus">+</span>':'')+'<span class="pt '+p[1]+'">'+esc(p[0])+'</span>').join('')+'</div><div class="eg">'+hl(f.eg)+'</div></div>').join('')}
+function tableHTML(t){if(!t.table)return '';const sq=t.table.head[0]==='';return '<table class="gt'+(sq?' sq':'')+'"><tr>'+t.table.head.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr>'+t.table.rows.map(r=>'<tr>'+r.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')+'</table>'}
+
+// ---- topics
+function topicDone(t){return ST[D.n].t[t.no]}
+function renderTopic(){
+  chips('chipsT',D.topics.map((t,i)=>[String(i),(topicDone(t)?'✓ ':'')+t.no+'. konu',topicDone(t)?'done':'']),String(ti),k=>{ti=+k;renderTopic();window.scrollTo(0,0)});
+  const t=D.topics[ti],dn=topicDone(t);
+  let h='<div class="card"><div class="tno">KONU '+t.no+(dn?' · en iyi sonuç '+dn.best+' / '+dn.total:'')+'</div><div class="ttl">'+esc(t.title)+'</div>';
+  h+='<div class="txt">'+esc(t.when)+'</div><button class="jump" id="toPrac2">Alıştırmaya geç ›</button>';
+  h+='<div class="sec">Kalıp</div>'+formsHTML(t)+tableHTML(t);
+  h+='<div class="askb"><b>Kendine sor:</b> '+esc(t.ask)+'</div>';
+  h+='<div class="sec">Sahne</div><div class="scene">'+t.scene.map((s,i)=>'<div class="bub'+(i%2?' r':'')+'"><div class="av">'+CAST[s[0]][0]+'<em>'+esc(CAST[s[0]][1])+'</em></div><div class="b">'+hl(s[1])+spk(plain(s[1]))+'<div class="t">'+esc(s[2])+'</div></div></div>').join('')+'</div>';
+  h+='<div class="sec">Örnekler</div>'+t.ex.map(e=>'<div class="exr">'+hl(e[0])+spk(plain(e[0]))+'<div class="t">'+esc(e[1])+'</div></div>').join('');
+  if(t.cases)h+='<div class="sec">Bütün durumlar ('+t.cases.length+')</div>'+t.cases.map((c,i)=>'<div class="case"><h4><i>'+(i+1)+'</i>'+esc(c.h)+'</h4><div class="d">'+esc(c.d)+'</div>'+c.ex.map(e=>'<div class="cx">'+esc(e[0])+spk(e[0].split(' / ')[0])+(e[1]?'<div class="t">'+esc(e[1])+'</div>':'')+'</div>').join('')+(c.no?'<div class="cn"><span class="x">'+esc(c.no[0])+'</span> &nbsp;→&nbsp; <span class="y">'+esc(c.no[1])+'</span></div>':'')+'</div>').join('');
+  h+='<div class="sec">En sık yapılan hata</div>'+t.bad.map(b=>'<div class="badr"><span class="x">'+esc(b[0])+'</span> &nbsp;→&nbsp; <span class="y">'+esc(b[1])+'</span><div class="w">'+esc(b[2])+'</div></div>').join('');
+  h+='<button class="go" id="toPrac">Alıştırmaya geç ('+t.qs.length+' soru)</button></div>';
+  document.getElementById('topicBox').innerHTML=h;
+  document.getElementById('tpos').textContent=(ti+1)+' / '+D.topics.length;
+  const goP=()=>{pf=String(ti);tab='prac';startPrac();renderTab();window.scrollTo(0,0)};
+  document.getElementById('toPrac').onclick=goP;document.getElementById('toPrac2').onclick=goP;
+}
+document.getElementById('tprev').onclick=()=>{ti=(ti-1+D.topics.length)%D.topics.length;renderTopic();window.scrollTo(0,0)};
+document.getElementById('tnext').onclick=()=>{ti=(ti+1)%D.topics.length;renderTopic();window.scrollTo(0,0)};
+
+// ---- question engine
+const PROPER=/^(I|I'm|Ali|Elif|Can|Ayşe|Efe|Zeynep|Hasan|Murat|Mr|Mrs|English|Turkish|Istanbul|Ankara|Izmir|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|January|February|March|April|May|June|July|August|September|October|November|December)$/;
+function toks(a){return a.replace(/[.?!,]/g,'').split(/\s+/).filter(Boolean).map(w=>PROPER.test(w)?w:w.toLowerCase())}
+function norm(a){return a.replace(/[.?!,]/g,'').toLowerCase().replace(/\s+/g,' ').trim()}
+function correctText(q){if(q.t==='mc')return q.opts[q.a]==='(boş)'?q.q.replace('___ ',''):q.q.replace('___',q.opts[q.a]);if(q.t==='tf')return q.ok?q.s:q.fix;return q.a}
+function promptText(q){return q.t==='mc'?q.q:q.t==='tf'?q.s:q.tr}
+const KIND={mc:'Boşluğa hangisi gelir?',tf:'Bu cümle doğru mu?',ord:'Kelimeleri sıraya diz'};
+// renders q into box; calls after(right, footEl) once answered
+function renderQ(box,q,numText,after){
+  let h='<div class="card"><div class="num"><span>'+numText+'</span><i>Konu '+q.topic.no+'</i></div><div class="qk">'+KIND[q.t]+'</div>';
+  if(q.t==='mc'){
+    if(q.ctx)h+='<div class="ctx">'+esc(q.ctx)+'</div>';
+    h+='<div class="qs">'+esc(q.q).replace('___','<span class="gap">&nbsp;</span>')+'</div><div class="qtr">'+esc(q.tr)+'</div>';
+    h+='<div class="opts'+(q.opts.length===2?' two':'')+'">'+q.opts.map((o,i)=>'<button data-i="'+i+'">'+esc(o)+'</button>').join('')+'</div>';
+  }else if(q.t==='tf'){
+    h+='<div class="qs">'+esc(q.s)+'</div><div class="qtr">'+esc(q.tr)+'</div><div class="opts two"><button data-i="1">✓ Doğru</button><button data-i="0">✗ Yanlış</button></div>';
+  }else{
+    h+='<div class="qtrb">'+esc(q.tr)+'</div><div class="ans" id="ans"></div><div class="pool" id="pool"></div><button class="go" id="chk" disabled>Kontrol et</button>';
+  }
+  h+='<div id="fb"></div><div id="foot"></div></div>';
+  box.innerHTML=h;
+  let done=false;
+  function finish(right){
+    done=true;
+    const ct=correctText(q);
+    document.getElementById('fb').innerHTML='<div class="fb '+(right?'r':'w')+'"><div class="hd">'+(right?'✓ Doğru cevap':'✗ Yanlış cevap. Doğrusu:')+'</div><div class="cs">'+esc(ct)+spk(ct)+'</div><div class="wy">'+esc(q.why)+'</div></div>';
+    if(canSay)say(ct);
+    after(right,document.getElementById('foot'));
+  }
+  if(q.t==='mc'||q.t==='tf'){
+    box.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{
+      if(done)return;
+      const pickd=+b.dataset.i, corr=q.t==='mc'?q.a:(q.ok?1:0), right=pickd===corr;
+      box.querySelectorAll('.opts button').forEach(o=>{if(+o.dataset.i===corr)o.classList.add('r')});
+      if(!right)b.classList.add('w');
+      finish(right);
+    });
+  }else{
+    const tiles=shuffle(toks(q.a).concat(q.extra||[]).map((w,i)=>({w,i})));
+    let placed=[];
+    const ans=document.getElementById('ans'),pool=document.getElementById('pool'),chk=document.getElementById('chk');
+    function draw(){
+      ans.innerHTML=placed.length?placed.map(t=>'<button class="tile" data-i="'+t.i+'">'+esc(t.w)+'</button>').join(''):'<span class="ph">Aşağıdaki kelimelere dokunarak cümleyi kur. Fazladan bir kelime var.</span>';
+      pool.innerHTML=tiles.map(t=>'<button class="tile'+(placed.includes(t)?' used':'')+'" data-i="'+t.i+'">'+esc(t.w)+'</button>').join('');
+      chk.disabled=!placed.length;
+      if(done)return;
+      ans.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{placed=placed.filter(t=>t.i!==+b.dataset.i);draw()});
+      pool.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{const t=tiles.find(x=>x.i===+b.dataset.i);if(!placed.includes(t)){placed.push(t);draw()}});
+    }
+    draw();
+    chk.onclick=()=>{
+      if(done)return;
+      const got=norm(placed.map(t=>t.w).join(' ')),right=[q.a].concat(q.alt||[]).some(a=>norm(a)===got);
+      ans.classList.add(right?'r':'w');chk.classList.add('hide');pool.classList.add('hide');
+      finish(right);draw();
+    };
+  }
+}
+
+// ---- practice
+function pracPool(){return pf==='mix'?[].concat(...D.topics.map(t=>t.qs)):D.topics[+pf].qs}
+function startPrac(){const p=pracPool();PR={qs:pf==='mix'?shuffle(p).slice(0,15):shuffle(p),n:0,ok:0,wrong:[]}}
+function renderPrac(){
+  chips('chipsP',[['mix','Karışık']].concat(D.topics.map((t,i)=>[String(i),(topicDone(t)?'✓ ':'')+t.no+'. konu',topicDone(t)?'done':''])),pf,k=>{pf=k;PR=null;renderPrac()});
+  const box=document.getElementById('pracBox');
+  if(!PR){
+    const n=pracPool().length;
+    box.innerHTML='<div class="card cen"><div class="ttl">'+(pf==='mix'?'Karışık alıştırma':esc(D.topics[+pf].title))+'</div><div class="txt">'+(pf==='mix'?'Günün '+D.topics.length+' konusundan karışık 15 soru. Konular karışık gelince hangi kuralın gerektiğini de sen bulursun; sınav da böyle sorar.':n+' soru: boşluk doldurma, doğru mu yanlış mı ve cümle kurma.')+'</div><button class="go" id="pgo">Başla</button></div>';
+    document.getElementById('pgo').onclick=()=>{startPrac();renderPrac()};return;
+  }
+  if(PR.n>=PR.qs.length){
+    if(pf!=='mix'){const t=D.topics[+pf],old=ST[D.n].t[t.no];ST[D.n].t[t.no]={best:Math.max(PR.ok,old?old.best:0),total:PR.qs.length};save(D.n)}
+    box.innerHTML='<div class="card cen"><div class="qk">Sonuç</div><div class="score">'+PR.ok+' / '+PR.qs.length+'</div>'+(PR.wrong.length?'<p class="txt">Yanlış yaptığın '+PR.wrong.length+' soru Tekrar sekmesine eklendi. Yarın önce onları çöz.</p>':'<p class="txt">Hepsi doğru.</p>')+'<button class="go" id="pagain">Tekrar çöz</button>'+(pf!=='mix'&&+pf<D.topics.length-1?'<button class="go alt" id="pnext">Sonraki konuya geç</button>':'')+'</div>';
+    document.getElementById('pagain').onclick=()=>{startPrac();renderPrac()};
+    const pn=document.getElementById('pnext');if(pn)pn.onclick=()=>{ti=+pf+1;PR=null;tab='topics';renderTab();window.scrollTo(0,0)};
+    return;
+  }
+  const q=PR.qs[PR.n];
+  renderQ(box,q,(PR.n+1)+' / '+PR.qs.length,(right,foot)=>{
+    if(right)PR.ok++;else{PR.wrong.push(q);setQ(q,'y')}
+    const on=getQ(q)==='y';
+    foot.innerHTML='<div class="acts"><button class="b-add'+(on?' on':'')+'" id="qadd">'+(on?'✓ Tekrarda':'+ Tekrar')+'</button><button class="b-go" id="qnext">Devam ›</button></div>'+(right?'':'<div class="note">Bu soru Tekrar sekmesine eklendi.</div>');
+    document.getElementById('qadd').onclick=e=>{const y=getQ(q)==='y';setQ(q,y?null:'y');e.currentTarget.classList.toggle('on',!y);e.currentTarget.textContent=y?'+ Tekrar':'✓ Tekrarda'};
+    document.getElementById('qnext').onclick=()=>{PR.n++;renderPrac();window.scrollTo(0,0)};
+  });
+}
+
+// ---- review
+function renderReview(){
+  const items=revItems();
+  document.getElementById('revHead').innerHTML=items.length?'Tekrar listende <b>'+items.length+'</b> soru var. "Öğrenildi" diyene kadar her gün burada kalırlar.':'Tekrar listen boş. Alıştırmada yanlış yaptığın ya da "+ Tekrar" ile eklediğin sorular buraya düşer.';
+  chips('chipsRM',[['test','Yeniden çöz'],['list','Liste']],rm,k=>{rm=k;RT=null;renderReview()});
+  const box=document.getElementById('revBox');
+  if(rm==='list'){
+    box.innerHTML=items.length?items.map(q=>'<div class="li" data-d="'+q.d+'" data-id="'+q.id+'"><div class="lt"><div class="w">'+esc(promptText(q))+'</div><div class="m">'+esc(correctText(q))+'</div><div class="dd">'+q.d+'. gün · Konu '+q.topic.no+': '+esc(q.topic.title)+'</div></div><button class="rb">✓ Öğrenildi</button></div>').join(''):'<div class="card empty">Tekrar edilecek soru yok.</div>';
+    box.querySelectorAll('.li').forEach(r=>{const q=items.find(x=>x.d===+r.dataset.d&&x.id===r.dataset.id);r.querySelector('.rb').onclick=()=>{setQ(q,'k');renderReview()}});
+    return;
+  }
+  if(!RT){
+    box.innerHTML='<div class="card cen">'+(items.length?'<div class="txt">'+items.length+' soru. Her sorudan sonra sen karar verirsin: "Öğrenildi" ya da "Yine tekrar".</div><button class="go" id="rgo">Başla</button>':'<div class="empty">Tekrar edilecek soru yok.</div>')+'</div>';
+    const g=document.getElementById('rgo');if(g)g.onclick=()=>{RT={qs:shuffle(items),n:0,ok:0,learned:0,again:0};renderReview()};return;
+  }
+  if(RT.n>=RT.qs.length){
+    box.innerHTML='<div class="card cen"><div class="qk">Tekrar bitti</div><div class="score">'+RT.ok+' / '+RT.qs.length+'</div><p class="txt">Öğrenildi: <b>'+RT.learned+'</b> · Yine tekrar: <b>'+RT.again+'</b></p><button class="go" id="ragain">Yeniden başlat</button></div>';
+    document.getElementById('ragain').onclick=()=>{RT=null;renderReview()};return;
+  }
+  const q=RT.qs[RT.n];
+  renderQ(box,q,(RT.n+1)+' / '+RT.qs.length+' · '+q.d+'. gün',(right,foot)=>{
+    if(right)RT.ok++;
+    foot.innerHTML='<div class="note">Hiç düşünmeden bildiysen "Öğrenildi", duraksadıysan "Yine tekrar".</div><div class="acts"><button class="b-ok" id="rk">✓ Öğrenildi</button><button class="b-no" id="ry">↻ Yine tekrar</button></div>';
+    document.getElementById('rk').onclick=()=>{setQ(q,'k');RT.learned++;RT.n++;renderReview();window.scrollTo(0,0)};
+    document.getElementById('ry').onclick=()=>{RT.again++;RT.n++;renderReview();window.scrollTo(0,0)};
+  });
+}
+
+// ---- summary
+function renderSum(){
+  document.getElementById('sumBox').innerHTML=D.topics.map(t=>'<div class="sum"><h3>'+t.no+'. '+esc(t.title)+'</h3>'+formsHTML(t)+tableHTML(t)+'<div class="askb"><b>Kendine sor:</b> '+esc(t.ask)+'</div></div>').join('');
+}
+
+function renderTab(){
+  document.querySelectorAll('#tabs button').forEach(o=>o.classList.toggle('on',o.dataset.tab===tab));
+  ['topics','prac','review','sum','guide'].forEach(id=>document.getElementById(id).classList.toggle('hide',id!==tab));
+  document.getElementById('days').classList.toggle('hide',tab==='review');
+  if(tab==='topics')renderTopic();if(tab==='prac')renderPrac();if(tab==='review')renderReview();if(tab==='sum')renderSum();
+  updBadge();
+}
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;if(tab==='prac')PR=PR;renderTab()});
+document.getElementById('reset').onclick=()=>{ST[D.n]={q:{},t:{}};save(D.n);updBadge();const r=document.getElementById('reset');r.textContent='Sıfırlandı';setTimeout(()=>r.textContent='Seçili günün işaretlemelerini sıfırla',1500)};
+renderHead();renderTab();
+</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}</script>
+</body>
+</html>

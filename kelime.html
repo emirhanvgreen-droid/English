@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelime Kartları</title>
+<meta name="theme-color" content="#f6f2ea">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="İngilizce">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+
+<style>
+:root{--bg:#f6f2ea;--card:#fffdf8;--ink:#2b2622;--mut:#7a7068;--line:#e4dccf;--acc:#b5562f;--acc2:#f3dfd3;--ok:#4f7a4a;--ok2:#e1ecdc;--no:#a8452f;--no2:#f5ddd6;--hl:#f0c069}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:560px;margin:0 auto;padding:14px 14px 90px}
+header h1{font-size:22px;margin:4px 0 2px;font-weight:800}
+header .sub{color:var(--mut);font-size:14px}
+.days{display:flex;gap:6px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.day{flex:0 0 auto;border:2px solid var(--line);background:var(--card);border-radius:12px;padding:6px 11px;font:800 13px Nunito,sans-serif;color:var(--ink);cursor:pointer;text-align:center;line-height:1.15}
+.day small{display:block;font-weight:600;font-size:11px;color:var(--mut)}
+.day.on{background:var(--ink);border-color:var(--ink);color:#fff}.day.on small{color:#d8d0c4}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:10px 0;background:#ebe4d8;padding:4px;border-radius:12px}
+.tabs button{border:0;background:transparent;padding:9px 2px;border-radius:9px;font:700 13.5px Nunito,sans-serif;color:var(--mut);cursor:pointer}
+.tabs button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.badge{display:inline-block;min-width:18px;padding:0 5px;border-radius:9px;background:var(--no);color:#fff;font-size:11px;margin-left:3px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:6px 11px;font:600 13px Nunito,sans-serif;color:var(--ink);cursor:pointer}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.stats{display:flex;gap:8px;font-size:13px;color:var(--mut);margin-bottom:8px;flex-wrap:wrap}
+.stats b{color:var(--ink)}
+.bar{height:6px;background:#e4dccf;border-radius:4px;overflow:hidden;margin-bottom:12px}
+.bar i{display:block;height:100%;background:var(--acc);width:0;transition:width .25s}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 16px 16px;box-shadow:0 2px 10px rgba(60,40,20,.06);text-align:center;position:relative}
+.num{position:absolute;top:12px;left:14px;font-size:12px;color:var(--mut);font-weight:700}
+.tag{position:absolute;top:10px;right:12px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:10px}
+.tag.k{background:var(--ok2);color:var(--ok)}.tag.y{background:var(--no2);color:var(--no)}.tag.d{background:#ece5d8;color:var(--mut)}
+.pic{min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:12px 0 4px}
+.emo{font-size:72px;line-height:1.1;letter-spacing:4px}
+.cap{font-size:13px;color:var(--mut);margin-top:6px}
+.bignum{font-size:76px;font-weight:800;line-height:1;color:var(--acc)}
+.dots{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;max-width:170px;margin-top:10px}
+.dots i{width:13px;height:13px;border-radius:50%;background:var(--hl)}
+.sw{width:64px;height:64px;border-radius:50%;border:3px solid #2b2622;margin-top:10px}
+.strip{display:flex;gap:4px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.strip span{min-width:38px;padding:7px 4px;border-radius:8px;background:#efe9df;font-size:12px;font-weight:700;color:var(--mut)}
+.strip span.h{background:var(--acc);color:#fff;transform:scale(1.08)}
+.grid12{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:10px;width:230px}
+.grid12 span{padding:6px 2px;border-radius:7px;background:#efe9df;font-size:11.5px;font-weight:700;color:var(--mut)}
+.grid12 span.h{background:var(--acc);color:#fff}
+.word{font-size:38px;font-weight:800;margin:8px 0 0;letter-spacing:.3px}
+.pron{color:var(--mut);font-size:16px;margin:2px 0 10px}
+.say{border:1px solid var(--line);background:#fff;border-radius:50%;width:44px;height:44px;font-size:20px;cursor:pointer;vertical-align:middle}
+.say.sm{width:32px;height:32px;font-size:15px;margin-left:6px}
+.reveal{margin-top:14px;width:100%;border:2px dashed var(--line);background:transparent;border-radius:14px;padding:14px;font:700 15px Nunito,sans-serif;color:var(--mut);cursor:pointer}
+.back{margin-top:14px;text-align:left;border-top:1px solid var(--line);padding-top:12px}
+.trm{font-size:24px;font-weight:800;color:var(--acc);text-align:center;margin-bottom:10px}
+.ex{background:#f3eee5;border-radius:12px;padding:10px 12px;font-size:15.5px}
+.ex .en{font-weight:700}
+.ex .t{color:var(--mut);font-size:14px;margin-top:3px}
+.hook{margin-top:9px;background:#fbf1dc;border-radius:12px;padding:9px 12px;font-size:14px}
+.hook b{color:#8a5a14}
+.acts{display:flex;gap:8px;margin-top:14px}
+.acts button{flex:1;border:0;border-radius:12px;padding:13px 6px;font:800 15px Nunito,sans-serif;cursor:pointer}
+.b-ok{background:var(--ok2);color:var(--ok)}.b-no{background:var(--no2);color:var(--no)}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.nav button{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 16px;font:700 14px Nunito,sans-serif;color:var(--ink);cursor:pointer}
+.nav span{font-size:13px;color:var(--mut)}
+.empty{padding:30px 10px;color:var(--mut);text-align:center}
+.q{font-size:14px;color:var(--mut);margin:4px 0 4px}
+.qtr{font-size:30px;font-weight:800;color:var(--acc);margin:22px 0 14px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.opts button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px 6px;font:800 17px Nunito,sans-serif;color:var(--ink);cursor:pointer}
+.opts button.r{background:var(--ok2);border-color:var(--ok);color:var(--ok)}
+.opts button.w{background:var(--no2);border-color:var(--no);color:var(--no)}
+.fb{margin-top:12px;font-size:15px;min-height:22px}
+.go{margin-top:12px;width:100%;border:0;background:var(--ink);color:#fff;border-radius:12px;padding:13px;font:800 15px Nunito,sans-serif;cursor:pointer}
+.go.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.score{font-size:46px;font-weight:800;color:var(--acc);margin:10px 0 0}
+.lnote{font-size:12.5px;color:var(--mut);margin:0 0 8px}
+.list{display:grid;grid-template-columns:1fr;gap:7px}
+.li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:9px 10px;display:flex;gap:9px;align-items:center;cursor:pointer;text-align:left}
+.li .e{font-size:28px;min-width:40px;text-align:center}
+.li .e.n{font-size:22px;font-weight:800;color:var(--acc)}
+.li .lt{flex:1;min-width:0}
+.li .w{font-weight:800;font-size:15px}
+.li .m{font-size:12.5px;color:var(--mut)}
+.li .dd{font-size:11px;color:var(--mut);font-weight:700}
+.li.k{border-color:#bcd2b5}.li.y{border-color:#e6b5a8}
+.rb{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font:800 12.5px Nunito,sans-serif;color:var(--no);cursor:pointer;white-space:nowrap}
+.rb.on{background:var(--no2);border-color:#e6b5a8}
+.rb.ok{color:var(--ok)}
+.mini-sw{display:inline-block;width:26px;height:26px;border-radius:50%;border:2px solid #2b2622;vertical-align:middle}
+.guide{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;font-size:14.5px;line-height:1.5}
+.guide h3{margin:12px 0 4px;font-size:16px}.guide h3:first-child{margin-top:0}
+.guide ol,.guide ul{padding-left:20px;margin:4px 0}.guide li{margin:3px 0}
+.reset{margin-top:12px;border:0;background:transparent;color:var(--mut);text-decoration:underline;font:600 13px Nunito,sans-serif;cursor:pointer}
+.revhead{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:14px;margin-bottom:10px}
+.revhead b{color:var(--no);font-size:18px}
+.mm{margin-top:9px;border:1px solid var(--line);border-radius:12px;padding:9px 12px;background:#fff}
+.mm h4{margin:0 0 6px;font-size:12px;font-weight:800;color:var(--acc);letter-spacing:.5px;text-transform:uppercase}
+.mrow{padding:6px 0;border-top:1px dashed var(--line)}
+.mrow:first-of-type{border-top:0;padding-top:0}
+.mrow .mt{font-size:15.5px;font-weight:800}
+.mrow .mt i{font-style:normal;font-size:11px;font-weight:800;background:#e6dcf3;color:#5d3d8f;border-radius:8px;padding:1px 6px;margin-right:6px;vertical-align:middle}
+.mrow .me{font-size:14.5px;font-weight:700;margin-top:2px}
+.mrow .mx{font-size:13.5px;color:var(--mut)}
+.more{display:inline-block;margin-top:2px;font-size:12px;font-weight:800;background:#e6dcf3;color:#5d3d8f;border-radius:10px;padding:2px 9px}
+.sheet .shm{font-size:13.5px;color:#4a433d;margin-top:5px;line-height:1.35}
+.pzbar{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.pzbar b{color:var(--ink)}
+.pz{display:grid;gap:3px;margin:0 auto;touch-action:manipulation;background:#2b2622;border:3px solid #2b2622;border-radius:10px;overflow:hidden}
+.pt{background-repeat:no-repeat;cursor:pointer;transition:transform .12s,opacity .12s;position:relative}
+.pt.sel{transform:scale(.9);outline:3px solid #f0c069;outline-offset:-3px;z-index:2}
+.pt.ok:after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 2px rgba(79,122,74,.55)}
+.pz.solved{gap:0}.pz.solved .pt.ok:after{box-shadow:none}
+.pzq{font-size:15px;font-weight:800;text-align:center;margin:14px 0 2px}
+.pzh{font-size:12.5px;color:var(--mut);text-align:center}
+.pzres{margin-top:12px;border-radius:14px;padding:12px;background:var(--ok2);text-align:center}
+.pzres .w{font-size:32px;font-weight:800}
+.pzres .tr{font-size:20px;font-weight:800;color:var(--acc)}
+.pzres .sc{font-size:13.5px;color:var(--ok);font-weight:800;margin-top:4px}
+.dw-q{text-align:center;margin:4px 0 10px}
+.dw-q .l{font-size:12.5px;color:var(--mut);font-weight:700}
+.dw-q .t{font-size:27px;font-weight:800;color:var(--acc);line-height:1.2}
+.dw-q .h{font-size:13px;color:var(--mut);margin-top:2px}
+.dw-cv{display:block;margin:0 auto;background:#fff;border:3px solid #2b2622;border-radius:12px;touch-action:none}
+.dw-tools{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin:10px 0 4px}
+.dw-col{width:30px;height:30px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px #cfc6b8;cursor:pointer}
+.dw-col.on{box-shadow:0 0 0 3px #2b2622}
+.dw-tb{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:6px 9px;font:800 13px Nunito,system-ui,sans-serif;color:var(--ink);cursor:pointer}
+.dw-tb.on{background:#2b2622;color:#fff;border-color:#2b2622}
+.dw-in{width:100%;border:2px solid #2b2622;border-radius:12px;padding:12px;font:800 20px Nunito,system-ui,sans-serif;text-align:center;margin-top:10px;background:#fff;color:var(--ink)}
+.dw-in.r{border-color:var(--ok);background:var(--ok2)}.dw-in.w{border-color:var(--no);background:var(--no2)}
+.dw-fb{margin-top:10px;border-radius:12px;padding:10px 12px;font-size:15px}
+.dw-fb.r{background:var(--ok2)}.dw-fb.w{background:var(--no2)}
+.dw-fb .w{font-size:26px;font-weight:800}
+.mine{display:flex;flex-direction:column;align-items:center;margin-top:8px}
+.mine img{width:118px;height:118px;border:2px solid #2b2622;border-radius:10px;background:#fff}
+.mine span{font-size:11px;font-weight:800;color:var(--mut);margin-top:3px}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px;text-align:center;cursor:pointer}
+.gi img{width:100%;aspect-ratio:1;border-radius:8px;background:#fff;display:block}
+.gi .w{font-weight:800;font-size:14px;margin-top:4px}
+.gi .m{font-size:11.5px;color:var(--mut)}
+.gi button{margin-top:4px;border:0;background:transparent;color:var(--no);font:700 12px Nunito,system-ui,sans-serif;cursor:pointer}
+.pen{font-size:12px;margin-left:4px}
+.hide{display:none!important}
+/* comic */
+.cm-title{font-family:Bangers,Nunito,sans-serif;font-size:36px;letter-spacing:2px;color:var(--acc);text-align:center;line-height:1;margin:4px 0 8px}
+.cm-castrow{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:2px 0 10px}
+.cm-castrow div{background:#fff;border:2px solid #2b2622;border-radius:10px;padding:4px 6px;font-size:10.5px;font-weight:700;min-width:60px;text-align:center}
+.cm-castrow span{display:block;font-size:24px}
+.cm-castrow em{font-style:normal;color:var(--mut);font-weight:600;display:block}
+.cm-ctrl{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0;display:flex;gap:6px;flex-wrap:wrap}
+.cm-tg{border:2px solid #2b2622;background:#fff;border-radius:20px;padding:6px 10px;font:700 12.5px Nunito,sans-serif;color:var(--ink);cursor:pointer}
+.cm-tg.on{background:#2b2622;color:#fff}
+.cm-leg{font-size:12.5px;color:var(--mut);margin:2px 0 4px}
+.cm-leg i{font-style:normal;padding:0 4px;border-radius:4px;font-weight:800;color:var(--ink)}
+.cm-panel{margin-top:16px;border:3px solid #2b2622;border-radius:6px;overflow:hidden;box-shadow:5px 5px 0 #2b2622}
+.cm-ph{display:flex;justify-content:space-between;align-items:center;background:#2b2622;color:#fff;padding:5px 10px;font-size:12px;font-weight:700}
+.cm-ph b{font-family:Bangers,Nunito,sans-serif;font-size:17px;letter-spacing:1px;font-weight:400}
+.cm-scene{position:relative;padding:12px 10px 0;min-height:200px;display:flex;flex-direction:column}
+.cm-morning{background:linear-gradient(#fff6d6,#ffe9b8)}
+.cm-day{background:linear-gradient(#dff1fb,#f3fbff)}
+.cm-afternoon{background:linear-gradient(#ffe6c4,#fff3e0)}
+.cm-evening{background:linear-gradient(#f6c7a8,#f9dfc8)}
+.cm-night{background:linear-gradient(#24304f,#3b4a70)}
+.cm-farm{background:linear-gradient(#dff1fb 60%,#cfe8b4 60%)}
+.cm-hospital{background:linear-gradient(#e3f4ef,#f4fbf9)}
+.cm-restaurant{background:linear-gradient(#f5e3cf,#fbefe2)}
+.cm-party{background:radial-gradient(circle at 20% 30%,#ffd1dc 0 6px,transparent 7px),radial-gradient(circle at 70% 18%,#c8e6ff 0 5px,transparent 6px),radial-gradient(circle at 85% 60%,#fff0a8 0 6px,transparent 7px),radial-gradient(circle at 35% 70%,#d6f5c8 0 5px,transparent 6px),linear-gradient(#ffe2c6,#ffd3b0)}
+.cm-props{position:absolute;top:8px;right:10px;font-size:26px;opacity:.55;letter-spacing:3px}
+.cm-cap{align-self:flex-start;background:#fff3b0;border:2px solid #2b2622;padding:6px 9px;font-size:14.5px;font-weight:700;max-width:86%;margin:4px 0 8px;box-shadow:2px 2px 0 #2b2622;position:relative;z-index:1}
+.cm-night .cm-cap{background:#e8e2ff}
+.cm-bub{position:relative;background:#fff;border:2px solid #2b2622;border-radius:18px;padding:7px 11px 8px;font-size:15.5px;font-weight:600;max-width:84%;margin:4px 0 14px;line-height:1.35;z-index:1}
+.cm-bub:after{content:'';position:absolute;bottom:-11px;width:16px;height:16px;background:#fff;border-right:2px solid #2b2622;border-bottom:2px solid #2b2622;transform:rotate(45deg) skew(8deg,8deg)}
+.cm-bub.L{align-self:flex-start}.cm-bub.L:after{left:22px}
+.cm-bub.C{align-self:center}.cm-bub.C:after{left:calc(50% - 8px)}
+.cm-bub.R{align-self:flex-end}.cm-bub.R:after{right:22px}
+.cm-bub.shout{font-family:Bangers,Nunito,sans-serif;font-size:26px;letter-spacing:1.5px;font-weight:400;background:#fff7c2;border-radius:6px;text-align:center}
+.cm-bub.shout:after{background:#fff7c2}
+.cm-who{display:block;font-size:11px;font-weight:800;color:var(--acc);letter-spacing:.4px;margin-bottom:1px}
+.cm-tr{display:none;font-size:13px;color:var(--mut);font-weight:600;font-style:italic;margin-top:4px;border-top:1px dashed #d9cfc2;padding-top:3px}
+.cm-showtr .cm-tr{display:block}
+.cm-spk{border:0;background:transparent;font-size:14px;cursor:pointer;padding:0 0 0 4px}
+.cm-kw{background:#ffe08a;border-radius:4px;padding:0 2px;cursor:pointer;font-weight:800;box-shadow:inset 0 -2px 0 #e3b84a}
+.cm-kw.y{background:#f7c4b6;box-shadow:inset 0 -2px 0 #c96a50}
+.cm-kw.k{background:#d6e8cf;box-shadow:inset 0 -2px 0 #8fb486}
+.cm-nohl .cm-kw{background:transparent;box-shadow:none;font-weight:inherit}
+.cm-stage{margin-top:auto;display:flex;justify-content:space-around;align-items:flex-end;flex-wrap:wrap;padding:6px 4px 8px;gap:2px}
+.cm-ch{text-align:center;line-height:1}
+.cm-ch span{display:block}
+.cm-ch em{font-style:normal;font-size:10.5px;font-weight:800;background:rgba(255,255,255,.88);border-radius:6px;padding:1px 5px;display:inline-block;margin-top:3px}
+.cm-end{text-align:center;font-family:Bangers,Nunito,sans-serif;font-size:36px;letter-spacing:3px;color:var(--acc);margin:22px 0 4px}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:20;transform:translateY(115%);visibility:hidden;transition:transform .2s,visibility 0s .2s}
+.sheet.on{transform:none;visibility:visible;transition:transform .2s}
+.sheet .in{max-width:560px;margin:0 auto;background:#fff;border:3px solid #2b2622;border-bottom:0;border-radius:16px 16px 0 0;padding:12px 14px 18px;box-shadow:0 -6px 20px rgba(0,0,0,.15)}
+.sheet .top{display:flex;align-items:flex-start;gap:10px}
+.sheet .shw{font-size:26px;font-weight:800}
+.sheet .shp{font-size:14px;color:var(--mut)}
+.sheet .sht{font-size:19px;font-weight:800;color:var(--acc);margin-top:2px}
+.sheet .ic{margin-left:auto;display:flex;gap:6px}
+.sheet .ic button{border:2px solid #2b2622;background:#fff;border-radius:50%;width:40px;height:40px;font-size:17px;cursor:pointer}
+.sheet .acts button.sel{outline:3px solid #2b2622;outline-offset:-3px}
+
+.appnav{display:flex;gap:4px;background:#ebe4d8;padding:4px;border-radius:12px;margin:0 0 10px}
+.appnav a{flex:1;text-align:center;text-decoration:none;font:800 14px system-ui,sans-serif;color:#7a7068;padding:8px 4px;border-radius:9px}
+.appnav a.on{background:#fffdf8;color:#2b2622;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="appnav"><a href="kelime.html" class="on">Kelime</a><a href="gramer.html">Gramer</a></nav>
+  <header>
+    <h1>Kelime Kartları</h1>
+    <div class="sub" id="sub"></div>
+  </header>
+  <div class="days" id="days"></div>
+  <div class="tabs" id="tabs">
+    <button data-tab="cards" class="on">Kartlar</button>
+    <button data-tab="test">Test</button>
+    <button data-tab="list">Liste</button>
+    <button data-tab="puzzle">Yapboz</button>
+    <button data-tab="draw">Çiz</button>
+    <button data-tab="comic">Çizgi roman</button>
+    <button data-tab="review">Tekrar<span class="badge" id="revBadge">0</span></button>
+    <button data-tab="guide">Nasıl çalışılır</button>
+  </div>
+
+  <section id="cards">
+    <div class="chips" id="chipsC"></div>
+    <div class="stats" id="stats"></div>
+    <div class="bar"><i id="barI"></i></div>
+    <div id="cardBox"></div>
+    <div class="nav"><button id="prev">‹ Geri</button><span id="pos"></span><button id="next">İleri ›</button></div>
+  </section>
+
+  <section id="test" class="hide">
+    <div class="chips" id="chipsT"></div>
+    <div id="testBox"></div>
+  </section>
+
+  <section id="list" class="hide">
+    <div class="chips" id="chipsL"></div>
+    <p class="lnote">Kelimeye dokununca anlamı ve okunuşu açılır. "+ Tekrar" kelimeyi Tekrar sekmesine gönderir.</p>
+    <div class="list" id="listBox"></div>
+  </section>
+
+  <section id="puzzle" class="hide">
+    <div class="chips" id="chipsZ"></div>
+    <div class="chips" id="chipsZL"></div>
+    <div id="pzBox"></div>
+  </section>
+
+  <section id="draw" class="hide">
+    <div class="chips" id="chipsDM"></div>
+    <div class="chips" id="chipsD"></div>
+    <div id="drawBox"></div>
+  </section>
+
+  <section id="comic" class="hide">
+    <div class="cm-title" id="cmTitle"></div>
+    <div class="cm-castrow" id="cmCast"></div>
+    <div class="cm-ctrl">
+      <button class="cm-tg" id="cmTr">Türkçe çeviri</button>
+      <button class="cm-tg on" id="cmHl">Vurgu</button>
+      <button class="cm-tg" id="cmPlay">🔊 Sırayla dinle</button>
+    </div>
+    <div class="cm-leg">Kelimeye dokun, aç, işaretle: <i style="background:#ffe08a">bakılmadı</i> <i style="background:#f7c4b6">tekrar</i> <i style="background:#d6e8cf">biliyordum</i></div>
+    <div id="cmBox"></div>
+    <div class="cm-end">THE END</div>
+  </section>
+
+  <section id="review" class="hide">
+    <div class="revhead" id="revHead"></div>
+    <div class="chips" id="chipsRM"></div>
+    <div class="chips" id="chipsRD"></div>
+    <div id="revBox"></div>
+  </section>
+
+  <section id="guide" class="hide">
+    <div class="guide">
+      <h3>Her gün çalışma sırası</h3>
+      <ol>
+        <li><b>Önce Tekrar sekmesi (10 dk):</b> Testi çöz. Her sorudan sonra karar ver: kelimeyi hiç düşünmeden bildiysen "Öğrenildi", düşündüysen ya da tahmin ettiysen "Yine tekrar". "Yine tekrar" dediklerin sen çıkarana kadar her gün burada olur.</li>
+        <li><b>Sonra günün kartları (20 dk):</b> Gün seçiciden bugünü seç. Resme bak, İngilizcesini sesli söyle, anlamını açmadan tahmin et, sonra aç. Tereddüt ettiğin kelimeye "Yeni kelime" de.</li>
+        <li><b>Birden fazla anlamı olan kelimeler:</b> Kartın önünde "3 farklı anlamı var" yazıyorsa, kartı açınca altta diğer anlamlar ve her biri için ayrı bir örnek cümle çıkar. Hangi anlamın geçerli olduğunu cümle belirler: kelimenin türüne (isim mi, fiil mi) ve yanındaki kelimelere bak. Örneğin "book a table" ifadesinde book fiildir ve "yer ayırtmak" demektir. İlk gün ana anlamı öğrenmen yeterli; diğerlerini tanıdık gelsin diye oku.</li>
+        <li><b>Yapboz (istersen, 5-10 dk):</b> Resim parçalara bölünüp karışık gelir. İki parçaya art arda dokununca yerleri değişir; doğru yerdeki parçanın kenarı yeşilleşir. Resmi tamamlamadan da tahmin edebilirsin: ne kadar az parça yerindeyken bilirsen kelime o kadar oturmuş demektir. Yanlış tahmin ettiğin kelime Tekrar sekmesine düşer.</li>
+        <li><b>Çiz (zorlandığın kelimeler için):</b> Türkçesini görüp anlamını parmağınla çiz, sonra İngilizcesini yaz. Çizimin güzel olması gerekmez; çizerken kelimeyi düşünmen yeter. Çizimin o kelimenin kartında da görünür. Her kelimeye 1-2 dakika gider, bu yüzden bölüm "Yeni kelimeler" filtresiyle açılır.</li>
+        <li><b>Akşam günün çizgi romanı:</b> Çeviri kapalı oku. Takıldığın kelimeye dokunup "Yeni kelime" de, Tekrar sekmesine düşer.</li>
+      </ol>
+      <h3>Neden resim, ses ve cümle birlikte?</h3>
+      <p>Beyin bir kelimeyi resim, ses ve cümle olarak üç ayrı yoldan kaydedince hatırlamak kolaylaşır. Sadece "person = kişi" diye okumak tek yol bırakır, o da çabuk silinir.</p>
+      <h3>Okumak neden yetmez?</h3>
+      <p>Hikayede kelimeyi bağlam taşır, sen tanırsın ama kafandan çıkaramayabilirsin. Sınavda ve konuşurken kelimeyi kendin üretmen gerekir. Bunu çalıştıran şey testte kendini zorlamaktır. Çizgi roman tekrarın son adımıdır: kelimeyi cümle içinde görüp sağlamlaştırırsın.</p>
+      <h3>Yapay zeka olmadan nasıl yaparım?</h3>
+      <ul>
+        <li>Kartın ön yüzüne küçük bir çizim ya da emoji koy, İngilizcesini yaz. Arka yüze Türkçesini ve kendi uydurduğun kısa bir cümleyi yaz.</li>
+        <li>Telaffuz için Cambridge ya da Oxford sözlüğünün sitesindeki ses düğmesini kullan.</li>
+        <li>Bilmediğin kartları ayrı bir zarfa koy. Her gün o zarfla başla, öğrendiğin kartı zarftan çıkar. Tekrar sekmesi tam olarak bu zarf.</li>
+        <li>Akılda kalmayan kelimeye saçma bir bağ kur: "aunt" "ant" (karınca) gibi okunur, teyzeni karınca gibi düşün.</li>
+      </ul>
+      <button class="reset" id="reset">Seçili günün işaretlemelerini sıfırla</button>
+    </div>
+  </section>
+</div>
+
+<div class="sheet" id="sheet"><div class="in">
+  <div class="top"><div><div class="shw" id="shW"></div><div class="shp" id="shP"></div><div class="sht" id="shT"></div><div class="shm" id="shM"></div></div>
+  <div class="ic"><button id="shS" aria-label="Dinle">🔊</button><button id="shX" aria-label="Kapat">✕</button></div></div>
+  <div class="acts"><button class="b-ok" id="shK">✓ Biliyordum</button><button class="b-no" id="shY">✗ Yeni kelime</button></div>
+</div></div>
+
+<script>
+const DAYS=[{"n": 1, "iso": "2026-11-16", "date": "16 Kasım Pazartesi", "short": "16 Kas Pzt", "level": "A1", "chips": ["İnsanlar ve aile", "Zaman", "Sayılar"], "words": [{"w": "person", "p": "pörsın", "tr": "kişi", "e": "🧍", "ex": "She is a nice person.", "xt": "O hoş biri.", "h": "Çoğulu genelde \"people\" olur, \"persons\" çok resmi kalır.", "g": 0}, {"w": "people", "p": "piipıl", "tr": "insanlar", "e": "👥", "ex": "There are many people here.", "xt": "Burada çok insan var.", "h": "Zaten çoğuldur, \"peoples\" denmez. Fiil de çoğul olur: people are.", "g": 0, "m": [["isim", "halk, millet", "The Turkish people love tea.", "Türk halkı çayı sever."]]}, {"w": "man", "p": "men", "tr": "adam", "e": "👨", "ex": "The man is tall.", "xt": "Adam uzun boylu.", "h": "Çoğulu düzensiz: man, men.", "g": 0}, {"w": "woman", "p": "vumın", "tr": "kadın", "e": "👩", "ex": "The woman is a doctor.", "xt": "Kadın doktor.", "h": "Çoğulu women, okunuşu \"vimin\". Yazıda tek harf, okunuşta büyük fark.", "g": 0}, {"w": "child", "p": "çayld", "tr": "çocuk", "e": "🧒", "ex": "The child is happy.", "xt": "Çocuk mutlu.", "h": "Çoğulu düzensiz: children (çildrın).", "g": 0}, {"w": "boy", "p": "boy", "tr": "erkek çocuk", "e": "👦", "ex": "The boy is my son.", "xt": "Erkek çocuk benim oğlum.", "g": 0}, {"w": "girl", "p": "görl", "tr": "kız", "e": "👧", "ex": "This girl is my sister.", "xt": "Bu kız benim kız kardeşim.", "g": 0}, {"w": "baby", "p": "beybi", "tr": "bebek", "e": "👶", "ex": "The baby is asleep.", "xt": "Bebek uyuyor.", "g": 0}, {"w": "friend", "p": "frend", "tr": "arkadaş", "e": "🤝", "ex": "He is my best friend.", "xt": "O benim en yakın arkadaşım.", "h": "Yazılışta \"i\" var ama okunmaz: fri-end değil, frend.", "g": 0}, {"w": "family", "p": "femıli", "tr": "aile", "e": "👨‍👩‍👧‍👦", "ex": "My family is big.", "xt": "Ailem kalabalık.", "g": 0}, {"w": "mother", "p": "madır", "tr": "anne", "e": "👩‍👧", "ex": "My mother is a teacher.", "xt": "Annem öğretmen.", "h": "Günlük dilde mum ya da mom denir.", "g": 0}, {"w": "father", "p": "fadır", "tr": "baba", "e": "👨‍👦", "ex": "My father is at work.", "xt": "Babam işte.", "h": "Günlük dilde dad denir.", "g": 0}, {"w": "parent", "p": "perınt", "tr": "ebeveyn (anne ya da baba)", "e": "👩 👨", "c": "anne ya da baba", "ex": "My parents are in Izmir.", "xt": "Annemle babam İzmir'de.", "h": "Tekil \"parent\" anne ya da baba demek. İkisi birlikte \"parents\".", "g": 0}, {"w": "brother", "p": "bradır", "tr": "erkek kardeş", "e": "👦👦", "ex": "I have a brother.", "xt": "Bir erkek kardeşim var.", "h": "Abi ve küçük erkek kardeş için aynı kelime. Ayırmak için older / younger brother.", "g": 0}, {"w": "sister", "p": "sistır", "tr": "kız kardeş", "e": "👧👧", "ex": "My sister is ten years old.", "xt": "Kız kardeşim on yaşında.", "h": "Abla ve küçük kız kardeş için aynı kelime: older / younger sister.", "g": 0}, {"w": "son", "p": "san", "tr": "oğul", "e": "👨 ➜ 👦", "c": "babanın oğlu", "ex": "This is my son.", "xt": "Bu benim oğlum.", "h": "\"Sun\" (güneş) ile aynı okunur. Oğlum benim güneşim diye düşün.", "g": 0}, {"w": "daughter", "p": "dotır", "tr": "kız evlat", "e": "👨 ➜ 👧", "c": "babanın kızı", "ex": "Their daughter is a student.", "xt": "Onların kızı öğrenci.", "h": "\"gh\" okunmaz. Kız kardeş \"sister\", kız evlat \"daughter\": karıştırma.", "g": 0}, {"w": "husband", "p": "hazbınd", "tr": "koca, eş (erkek)", "e": "💍🤵", "ex": "Her husband is a driver.", "xt": "Kocası şoför.", "g": 0}, {"w": "wife", "p": "vayf", "tr": "eş (kadın), karı", "e": "💍👰", "ex": "His wife is a nurse.", "xt": "Eşi hemşire.", "h": "Çoğulu düzensiz: wives.", "g": 0}, {"w": "grandmother", "p": "grenmadır", "tr": "büyükanne, nine", "e": "👵", "ex": "My grandmother is 80.", "xt": "Büyükannem 80 yaşında.", "h": "grand (büyük) + mother. Günlük dilde granny ya da grandma.", "g": 0}, {"w": "grandfather", "p": "grenfadır", "tr": "büyükbaba, dede", "e": "👴", "ex": "My grandfather is a farmer.", "xt": "Dedem çiftçi.", "h": "grand + father. Günlük dilde grandpa.", "g": 0}, {"w": "uncle", "p": "ankıl", "tr": "amca, dayı, enişte", "e": "🧔", "c": "annenin ya da babanın erkek kardeşi", "ex": "My uncle is a police officer.", "xt": "Amcam polis.", "h": "İngilizcede amca, dayı ve enişte için tek kelime var.", "g": 0}, {"w": "aunt", "p": "ant", "tr": "teyze, hala, yenge", "e": "👩‍🦰", "c": "annenin ya da babanın kız kardeşi", "ex": "My aunt is very kind.", "xt": "Teyzem çok nazik.", "h": "\"Ant\" (karınca) gibi okunur. Teyzeni karınca gibi çalışkan düşün.", "g": 0}, {"w": "cousin", "p": "kazın", "tr": "kuzen", "e": "🧒🧒", "c": "amcanın, teyzenin çocuğu", "ex": "My cousins are in Ankara.", "xt": "Kuzenlerim Ankara'da.", "h": "Kız ve erkek kuzen için aynı kelime. \"ou\" burada \"a\" okunur.", "g": 0}, {"w": "name", "p": "neym", "tr": "isim, ad", "e": "🏷️", "ex": "My name is Ali.", "xt": "Benim adım Ali.", "h": "Ad: first name. Soyad: surname ya da last name.", "g": 0, "m": [["fiil", "ad vermek", "They named the baby Can.", "Bebeğe Can adını verdiler."]]}, {"w": "age", "p": "eyc", "tr": "yaş", "e": "👶 ➜ 🧑 ➜ 👴", "ex": "What is your age?", "xt": "Yaşın kaç?", "h": "Günlük dilde yaş daha çok \"How old are you?\" diye sorulur.", "g": 0, "m": [["isim", "çağ, devir", "We live in the digital age.", "Dijital çağda yaşıyoruz."]]}, {"w": "teacher", "p": "tiiçır", "tr": "öğretmen", "e": "👩‍🏫", "ex": "She is an English teacher.", "xt": "O bir İngilizce öğretmeni.", "h": "teach (öğretmek) + er (yapan kişi). Aynı mantık: work, worker / drive, driver.", "g": 0}, {"w": "student", "p": "styuudınt", "tr": "öğrenci", "e": "🧑‍🎓", "ex": "I am a student.", "xt": "Ben öğrenciyim.", "g": 0}, {"w": "doctor", "p": "doktır", "tr": "doktor", "e": "👨‍⚕️", "ex": "He is a doctor.", "xt": "O bir doktor.", "g": 0}, {"w": "nurse", "p": "nörs", "tr": "hemşire", "e": "👩‍⚕️💉", "ex": "The nurse is very busy.", "xt": "Hemşire çok meşgul.", "g": 0}, {"w": "driver", "p": "drayvır", "tr": "şoför, sürücü", "e": "🚕", "c": "araç süren kişi", "ex": "My father is a taxi driver.", "xt": "Babam taksi şoförü.", "h": "drive (sürmek) + r.", "g": 0}, {"w": "police", "p": "pıliis", "tr": "polis", "e": "👮", "ex": "The police are here.", "xt": "Polis burada.", "h": "Fiili çoğul alır: the police are. Tek polis için police officer.", "g": 0}, {"w": "waiter", "p": "veytır", "tr": "garson", "e": "🤵🍽️", "ex": "The waiter is friendly.", "xt": "Garson güler yüzlü.", "h": "wait (beklemek) + er: masanın başında bekleyen kişi.", "g": 0}, {"w": "farmer", "p": "farmır", "tr": "çiftçi", "e": "🧑‍🌾", "ex": "My grandfather is a farmer.", "xt": "Dedem çiftçi.", "h": "farm (çiftlik) + er.", "g": 0}, {"w": "worker", "p": "vörkır", "tr": "işçi, çalışan", "e": "👷", "ex": "The workers are tired.", "xt": "İşçiler yorgun.", "h": "work (çalışmak) + er.", "g": 0}, {"w": "neighbour", "p": "neybır", "tr": "komşu", "e": "🏠🤝🏠", "ex": "Our neighbours are nice.", "xt": "Komşularımız iyi.", "h": "\"gh\" okunmaz. Amerikan yazımı neighbor.", "g": 0}, {"w": "guest", "p": "gest", "tr": "misafir, konuk", "e": "🚪👋", "c": "eve gelen kişi", "ex": "We have guests tonight.", "xt": "Bu akşam misafirimiz var.", "h": "\"u\" okunmaz, sadece \"g\" sesini sert yapar.", "g": 0}, {"w": "adult", "p": "edalt", "tr": "yetişkin", "e": "🧒 ➜ 🧑", "ex": "The ticket is for adults.", "xt": "Bilet yetişkinler için.", "g": 0}, {"w": "time", "p": "taym", "tr": "zaman, saat", "e": "⏳", "ex": "What time is it?", "xt": "Saat kaç?", "h": "Saati sorarken \"hour\" değil \"time\" kullanılır.", "g": 1, "m": [["isim", "zaman, vakit", "I don't have time.", "Vaktim yok."], ["isim", "kez, defa", "I go to the gym three times a week.", "Haftada üç kez spor salonuna giderim."]]}, {"w": "day", "p": "dey", "tr": "gün", "e": "🌅 ➜ 🌙", "c": "24 saat", "ex": "Today is a good day.", "xt": "Bugün güzel bir gün.", "g": 1, "m": [["isim", "gündüz", "I work during the day and study at night.", "Gündüz çalışır, gece ders çalışırım."]]}, {"w": "week", "p": "viik", "tr": "hafta", "e": "", "v": ["w", [0, 1, 2, 3, 4, 5, 6]], "c": "7 gün", "ex": "A week has seven days.", "xt": "Bir haftada yedi gün var.", "h": "\"Weak\" (zayıf) ile aynı okunur.", "g": 1}, {"w": "month", "p": "manth", "tr": "ay (takvim)", "e": "🗓️", "c": "yaklaşık 30 gün", "ex": "My birthday is this month.", "xt": "Doğum günüm bu ay.", "h": "Gökyüzündeki ay \"moon\". Takvimdeki ay \"month\".", "g": 1}, {"w": "year", "p": "yiır", "tr": "yıl, sene", "e": "", "v": ["m", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]], "c": "12 ay", "ex": "I am 25 years old.", "xt": "25 yaşındayım.", "h": "Yaş söylerken: ... years old.", "g": 1, "m": [["isim", "sınıf (okulda kaçıncı yıl)", "She is in her second year.", "O ikinci sınıfta."]]}, {"w": "hour", "p": "avır", "tr": "saat (süre)", "e": "🕐", "c": "60 dakika", "ex": "The lesson is one hour.", "xt": "Ders bir saat.", "h": "\"h\" okunmaz, bu yüzden \"an hour\" denir. \"Our\" (bizim) ile aynı okunur.", "g": 1, "m": [["isim", "hours: çalışma saatleri", "The opening hours are nine to six.", "Açık olduğu saatler dokuzdan altıya."]]}, {"w": "minute", "p": "minit", "tr": "dakika", "e": "⏱️", "c": "60 saniye", "ex": "Wait a minute, please.", "xt": "Bir dakika bekle lütfen.", "g": 1, "m": [["isim", "dakika (süre)", "The bus comes in ten minutes.", "Otobüs on dakika sonra geliyor."], ["isim", "minutes: toplantı tutanağı", "Who takes the minutes of the meeting?", "Toplantının tutanağını kim tutuyor?"]]}, {"w": "second", "p": "sekınd", "tr": "saniye; ikinci", "e": "⚡", "ex": "This is my second lesson.", "xt": "Bu benim ikinci dersim.", "h": "İki anlamı var: saniye ve ikinci. Cümleden anlaşılır.", "g": 1, "m": [["isim", "saniye", "Wait a second, please.", "Bir saniye bekle lütfen."]]}, {"w": "today", "p": "tıdey", "tr": "bugün", "e": "", "v": ["d", 1], "ex": "Today is Monday.", "xt": "Bugün pazartesi.", "g": 1}, {"w": "tomorrow", "p": "tımorou", "tr": "yarın", "e": "", "v": ["d", 2], "ex": "See you tomorrow!", "xt": "Yarın görüşürüz!", "h": "Yazarken çift \"r\", tek \"m\".", "g": 1}, {"w": "yesterday", "p": "yestırdey", "tr": "dün", "e": "", "v": ["d", 0], "ex": "Yesterday was Sunday.", "xt": "Dün pazardı.", "g": 1}, {"w": "morning", "p": "morning", "tr": "sabah", "e": "🌅", "ex": "Good morning!", "xt": "Günaydın!", "h": "Kalıp: in the morning (sabahleyin).", "g": 1}, {"w": "afternoon", "p": "aftırnuun", "tr": "öğleden sonra", "e": "🌤️", "ex": "Good afternoon!", "xt": "Tünaydın! (öğleden sonra selamı)", "h": "after (sonra) + noon (öğle). Kelime kendini anlatıyor.", "g": 1}, {"w": "evening", "p": "iivning", "tr": "akşam", "e": "🌆", "ex": "Good evening!", "xt": "İyi akşamlar! (selamlaşma)", "h": "Vedalaşırken \"Good evening\" değil \"Good night\" denir.", "g": 1}, {"w": "night", "p": "nayt", "tr": "gece", "e": "🌙", "ex": "Good night!", "xt": "İyi geceler!", "h": "\"gh\" okunmaz. Kalıp: at night (geceleyin).", "g": 1}, {"w": "now", "p": "nau", "tr": "şimdi", "e": "👉⌚", "ex": "I am at home now.", "xt": "Şu an evdeyim.", "g": 1}, {"w": "weekend", "p": "viikend", "tr": "hafta sonu", "e": "", "v": ["w", [5, 6]], "ex": "I am free at the weekend.", "xt": "Hafta sonu boşum.", "h": "week (hafta) + end (son).", "g": 1}, {"w": "Monday", "p": "mandey", "tr": "pazartesi", "e": "", "v": ["w", [0]], "ex": "The exam is on Monday.", "xt": "Sınav pazartesi.", "h": "Moon day: Ay günü. Gün adları her zaman büyük harfle yazılır. Gün önünde \"on\" kullanılır.", "g": 1}, {"w": "Tuesday", "p": "tyuuzdey", "tr": "salı", "e": "", "v": ["w", [1]], "ex": "Today is Tuesday.", "xt": "Bugün salı.", "g": 1}, {"w": "Wednesday", "p": "venzdey", "tr": "çarşamba", "e": "", "v": ["w", [2]], "ex": "I work on Wednesday.", "xt": "Çarşamba çalışıyorum.", "h": "İlk \"d\" okunmaz. Yazarken \"Wed-nes-day\" diye hecele.", "g": 1}, {"w": "Thursday", "p": "thörzdey", "tr": "perşembe", "e": "", "v": ["w", [3]], "ex": "The party is on Thursday.", "xt": "Parti perşembe.", "h": "\"th\" sesi: dilin ucu üst dişlerin arasında, hafif \"t\" ile \"s\" arası.", "g": 1}, {"w": "Friday", "p": "fraydey", "tr": "cuma", "e": "", "v": ["w", [4]], "ex": "Friday is my favourite day.", "xt": "Cuma en sevdiğim gün.", "g": 1}, {"w": "Saturday", "p": "setırdey", "tr": "cumartesi", "e": "", "v": ["w", [5]], "ex": "On Saturday I am at home.", "xt": "Cumartesi evdeyim.", "h": "Saturn günü.", "g": 1}, {"w": "Sunday", "p": "sandey", "tr": "pazar", "e": "", "v": ["w", [6]], "ex": "Sunday is a holiday.", "xt": "Pazar tatil günü.", "h": "Sun day: Güneş günü.", "g": 1}, {"w": "January", "p": "cenyuıri", "tr": "ocak", "e": "⛄", "v": ["m", [0]], "ex": "January is cold.", "xt": "Ocak soğuk.", "h": "Ay adları büyük harfle yazılır. Ay önünde \"in\" kullanılır: in January.", "g": 1}, {"w": "February", "p": "februıri", "tr": "şubat", "e": "❄️", "v": ["m", [1]], "ex": "February is a short month.", "xt": "Şubat kısa bir ay.", "g": 1}, {"w": "March", "p": "març", "tr": "mart", "e": "🌱", "v": ["m", [2]], "ex": "The exam is in March.", "xt": "Sınav martta.", "h": "Senin sınavın bu ayda.", "g": 1}, {"w": "April", "p": "eyprıl", "tr": "nisan", "e": "🌧️", "v": ["m", [3]], "ex": "April is rainy.", "xt": "Nisan yağmurlu.", "g": 1}, {"w": "May", "p": "mey", "tr": "mayıs", "e": "🌷", "v": ["m", [4]], "ex": "May is a nice month.", "xt": "Mayıs güzel bir ay.", "g": 1, "m": [["yardımcı fiil", "-ebilir (izin, olasılık); küçük harfle yazılır", "May I come in?", "İçeri girebilir miyim?"]]}, {"w": "June", "p": "cuun", "tr": "haziran", "e": "🌞", "v": ["m", [5]], "ex": "School ends in June.", "xt": "Okul haziranda biter.", "g": 1}, {"w": "July", "p": "culay", "tr": "temmuz", "e": "🏖️", "v": ["m", [6]], "ex": "July is very hot.", "xt": "Temmuz çok sıcak.", "h": "Vurgu sonda: cu-LAY.", "g": 1}, {"w": "August", "p": "ogıst", "tr": "ağustos", "e": "🍉", "v": ["m", [7]], "ex": "We are on holiday in August.", "xt": "Ağustosta tatildeyiz.", "g": 1}, {"w": "September", "p": "septembır", "tr": "eylül", "e": "🎒", "v": ["m", [8]], "ex": "School starts in September.", "xt": "Okul eylülde başlar.", "g": 1}, {"w": "October", "p": "oktoubır", "tr": "ekim", "e": "🍁", "v": ["m", [9]], "ex": "October is cool.", "xt": "Ekim serin.", "g": 1}, {"w": "November", "p": "novembır", "tr": "kasım", "e": "🍂", "v": ["m", [10]], "ex": "Now it is November.", "xt": "Şimdi kasım.", "h": "Bu programa başladığın ay.", "g": 1}, {"w": "December", "p": "disembır", "tr": "aralık", "e": "🎄", "v": ["m", [11]], "ex": "December is the last month.", "xt": "Aralık son ay.", "g": 1}, {"w": "spring", "p": "spring", "tr": "ilkbahar", "e": "🌸", "ex": "Spring is my favourite season.", "xt": "İlkbahar en sevdiğim mevsim.", "h": "Bir anlamı daha var: yay (zıplayan tel). Baharda her şey yay gibi fırlar.", "g": 1, "m": [["isim", "yay", "The spring in my pen is broken.", "Kalemimin yayı kırık."], ["isim", "su kaynağı", "The water comes from a spring.", "Su bir kaynaktan geliyor."]]}, {"w": "summer", "p": "samır", "tr": "yaz", "e": "☀️🌴", "ex": "Summer is hot.", "xt": "Yaz sıcak.", "g": 1}, {"w": "autumn", "p": "otım", "tr": "sonbahar", "e": "🍂", "ex": "The trees are yellow in autumn.", "xt": "Sonbaharda ağaçlar sarı.", "h": "Sondaki \"n\" okunmaz. Amerikan İngilizcesinde \"fall\" denir: yapraklar düşer.", "g": 1}, {"w": "winter", "p": "vintır", "tr": "kış", "e": "❄️⛄", "ex": "Winter is cold.", "xt": "Kış soğuk.", "g": 1}, {"w": "birthday", "p": "börthdey", "tr": "doğum günü", "e": "🎂", "ex": "Happy birthday!", "xt": "Doğum günün kutlu olsun!", "h": "birth (doğum) + day (gün).", "g": 1}, {"w": "holiday", "p": "holıdey", "tr": "tatil", "e": "🏖️✈️", "ex": "We are on holiday.", "xt": "Tatildeyiz.", "h": "Kökü holy day: kutsal gün. Kalıp: on holiday.", "g": 1, "m": [["isim", "bayram, resmi tatil", "Tomorrow is a public holiday.", "Yarın resmi tatil."]]}, {"w": "date", "p": "deyt", "tr": "tarih", "e": "📅", "c": "16.11.2026", "ex": "What is the date today?", "xt": "Bugün ayın kaçı?", "h": "Bir anlamı da randevu ya da buluşma.", "g": 1, "m": [["isim", "randevu, buluşma", "I have a date tonight.", "Bu akşam bir buluşmam var."], ["isim", "hurma", "Dates are very sweet.", "Hurma çok tatlıdır."]]}, {"w": "clock", "p": "klok", "tr": "saat (duvar, masa)", "e": "🕰️", "ex": "The clock is on the wall.", "xt": "Saat duvarda.", "h": "Duvar saati clock, kol saati watch.", "g": 1}, {"w": "early", "p": "örli", "tr": "erken", "e": "🐓⏰", "ex": "I get up early.", "xt": "Erken kalkarım.", "g": 1}, {"w": "late", "p": "leyt", "tr": "geç", "e": "🏃💨⏰", "ex": "Sorry, I am late.", "xt": "Pardon, geç kaldım.", "g": 1, "m": [["zarf", "geç saate kadar", "I work late on Fridays.", "Cumaları geç saate kadar çalışırım."], ["sıfat", "merhum, rahmetli", "My late grandfather was a farmer.", "Rahmetli dedem çiftçiydi."]]}, {"w": "number", "p": "nambır", "tr": "sayı, numara", "e": "🔢", "ex": "What is your phone number?", "xt": "Telefon numaran ne?", "g": 2, "m": [["isim", "sayı", "Seven is my lucky number.", "Yedi benim uğurlu sayım."], ["kalıp", "a number of: birkaç, bir miktar", "A number of students are late.", "Birkaç öğrenci geç kaldı."]]}, {"w": "one", "p": "van", "tr": "bir", "e": "", "v": ["n", 1], "ex": "I have one sister.", "xt": "Bir kız kardeşim var.", "h": "Yazılışı \"o\" ile ama \"van\" okunur.", "g": 2, "m": [["zamir", "olan, tanesi (ismi tekrar etmemek için)", "I like the red one.", "Kırmızı olanı beğendim."]]}, {"w": "two", "p": "tuu", "tr": "iki", "e": "", "v": ["n", 2], "ex": "I have two brothers.", "xt": "İki erkek kardeşim var.", "h": "\"w\" okunmaz. \"to\" ve \"too\" ile aynı okunur.", "g": 2}, {"w": "three", "p": "thrii", "tr": "üç", "e": "", "v": ["n", 3], "ex": "There are three children.", "xt": "Üç çocuk var.", "h": "\"th\" sesi. \"tree\" (ağaç) ile karıştırma.", "g": 2}, {"w": "four", "p": "for", "tr": "dört", "e": "", "v": ["n", 4], "ex": "A car has four wheels.", "xt": "Arabanın dört tekerleği var.", "h": "\"for\" (için) ile aynı okunur.", "g": 2}, {"w": "five", "p": "fayv", "tr": "beş", "e": "", "v": ["n", 5], "ex": "I have five fingers.", "xt": "Beş parmağım var.", "g": 2}, {"w": "six", "p": "siks", "tr": "altı", "e": "", "v": ["n", 6], "ex": "The lesson is at six.", "xt": "Ders altıda.", "g": 2}, {"w": "seven", "p": "sevın", "tr": "yedi", "e": "", "v": ["n", 7], "ex": "A week has seven days.", "xt": "Haftada yedi gün var.", "g": 2}, {"w": "eight", "p": "eyt", "tr": "sekiz", "e": "", "v": ["n", 8], "ex": "I sleep eight hours.", "xt": "Sekiz saat uyurum.", "h": "\"gh\" okunmaz.", "g": 2}, {"w": "nine", "p": "nayn", "tr": "dokuz", "e": "", "v": ["n", 9], "ex": "Work starts at nine.", "xt": "İş dokuzda başlar.", "g": 2}, {"w": "ten", "p": "ten", "tr": "on", "e": "", "v": ["n", 10], "ex": "She is ten years old.", "xt": "O on yaşında.", "g": 2}, {"w": "eleven", "p": "ilevın", "tr": "on bir", "e": "", "v": ["n", 11], "ex": "A football team has eleven players.", "xt": "Futbol takımında on bir oyuncu var.", "g": 2}, {"w": "twelve", "p": "tvelv", "tr": "on iki", "e": "", "v": ["n", 12], "ex": "A year has twelve months.", "xt": "Yılda on iki ay var.", "g": 2}, {"w": "twenty", "p": "tventi", "tr": "yirmi", "e": "", "v": ["n", 20], "ex": "I am twenty years old.", "xt": "Yirmi yaşındayım.", "h": "twelve (12) ile twenty (20) karışır. -ty ile biten sayılar onluktur.", "g": 2}, {"w": "thirty", "p": "thörti", "tr": "otuz", "e": "", "v": ["n", 30], "ex": "There are thirty students.", "xt": "Otuz öğrenci var.", "h": "thirteen (13) ile karıştırma: thir-TEEN vurgusu sonda, THIR-ty vurgusu başta.", "g": 2}, {"w": "forty", "p": "forti", "tr": "kırk", "e": "", "v": ["n", 40], "ex": "My father is forty.", "xt": "Babam kırk yaşında.", "h": "Dikkat: four (4) içinde \"u\" var ama forty (40) yazılırken \"u\" yok.", "g": 2}, {"w": "fifty", "p": "fifti", "tr": "elli", "e": "", "v": ["n", 50], "ex": "It is fifty lira.", "xt": "Elli lira.", "h": "five değil fif-ty.", "g": 2}, {"w": "hundred", "p": "handrıd", "tr": "yüz (sayı)", "e": "", "v": ["n", 100], "ex": "One hundred people are here.", "xt": "Burada yüz kişi var.", "h": "Sayıdan sonra çoğul olmaz: two hundred (two hundreds değil).", "g": 2}, {"w": "thousand", "p": "thauzınd", "tr": "bin", "e": "", "v": ["n", 1000], "ex": "It costs a thousand lira.", "xt": "Bin lira tutuyor.", "h": "\"th\" sesi. two thousand: iki bin.", "g": 2}, {"w": "million", "p": "milyın", "tr": "milyon", "e": "", "v": ["n", "1.000.000"], "ex": "Istanbul has fifteen million people.", "xt": "İstanbul'un nüfusu on beş milyon.", "g": 2}, {"w": "first", "p": "först", "tr": "birinci, ilk", "e": "🥇", "c": "1st", "ex": "This is my first day.", "xt": "Bu benim ilk günüm.", "h": "Sıra sayıları: first, second, third. Sonra -th gelir: fourth, fifth.", "g": 2, "m": [["zarf", "önce, ilk olarak", "First, wash your hands.", "Önce ellerini yıka."]]}, {"w": "last", "p": "last", "tr": "son; geçen", "e": "🏁", "ex": "December is the last month.", "xt": "Aralık son ay.", "h": "last week: geçen hafta. Önüne \"in\" ya da \"on\" gelmez.", "g": 2, "m": [["sıfat", "geçen", "I saw him last week.", "Onu geçen hafta gördüm."], ["fiil", "sürmek, devam etmek", "The film lasts two hours.", "Film iki saat sürüyor."]]}, {"w": "half", "p": "haf", "tr": "yarım, yarı", "e": "🌗", "c": "½", "ex": "It is half past nine.", "xt": "Saat dokuz buçuk.", "h": "\"l\" okunmaz. Çoğulu halves.", "g": 2, "m": [["isim", "yarı, yarısı", "Half of the class is here.", "Sınıfın yarısı burada."], ["isim", "devre (maçta)", "We scored in the first half.", "İlk yarıda gol attık."]]}, {"w": "all", "p": "ol", "tr": "hepsi, bütün", "e": "✅✅✅", "ex": "All my friends are here.", "xt": "Bütün arkadaşlarım burada.", "g": 2}, {"w": "many", "p": "meni", "tr": "çok (sayılabilen)", "e": "🍎🍎🍎🍎🍎", "ex": "I have many books.", "xt": "Çok kitabım var.", "h": "Sayılabilenler için many, sayılamayanlar için much: many books, much water.", "g": 2}], "comic": {"title": "ALI'S BIRTHDAY", "main": ["ali", "mom", "dad", "elif", "can", "gma", "gpa", "uncle", "aunt", "efe", "zey", "kaya"], "panels": [{"bg": "morning", "place": "Pazartesi sabahı, mutfak", "props": ["🕰️", "☕", "🍳"], "cast": ["mom", "ali"], "lines": [["nar", "It is [[Monday]] [[morning]]. The [[clock]] says [[seven]].", "Pazartesi sabahı. Saat yediyi gösteriyor."], ["mom", "Good morning, Ali! You are [[early]] [[today]].", "Günaydın Ali! Bugün erkencisin."], ["ali", "Good morning, Mum. My [[first]] lesson is at [[eight]].", "Günaydın anne. İlk dersim sekizde."]]}, {"bg": "day", "place": "Ali kendini tanıtıyor", "props": ["🏠", "🚕"], "cast": ["mom", "ali", "dad"], "lines": [["ali", "Hi! My [[name]] is Ali. I am a [[student]].", "Merhaba! Benim adım Ali. Ben öğrenciyim."], ["ali", "My [[age]]? I am nineteen. But on [[Saturday]] I am [[twenty]]!", "Yaşım mı? On dokuz. Ama cumartesi yirmi oluyorum!"], ["ali", "My [[mother]] is a [[teacher]] and my [[father]] is a taxi [[driver]]. My [[parents|parent]] are very nice [[people]].", "Annem öğretmen, babam taksi şoförü. Annemle babam çok iyi insanlar."]]}, {"bg": "day", "place": "Ali'nin kardeşleri", "props": ["🧸", "🍼"], "cast": ["elif", "ali", "can"], "lines": [["ali", "This [[girl]] is my [[sister]], Elif. She is [[ten]].", "Bu kız benim kız kardeşim Elif. O on yaşında."], ["ali", "And this [[baby]] is my little [[brother]], Can. He is [[one]].", "Bu bebek de küçük erkek kardeşim Can. O bir yaşında."], ["elif", "I am not a baby. I am a big girl!", "Ben bebek değilim. Ben büyük bir kızım!"]]}, {"bg": "evening", "place": "Pazartesi akşamı, salon", "props": ["🛋️", "📺"], "cast": ["mom", "dad"], "lines": [["nar", "Monday [[evening]]. Ali is out. Mum talks to her [[husband]].", "Pazartesi akşamı. Ali dışarıda. Annesi kocasıyla konuşuyor."], ["mom", "Saturday is Ali's [[birthday]]. Let's have a surprise party!", "Cumartesi Ali'nin doğum günü. Hadi sürpriz bir parti yapalım!"], ["dad", "Great idea! A party for [[all]] the [[family]]. My [[wife]] has [[many]] good ideas!", "Harika fikir! Bütün aile için bir parti. Karımın çok güzel fikirleri var!"]]}, {"bg": "evening", "place": "Misafir listesi", "props": ["📝", "✏️"], "cast": ["dad", "mom", "elif"], "lines": [["dad", "What is the [[number]] of [[guests|guest]]?", "Misafir sayısı kaç?"], ["mom", "[[Twelve]] people from the family and [[eleven]] of Ali's [[friends|friend]].", "Aileden on iki kişi ve Ali'nin on bir arkadaşı."], ["elif", "And all my friends! [[Thirty]]? [[Forty]]? [[Fifty]]?", "Benim bütün arkadaşlarım da! Otuz mu? Kırk mı? Elli mi?"], ["dad", "No, no! Not a [[hundred]] guests, please!", "Hayır, hayır! Lütfen yüz misafir olmasın!"]]}, {"bg": "evening", "place": "Parti alışverişi", "props": ["🎂", "🎈", "💸"], "cast": ["elif", "dad", "mom"], "lines": [["dad", "A big cake is a [[thousand]] lira!", "Büyük bir pasta bin lira!"], ["elif", "And I want a [[million]] balloons!", "Ben de bir milyon balon istiyorum!"], ["mom", "Not a million, Elif. Twenty balloons.", "Bir milyon değil Elif. Yirmi balon."]]}, {"bg": "afternoon", "place": "Salı öğleden sonra, telefon", "props": ["📞", "🚓"], "cast": ["mom", "uncle"], "lines": [["nar", "[[Tuesday]] [[afternoon]]. Mum calls her brother, Murat. Ali's [[uncle]] is a [[police]] officer.", "Salı öğleden sonra. Annesi erkek kardeşi Murat'ı arıyor. Ali'nin dayısı polis memuru."], ["mom", "Come on Saturday at [[six]] in the evening, please.", "Lütfen cumartesi akşam altıda gel."], ["uncle", "OK! I am at work on Saturday, but I am free at [[five]].", "Tamam! Cumartesi işteyim ama beşte boşum."]]}, {"bg": "hospital", "place": "Çarşamba, hastane", "props": ["🏥", "💉"], "cast": ["aunt", "doc"], "lines": [["nar", "[[Wednesday]]. Ali's [[aunt]], Ayşe, is a [[nurse]]. She works with a [[doctor]].", "Çarşamba. Ali'nin halası Ayşe hemşire. Bir doktorla birlikte çalışıyor."], ["aunt", "A party for Ali? Great! My [[son]] and my [[daughter]] can come too.", "Ali'ye parti mi? Harika! Oğlum ve kızım da gelebilir."], ["doc", "Your children are Ali's [[cousins|cousin]], right?", "Senin çocukların Ali'nin kuzenleri, değil mi?"], ["aunt", "Yes, they are!", "Evet, öyle!"]]}, {"bg": "farm", "place": "Perşembe, köy", "props": ["🐄", "🌾", "🚜"], "cast": ["gma", "gpa"], "lines": [["nar", "[[Thursday]]. [[Grandmother]] and [[grandfather]] live in a village. Grandfather is a [[farmer]].", "Perşembe. Büyükanne ve büyükbaba köyde yaşıyor. Büyükbaba çiftçi."], ["gma", "What is the [[date]] of the party?", "Partinin tarihi ne?"], ["gpa", "Saturday, the twenty-first of [[November]]. Ali is twenty! [[Time]] is fast.", "21 Kasım cumartesi. Ali yirmi yaşına giriyor! Zaman çok hızlı geçiyor."], ["gma", "Yes. Twenty [[years|year]]! Ali was a baby [[yesterday]]...", "Evet. Yirmi yıl! Daha dün bebekti..."]]}, {"bg": "day", "place": "Cuma, kapının önü", "props": ["🪑", "🪑", "🚚"], "cast": ["kaya", "mom", "wk", "wk2"], "lines": [["nar", "[[Friday]]. Mum talks to the [[neighbour]], Mrs Kaya.", "Cuma. Annesi komşusu Kaya Hanım'la konuşuyor."], ["kaya", "A party [[tomorrow]]? Lovely! I am free at the [[weekend]].", "Yarın parti mi? Ne güzel! Hafta sonu boşum."], ["nar", "[[Two]] [[workers|worker]] bring [[four]] tables and twenty chairs.", "İki işçi dört masa ve yirmi sandalye getiriyor."], ["wk2", "Here you are, madam. Four tables!", "Buyurun hanımefendi. Dört masa!"]]}, {"bg": "night", "place": "Cuma gecesi", "props": ["🌙", "🪑", "🪑", "🪑"], "cast": ["elif", "mom", "ali", "can"], "lines": [["nar", "Friday [[night]].", "Cuma gecesi."], ["ali", "Mum, why are there twenty chairs here?", "Anne, burada neden yirmi sandalye var?"], ["mom", "Oh... they are for... a meeting!", "Şey... onlar... bir toplantı için!"], ["elif", "Shh, Can! It is a secret!", "Şşş Can! Bu bir sır!"]]}, {"bg": "morning", "place": "Cumartesi sabahı", "props": ["📅", "🛏️"], "cast": ["ali"], "lines": [["ali", "Today is Saturday. It is my birthday! But nobody says \"Happy birthday\".", "Bugün cumartesi. Benim doğum günüm! Ama kimse \"İyi ki doğdun\" demiyor."], ["ali", "Yesterday my father was strange. [[Now]] my mother is strange. What a [[day]]!", "Dün babam tuhaftı. Şimdi de annem tuhaf. Ne gün ama!"]]}, {"bg": "restaurant", "place": "Cumartesi öğleden sonra, restoran", "props": ["🍽️", "🍝", "🕒"], "cast": ["dad", "waiter", "ali"], "lines": [["nar", "Dad and Ali are at a restaurant. The [[waiter]] is very friendly.", "Babasıyla Ali restoranda. Garson çok güler yüzlü."], ["waiter", "A table for two? This way, please.", "İki kişilik masa mı? Bu taraftan lütfen."], ["ali", "Dad, it is [[three]] o'clock. We are here for two [[hours|hour]]!", "Baba, saat üç. İki saattir buradayız!"], ["dad", "Wait a [[minute]]... one [[second]]... a dessert, please!", "Bir dakika... bir saniye... bir tatlı lütfen!"]]}, {"bg": "afternoon", "place": "Saat beş buçuk", "props": ["⌚", "🚕"], "cast": ["dad", "ali"], "lines": [["dad", "Oh! It is [[half]] past five. We are [[late]]! Quick, to the taxi!", "Aa! Saat beş buçuk. Geç kaldık! Çabuk, taksiye!"], ["ali", "Late? Late for what?", "Geç mi? Ne için geç?"]]}, {"bg": "party", "place": "Cumartesi akşamı, ev", "props": ["🎈", "🎉", "🎊"], "cast": ["gpa", "gma", "uncle", "aunt", "efe", "zey", "elif", "ali", "mom", "can", "dad", "kaya", "mrkaya"], "lines": [["all", "SURPRISE! Happy birthday, Ali!", "SÜRPRİZ! İyi ki doğdun Ali!"], ["nar", "Every [[person]] is here: every [[adult]] and every [[child]].", "Herkes burada: bütün büyükler ve bütün çocuklar."], ["efe", "Happy birthday! I am the little [[boy]] of the family!", "İyi ki doğdun! Ailenin küçük oğlanı benim!"], ["ali", "And who is this [[man]] and this [[woman]]?", "Peki bu adam ve bu kadın kim?"], ["kaya", "We are your neighbours! I am Mrs Kaya and this man is my husband.", "Biz komşularınız! Ben Kaya Hanım, bu adam da kocam."]]}, {"bg": "party", "place": "Hediyeler", "props": ["🎁", "🗓️"], "cast": ["gma", "ali"], "lines": [["gma", "My gift is a calendar with photos of our farm. Every [[month]] has a photo.", "Hediyem çiftliğimizin fotoğraflarıyla bir takvim. Her ayın bir fotoğrafı var."], ["ali", "[[January]] and [[February]]: [[winter]]. [[March]], [[April]], [[May]]: [[spring]].", "Ocak ve şubat: kış. Mart, nisan, mayıs: ilkbahar."], ["ali", "[[June]], [[July]], [[August]]: [[summer]]. [[September]], [[October]], November: [[autumn]]. And [[December]]: winter again!", "Haziran, temmuz, ağustos: yaz. Eylül, ekim, kasım: sonbahar. Aralık da yine kış!"]]}, {"bg": "party", "place": "Annesiyle babasının hediyesi", "props": ["🏖️", "✈️"], "cast": ["mom", "ali", "dad", "uncle"], "lines": [["dad", "And our gift is a [[holiday]]! One [[week]] at the sea this summer.", "Bizim hediyemiz de bir tatil! Bu yaz denizde bir hafta."], ["ali", "A holiday? Thank you, Mum! Thank you, Dad!", "Tatil mi? Teşekkürler anne! Teşekkürler baba!"], ["uncle", "Only one week? Not one month? Ha ha!", "Sadece bir hafta mı? Bir ay değil mi? Ha ha!"]]}, {"bg": "party", "place": "Pasta", "props": ["🎂", "🕯️"], "cast": ["elif", "ali", "can"], "lines": [["elif", "Twenty candles! One, two, three... [[nine]], ten... twenty! Make a wish!", "Yirmi mum! Bir, iki, üç... dokuz, on... yirmi! Bir dilek tut!"], ["ali", "This is the best birthday of my life!", "Bu hayatımın en güzel doğum günü!"]]}, {"bg": "night", "place": "Gece yarısı", "props": ["🌙", "🕚"], "cast": ["gpa", "dad", "ali"], "lines": [["gpa", "It is eleven o'clock at night. It is late for an old farmer!", "Saat gece on bir. Yaşlı bir çiftçi için geç oldu!"], ["dad", "Don't worry. Tomorrow is [[Sunday]]. No work, no school!", "Merak etme. Yarın pazar. Ne iş var ne okul!"], ["nar", "The [[last]] guest goes home at midnight.", "Son misafir gece yarısı evine gidiyor."], ["ali", "Thank you, my family and my friends. You are the best people in the world!", "Teşekkürler ailem ve arkadaşlarım. Siz dünyanın en iyi insanlarısınız!"]]}]}}, {"n": 2, "iso": "2026-11-17", "date": "17 Kasım Salı", "short": "17 Kas Sal", "level": "A1", "chips": ["Miktar, renk", "Vücut", "Yiyecek", "Ev, okul"], "words": [{"w": "much", "p": "maç", "tr": "çok (sayılamayan)", "e": "💧💧💧", "ex": "I don't have much time.", "xt": "Çok vaktim yok.", "h": "Sayılamayanlar için much, sayılabilenler için many: much water, many bottles. Olumlu cümlede çoğunlukla \"a lot of\" denir.", "g": 0, "m": [["soru", "How much: ne kadar, kaç para", "How much is this?", "Bu ne kadar?"], ["zarf", "very much: çok", "Thank you very much.", "Çok teşekkür ederim."], ["zarf", "much + karşılaştırma: çok daha", "This one is much better.", "Bu çok daha iyi."]]}, {"w": "some", "p": "sam", "tr": "biraz, bazı", "e": "🍪🍪", "ex": "There is some milk in the fridge.", "xt": "Buzdolabında biraz süt var.", "h": "Olumlu cümlede some, olumsuz ve soruda any: Is there any milk?", "g": 0, "m": [["belirteç", "bazı", "Some people don't eat meat.", "Bazı insanlar et yemez."], ["belirteç", "biraz (ikram ve ricada, soru cümlesinde)", "Would you like some tea?", "Biraz çay ister misin?"]]}, {"w": "every", "p": "evri", "tr": "her", "e": "📅✅✅✅", "ex": "I drink tea every morning.", "xt": "Her sabah çay içerim.", "h": "Arkasından tekil isim gelir: every day (every days değil).", "g": 0}, {"w": "both", "p": "bouth", "tr": "ikisi de", "e": "👦👧", "c": "ikisi birden", "ex": "Both my sisters have green eyes.", "xt": "İki kız kardeşimin de gözleri yeşil.", "h": "Sadece iki şey için kullanılır. Üç ve fazlası için all.", "g": 0, "m": [["kalıp", "both ... and ...: hem ... hem ...", "She speaks both English and German.", "Hem İngilizce hem Almanca konuşur."]]}, {"w": "more", "p": "mor", "tr": "daha fazla", "e": "🍪 ➜ 🍪🍪🍪", "ex": "Can I have more tea, please?", "xt": "Biraz daha çay alabilir miyim?", "g": 0, "m": [["zarf", "daha (uzun sıfatlarla karşılaştırma)", "This phone is more expensive.", "Bu telefon daha pahalı."], ["kalıp", "not ... any more: artık değil", "I don't live there any more.", "Artık orada yaşamıyorum."]]}, {"w": "colour", "p": "kalır", "tr": "renk", "e": "🎨", "ex": "What colour is your car?", "xt": "Araban ne renk?", "h": "Amerikan yazımı color. \"o\" burada \"a\" okunur.", "g": 0, "m": [["fiil", "boyamak", "The children colour the pictures.", "Çocuklar resimleri boyuyor."]]}, {"w": "red", "p": "red", "tr": "kırmızı", "e": "🍎", "v": ["c", "#d93b2b"], "ex": "The apple is red.", "xt": "Elma kırmızı.", "g": 0}, {"w": "blue", "p": "bluu", "tr": "mavi", "e": "🌊", "v": ["c", "#2f6fd6"], "ex": "The sea is blue.", "xt": "Deniz mavi.", "g": 0, "m": [["sıfat", "hüzünlü, keyifsiz", "I feel blue today.", "Bugün keyifsizim."]]}, {"w": "green", "p": "griin", "tr": "yeşil", "e": "🌳", "v": ["c", "#3e9b4f"], "ex": "Trees are green in spring.", "xt": "İlkbaharda ağaçlar yeşil.", "g": 0, "m": [["sıfat", "çevre dostu", "We need green energy.", "Çevre dostu enerjiye ihtiyacımız var."], ["sıfat", "ham, olgunlaşmamış", "These bananas are still green.", "Bu muzlar hala ham."]]}, {"w": "yellow", "p": "yelou", "tr": "sarı", "e": "🍋", "v": ["c", "#f2c230"], "ex": "Lemons are yellow.", "xt": "Limonlar sarı.", "g": 0}, {"w": "black", "p": "blek", "tr": "siyah", "e": "🐈‍⬛", "v": ["c", "#222222"], "ex": "I have a black cat.", "xt": "Siyah bir kedim var.", "g": 0, "m": [["sıfat", "sade, sütsüz (kahve, çay)", "I drink black coffee.", "Sade kahve içerim."]]}, {"w": "white", "p": "vayt", "tr": "beyaz", "e": "☁️", "v": ["c", "#ffffff"], "ex": "Clouds are white.", "xt": "Bulutlar beyaz.", "h": "\"h\" okunmaz.", "g": 0}, {"w": "brown", "p": "braun", "tr": "kahverengi", "e": "🐻", "v": ["c", "#7a4a2a"], "ex": "The bear is brown.", "xt": "Ayı kahverengi.", "g": 0}, {"w": "orange", "p": "orinc", "tr": "turuncu; portakal", "e": "🍊", "v": ["c", "#f08a24"], "ex": "An orange is orange.", "xt": "Portakal turuncudur.", "h": "Hem renk hem meyve. Meyve olunca \"an orange\" denir.", "g": 0, "m": [["isim", "portakal", "I eat an orange every day.", "Her gün bir portakal yerim."]]}, {"w": "pink", "p": "pink", "tr": "pembe", "e": "🌸", "v": ["c", "#f29bc0"], "ex": "Her bag is pink.", "xt": "Onun çantası pembe.", "g": 0}, {"w": "grey", "p": "grey", "tr": "gri", "e": "🐘", "v": ["c", "#8e8e8e"], "ex": "Elephants are grey.", "xt": "Filler gri.", "h": "Amerikan yazımı gray.", "g": 0}, {"w": "purple", "p": "pörpıl", "tr": "mor", "e": "🍇", "v": ["c", "#7d4cb0"], "ex": "Grapes are purple.", "xt": "Üzümler mor.", "g": 0}, {"w": "body", "p": "bodi", "tr": "vücut", "e": "🧍", "ex": "Sport is good for your body.", "xt": "Spor vücuduna iyi gelir.", "g": 1, "m": [["isim", "gövde, ana kısım", "The body of the plane is white.", "Uçağın gövdesi beyaz."]]}, {"w": "head", "p": "hed", "tr": "baş, kafa", "e": "👤", "ex": "My head hurts.", "xt": "Başım ağrıyor.", "h": "head + ache = headache (baş ağrısı). \"ea\" burada \"e\" okunur.", "g": 1, "m": [["isim", "başkan, müdür, şef", "She is the head of the department.", "O bölümün başkanı."], ["fiil", "yönelmek, doğru gitmek", "We are heading home.", "Eve doğru gidiyoruz."]]}, {"w": "face", "p": "feys", "tr": "yüz", "e": "😊", "ex": "She has a beautiful face.", "xt": "Onun güzel bir yüzü var.", "g": 1, "m": [["fiil", "yüzleşmek, karşı karşıya olmak", "We face a big problem.", "Büyük bir sorunla karşı karşıyayız."], ["fiil", "bakmak, dönük olmak", "My room faces the sea.", "Odam denize bakıyor."]]}, {"w": "eye", "p": "ay", "tr": "göz", "e": "👁️", "ex": "He has brown eyes.", "xt": "Onun gözleri kahverengi.", "h": "\"I\" (ben) ile aynı okunur.", "g": 1}, {"w": "ear", "p": "iır", "tr": "kulak", "e": "👂", "ex": "I have two ears.", "xt": "İki kulağım var.", "g": 1}, {"w": "nose", "p": "nouz", "tr": "burun", "e": "👃", "ex": "My nose is cold.", "xt": "Burnum üşüyor.", "h": "\"knows\" (bilir) ile aynı okunur.", "g": 1}, {"w": "mouth", "p": "mauth", "tr": "ağız", "e": "👄", "ex": "Open your mouth, please.", "xt": "Ağzını aç lütfen.", "h": "Sondaki \"th\" sesi: dilin ucu dişlerin arasında.", "g": 1}, {"w": "tooth", "p": "tuuth", "tr": "diş", "e": "🦷", "ex": "I brush my teeth every morning.", "xt": "Her sabah dişlerimi fırçalarım.", "h": "Çoğulu düzensiz: teeth (tiith).", "g": 1}, {"w": "hair", "p": "heır", "tr": "saç", "e": "💇", "ex": "My sister has long hair.", "xt": "Kız kardeşimin saçları uzun.", "h": "Sayılamaz, tekil kullanılır: her hair is long (\"hairs\" denmez).", "g": 1}, {"w": "hand", "p": "hend", "tr": "el", "e": "✋", "ex": "Wash your hands before dinner.", "xt": "Yemekten önce ellerini yıka.", "g": 1, "m": [["fiil", "uzatmak, elden vermek", "Can you hand me that book?", "Şu kitabı uzatır mısın?"], ["isim", "akrep, yelkovan", "The clock has two hands.", "Saatin iki kolu var."], ["kalıp", "give a hand: yardım etmek", "Can you give me a hand?", "Bana yardım eder misin?"]]}, {"w": "arm", "p": "arm", "tr": "kol", "e": "💪", "ex": "My arm hurts.", "xt": "Kolum ağrıyor.", "g": 1, "m": [["isim", "kol (koltukta)", "The arm of the sofa is broken.", "Kanepenin kolu kırık."]]}, {"w": "leg", "p": "leg", "tr": "bacak", "e": "🦵", "ex": "A dog has four legs.", "xt": "Köpeğin dört bacağı var.", "g": 1, "m": [["isim", "ayak (masa, sandalye)", "One leg of the table is broken.", "Masanın bir ayağı kırık."], ["isim", "etap, ayak (yolculukta)", "This is the first leg of the trip.", "Bu yolculuğun ilk etabı."]]}, {"w": "foot", "p": "fut", "tr": "ayak", "e": "🦶", "ex": "I go to school on foot.", "xt": "Okula yürüyerek giderim.", "h": "Çoğulu düzensiz: feet. Kalıp: on foot = yürüyerek.", "g": 1, "m": [["isim", "fit (yaklaşık 30 cm, çoğulu feet)", "The wall is six feet high.", "Duvar altı fit yüksekliğinde."], ["isim", "etek, dip", "The village is at the foot of the mountain.", "Köy dağın eteğinde."]]}, {"w": "finger", "p": "fingır", "tr": "parmak (el)", "e": "☝️", "ex": "I have ten fingers.", "xt": "On parmağım var.", "h": "Ayak parmağı başka kelime: toe.", "g": 1}, {"w": "back", "p": "bek", "tr": "sırt; geri", "e": "🎒", "c": "sırt", "ex": "My back hurts.", "xt": "Sırtım ağrıyor.", "h": "İkinci anlamı \"geri\": come back = geri gel.", "g": 1, "m": [["zarf", "geri", "I will be back at six.", "Altıda dönmüş olurum."], ["isim", "arka taraf", "The garden is at the back of the house.", "Bahçe evin arkasında."], ["fiil", "desteklemek", "Many people back the plan.", "Pek çok kişi planı destekliyor."]]}, {"w": "heart", "p": "hart", "tr": "kalp", "e": "❤️", "ex": "Your heart works all the time.", "xt": "Kalbin hiç durmadan çalışır.", "h": "Yazılışta \"ea\" var ama \"a\" okunur.", "g": 1, "m": [["isim", "merkez, orta", "The hotel is in the heart of the city.", "Otel şehrin tam merkezinde."], ["kalıp", "by heart: ezbere", "I know this song by heart.", "Bu şarkıyı ezbere biliyorum."]]}, {"w": "food", "p": "fuud", "tr": "yiyecek, yemek", "e": "🥘🍞🍎", "ex": "I like Turkish food.", "xt": "Türk yemeklerini severim.", "g": 2}, {"w": "water", "p": "votır", "tr": "su", "e": "💧", "ex": "I drink two litres of water every day.", "xt": "Her gün iki litre su içerim.", "h": "Sayılamaz: \"a water\" denmez, \"a glass of water\" denir.", "g": 2, "m": [["fiil", "sulamak", "I water the flowers every day.", "Çiçekleri her gün sularım."]]}, {"w": "bread", "p": "bred", "tr": "ekmek", "e": "🍞", "ex": "We eat bread with every meal.", "xt": "Her yemekte ekmek yeriz.", "h": "Sayılamaz: a piece of bread (bir parça ekmek).", "g": 2}, {"w": "milk", "p": "milk", "tr": "süt", "e": "🥛", "ex": "The baby drinks milk.", "xt": "Bebek süt içer.", "g": 2, "m": [["fiil", "sağmak", "The farmer milks the cows.", "Çiftçi inekleri sağar."]]}, {"w": "tea", "p": "tii", "tr": "çay", "e": "🍵", "ex": "Turkish people drink a lot of tea.", "xt": "Türkler çok çay içer.", "g": 2}, {"w": "coffee", "p": "kofi", "tr": "kahve", "e": "☕", "ex": "Do you drink coffee in the morning?", "xt": "Sabahları kahve içer misin?", "g": 2}, {"w": "juice", "p": "cuus", "tr": "meyve suyu", "e": "🧃", "ex": "I drink orange juice at breakfast.", "xt": "Kahvaltıda portakal suyu içerim.", "h": "\"ui\" burada \"u\" okunur.", "g": 2}, {"w": "egg", "p": "eg", "tr": "yumurta", "e": "🥚", "ex": "I eat two eggs every morning.", "xt": "Her sabah iki yumurta yerim.", "g": 2}, {"w": "cheese", "p": "çiiz", "tr": "peynir", "e": "🧀", "ex": "There is white cheese on the table.", "xt": "Masada beyaz peynir var.", "h": "Fotoğraf çekerken \"Say cheese!\" denir: gülümse.", "g": 2}, {"w": "meat", "p": "miit", "tr": "et", "e": "🥩", "ex": "He doesn't eat meat.", "xt": "O et yemez.", "h": "\"meet\" (buluşmak) ile aynı okunur.", "g": 2}, {"w": "chicken", "p": "çikın", "tr": "tavuk", "e": "🍗", "ex": "We have chicken for dinner.", "xt": "Akşam yemeğinde tavuk var.", "h": "Hem hayvan hem et için aynı kelime.", "g": 2, "m": [["isim", "tavuk (hayvan)", "There are ten chickens on the farm.", "Çiftlikte on tavuk var."], ["sıfat", "korkak (gündelik dil)", "Don't be chicken!", "Korkak olma!"]]}, {"w": "fish", "p": "fiş", "tr": "balık", "e": "🐟", "ex": "My father likes fish.", "xt": "Babam balığı sever.", "h": "Çoğulu da genelde fish.", "g": 2, "m": [["fiil", "balık tutmak", "My grandfather fishes in the river.", "Dedem nehirde balık tutar."]]}, {"w": "rice", "p": "rays", "tr": "pirinç, pilav", "e": "🍚", "ex": "The rice is ready.", "xt": "Pilav hazır.", "g": 2}, {"w": "soup", "p": "suup", "tr": "çorba", "e": "🍲", "ex": "I always have soup in winter.", "xt": "Kışın hep çorba içerim.", "h": "İngilizcede çorba \"içilmez\": eat soup ya da have soup denir.", "g": 2}, {"w": "salad", "p": "selıd", "tr": "salata", "e": "🥗", "ex": "I have a salad for lunch.", "xt": "Öğle yemeğinde salata yerim.", "g": 2}, {"w": "fruit", "p": "fruut", "tr": "meyve", "e": "🍎🍌🍇", "ex": "I eat fruit every day.", "xt": "Her gün meyve yerim.", "h": "\"ui\" \"u\" okunur. Genelde sayılamaz: some fruit.", "g": 2}, {"w": "vegetable", "p": "vectıbıl", "tr": "sebze", "e": "🥦🥕", "ex": "Children don't like vegetables.", "xt": "Çocuklar sebze sevmez.", "h": "Yazılışta 4 hece, söyleyişte 3: VEJ-tı-bıl.", "g": 2}, {"w": "apple", "p": "epıl", "tr": "elma", "e": "🍎", "ex": "An apple a day keeps the doctor away.", "xt": "Günde bir elma doktoru uzak tutar.", "h": "Sesli harfle başladığı için \"an apple\".", "g": 2}, {"w": "banana", "p": "bınana", "tr": "muz", "e": "🍌", "ex": "Monkeys love bananas.", "xt": "Maymunlar muza bayılır.", "g": 2}, {"w": "tomato", "p": "tımatou", "tr": "domates", "e": "🍅", "ex": "The tomatoes are red.", "xt": "Domatesler kırmızı.", "h": "Çoğulu -es alır: tomatoes.", "g": 2}, {"w": "potato", "p": "pıteytou", "tr": "patates", "e": "🥔", "ex": "I like potatoes.", "xt": "Patatesi severim.", "h": "Çoğulu -es alır: potatoes.", "g": 2}, {"w": "sugar", "p": "şugır", "tr": "şeker (toz)", "e": "🍬", "c": "tatlandırır", "ex": "Do you take sugar in your tea?", "xt": "Çayına şeker alır mısın?", "h": "\"s\" burada \"ş\" okunur.", "g": 2}, {"w": "salt", "p": "solt", "tr": "tuz", "e": "🧂", "ex": "Can you pass the salt, please?", "xt": "Tuzu uzatır mısın lütfen?", "g": 2}, {"w": "butter", "p": "batır", "tr": "tereyağı", "e": "🧈", "ex": "I have bread and butter for breakfast.", "xt": "Kahvaltıda tereyağlı ekmek yerim.", "g": 2}, {"w": "cake", "p": "keyk", "tr": "pasta, kek", "e": "🍰", "ex": "This cake is delicious.", "xt": "Bu pasta çok lezzetli.", "g": 2}, {"w": "chocolate", "p": "çoklıt", "tr": "çikolata", "e": "🍫", "ex": "I love chocolate.", "xt": "Çikolataya bayılırım.", "h": "Yazılışta üç hece, söyleyişte iki: ÇOK-lıt.", "g": 2}, {"w": "breakfast", "p": "brekfıst", "tr": "kahvaltı", "e": "🍳", "ex": "I have breakfast at seven.", "xt": "Yedide kahvaltı yaparım.", "h": "break (bozmak) + fast (oruç, açlık): gecenin açlığını bozan öğün. Kalıp: have breakfast.", "g": 2}, {"w": "lunch", "p": "lanç", "tr": "öğle yemeği", "e": "🥪", "ex": "I have lunch at one.", "xt": "Öğle yemeğini birde yerim.", "h": "Kalıp: have lunch (öğle yemeği yemek).", "g": 2}, {"w": "dinner", "p": "dinır", "tr": "akşam yemeği", "e": "🍝", "ex": "We have dinner at seven.", "xt": "Akşam yemeğini yedide yeriz.", "h": "\"diner\" (lokanta) ile karıştırma: dinner çift \"n\".", "g": 2}, {"w": "meal", "p": "miil", "tr": "öğün, yemek", "e": "🍳 🥪 🍝", "c": "kahvaltı, öğle, akşam", "ex": "Breakfast is the first meal of the day.", "xt": "Kahvaltı günün ilk öğünüdür.", "g": 2}, {"w": "drink", "p": "drink", "tr": "içecek; içmek", "e": "🥤", "ex": "What do you want to drink?", "xt": "Ne içmek istersin?", "g": 2, "m": [["isim", "içecek", "Would you like a cold drink?", "Soğuk bir içecek ister misin?"], ["fiil", "alkol kullanmak", "He doesn't drink.", "O alkol kullanmaz."]]}, {"w": "menu", "p": "menyuu", "tr": "menü", "e": "📋", "ex": "Can I see the menu, please?", "xt": "Menüyü görebilir miyim lütfen?", "g": 2, "m": [["isim", "menü (bilgisayar, telefon)", "Click on the File menu.", "Dosya menüsüne tıkla."]]}, {"w": "bottle", "p": "botıl", "tr": "şişe", "e": "🍾", "ex": "There is a bottle of water in my bag.", "xt": "Çantamda bir şişe su var.", "h": "Kalıp: a bottle of water (bir şişe su).", "g": 2}, {"w": "cup", "p": "kap", "tr": "fincan", "e": "🫖 ➜ ☕", "c": "bir fincan çay", "ex": "Would you like a cup of coffee?", "xt": "Bir fincan kahve ister misin?", "h": "Kalıp: a cup of tea / a cup of coffee.", "g": 2, "m": [["isim", "kupa (ödül, turnuva)", "Who won the World Cup?", "Dünya Kupası'nı kim kazandı?"]]}, {"w": "glass", "p": "glas", "tr": "bardak; cam", "e": "🥃", "c": "bir bardak", "ex": "Can I have a glass of water?", "xt": "Bir bardak su alabilir miyim?", "h": "İkinci anlamı cam. Çoğulu \"glasses\" aynı zamanda gözlük demek.", "g": 2, "m": [["isim", "cam (malzeme)", "The table is made of glass.", "Masa camdan yapılmış."], ["isim", "glasses: gözlük", "I wear glasses.", "Gözlük takıyorum."]]}, {"w": "plate", "p": "pleyt", "tr": "tabak", "e": "🍽️", "ex": "Put the plates on the table, please.", "xt": "Tabakları masaya koy lütfen.", "g": 2, "m": [["isim", "plaka (araç)", "What is your number plate?", "Plakan ne?"], ["isim", "levha (metal)", "This is a steel plate.", "Bu bir çelik levha."]]}, {"w": "knife", "p": "nayf", "tr": "bıçak", "e": "🔪", "ex": "Be careful with the knife!", "xt": "Bıçağa dikkat et!", "h": "\"k\" okunmaz. Çoğulu düzensiz: knives.", "g": 2}, {"w": "fork", "p": "fork", "tr": "çatal", "e": "🍴", "ex": "I eat salad with a fork.", "xt": "Salatayı çatalla yerim.", "g": 2, "m": [["isim", "yol ayrımı", "Turn left at the fork in the road.", "Yol ayrımında sola dön."]]}, {"w": "spoon", "p": "spuun", "tr": "kaşık", "e": "🥄", "ex": "We eat soup with a spoon.", "xt": "Çorbayı kaşıkla içeriz.", "g": 2}, {"w": "hungry", "p": "hangri", "tr": "aç, acıkmış", "e": "🤤", "ex": "I am hungry. Is dinner ready?", "xt": "Acıktım. Yemek hazır mı?", "h": "Türkçede \"acıktım\" diye geçmiş zaman, İngilizcede \"I am hungry\" (açım) denir.", "g": 2}, {"w": "thirsty", "p": "thörsti", "tr": "susamış", "e": "🥵💧", "ex": "I am thirsty. Can I have some water?", "xt": "Susadım. Biraz su alabilir miyim?", "h": "Türkçede \"susadım\", İngilizcede \"I am thirsty\" (susuzum) denir.", "g": 2}, {"w": "house", "p": "haus", "tr": "ev (bina)", "e": "🏠", "ex": "They live in a big house.", "xt": "Büyük bir evde yaşıyorlar.", "h": "house binanın kendisi, home yaşadığın yuva.", "g": 3}, {"w": "home", "p": "houm", "tr": "ev, yuva", "e": "🏡❤️", "ex": "I am at home now.", "xt": "Şu an evdeyim.", "h": "Önüne \"to\" gelmez: go home (\"go to home\" değil).", "g": 3, "m": [["zarf", "eve", "I go home at six.", "Altıda eve giderim."], ["isim", "memleket, yurt", "Istanbul is my home.", "İstanbul benim memleketim."]]}, {"w": "flat", "p": "flet", "tr": "daire (apartman)", "e": "🏢", "ex": "We live in a flat on the third floor.", "xt": "Üçüncü kattaki bir dairede oturuyoruz.", "h": "Amerikanca apartment. \"flat\" aynı zamanda \"düz\" demek.", "g": 3, "m": [["sıfat", "düz", "The road is flat.", "Yol düz."], ["sıfat", "inik, patlak (lastik)", "We have a flat tyre.", "Lastiğimiz patlak."]]}, {"w": "room", "p": "ruum", "tr": "oda", "e": "🏠 ➜ 🚪🚪🚪", "c": "evin içindeki bölümler", "ex": "There are three rooms in our flat.", "xt": "Dairemizde üç oda var.", "g": 3, "m": [["isim", "yer, boş alan (sayılamaz)", "There is no room in the car.", "Arabada yer yok."]]}, {"w": "kitchen", "p": "kiçın", "tr": "mutfak", "e": "🧑‍🍳", "c": "yemek yapılan oda", "ex": "Mum is in the kitchen.", "xt": "Annem mutfakta.", "g": 3}, {"w": "bathroom", "p": "bathruum", "tr": "banyo", "e": "🛁", "ex": "The bathroom is next to the bedroom.", "xt": "Banyo yatak odasının yanında.", "h": "bath (küvet) + room. Evde tuvalete de bathroom denir.", "g": 3}, {"w": "bedroom", "p": "bedruum", "tr": "yatak odası", "e": "🛏️🪟🚪", "c": "uyunan oda", "ex": "My bedroom is small.", "xt": "Yatak odam küçük.", "h": "bed (yatak) + room (oda).", "g": 3}, {"w": "living room", "p": "living ruum", "tr": "oturma odası, salon", "e": "🛋️📺🪴", "ex": "We watch TV in the living room.", "xt": "Salonda televizyon izleriz.", "h": "living (yaşanan) + room. Ailenin oturduğu oda.", "g": 3}, {"w": "garden", "p": "gardın", "tr": "bahçe", "e": "🌻🌳", "ex": "My grandmother has a big garden.", "xt": "Büyükannemin büyük bir bahçesi var.", "g": 3}, {"w": "door", "p": "dor", "tr": "kapı", "e": "🚪", "ex": "Close the door, please.", "xt": "Kapıyı kapat lütfen.", "g": 3}, {"w": "window", "p": "vindou", "tr": "pencere", "e": "🪟", "ex": "Open the window, please. It is hot.", "xt": "Pencereyi aç lütfen. Hava sıcak.", "g": 3, "m": [["isim", "pencere (bilgisayar)", "Close this window and open a new one.", "Bu pencereyi kapat ve yenisini aç."]]}, {"w": "wall", "p": "vol", "tr": "duvar", "e": "🧱", "ex": "There is a picture on the wall.", "xt": "Duvarda bir resim var.", "g": 3}, {"w": "floor", "p": "flor", "tr": "yer, zemin; kat", "e": "🧹", "c": "yer", "ex": "The keys are on the floor.", "xt": "Anahtarlar yerde.", "h": "İkinci anlamı \"kat\": on the second floor (ikinci katta).", "g": 3, "m": [["isim", "kat", "My office is on the third floor.", "Ofisim üçüncü katta."]]}, {"w": "table", "p": "teybıl", "tr": "masa", "e": "", "v": ["s", "table"], "ex": "The food is on the table.", "xt": "Yemek masada.", "g": 3, "m": [["isim", "tablo, çizelge", "Look at the table on page five.", "Beşinci sayfadaki tabloya bak."]]}, {"w": "chair", "p": "çeır", "tr": "sandalye", "e": "🪑", "ex": "There are four chairs in the kitchen.", "xt": "Mutfakta dört sandalye var.", "g": 3, "m": [["isim", "başkan (toplantı, kurul)", "She is the chair of the meeting.", "O toplantının başkanı."], ["fiil", "başkanlık etmek", "Who chairs the meeting?", "Toplantıya kim başkanlık ediyor?"]]}, {"w": "bed", "p": "bed", "tr": "yatak", "e": "🛏️", "ex": "I go to bed at eleven.", "xt": "On birde yatarım.", "h": "Kalıp: go to bed (yatmak).", "g": 3}, {"w": "sofa", "p": "soufa", "tr": "kanepe", "e": "🛋️", "ex": "The cat is sleeping on the sofa.", "xt": "Kedi kanepede uyuyor.", "g": 3}, {"w": "desk", "p": "desk", "tr": "çalışma masası", "e": "✏️📚", "c": "ders çalışılan masa", "ex": "My computer is on my desk.", "xt": "Bilgisayarım çalışma masamda.", "h": "Yemek masası table, çalışma masası desk.", "g": 3, "m": [["isim", "banko, danışma masası", "Ask at the information desk.", "Danışma masasına sor."]]}, {"w": "lamp", "p": "lemp", "tr": "lamba", "e": "💡", "ex": "Turn on the lamp, please.", "xt": "Lambayı aç lütfen.", "g": 3}, {"w": "key", "p": "kii", "tr": "anahtar", "e": "🔑", "ex": "Where are my keys?", "xt": "Anahtarlarım nerede?", "h": "\"ey\" burada \"ii\" okunur.", "g": 3, "m": [["isim", "tuş", "Press the Enter key.", "Enter tuşuna bas."], ["sıfat", "kilit, çok önemli", "This is the key point.", "Kilit nokta bu."], ["isim", "cevap anahtarı", "The answer key is at the back of the book.", "Cevap anahtarı kitabın arkasında."]]}, {"w": "picture", "p": "pikçır", "tr": "resim, fotoğraf", "e": "🖼️", "ex": "This is a picture of my family.", "xt": "Bu ailemin bir fotoğrafı.", "g": 3, "m": [["isim", "fotoğraf", "Can you take a picture of us?", "Bizim bir fotoğrafımızı çeker misin?"], ["fiil", "gözünde canlandırmak", "I can't picture him as a teacher.", "Onu öğretmen olarak hayal edemiyorum."]]}, {"w": "television", "p": "telıvijın", "tr": "televizyon", "e": "📺", "ex": "My father watches television every evening.", "xt": "Babam her akşam televizyon izler.", "h": "Kısaca TV (tii vii) denir.", "g": 3}, {"w": "phone", "p": "foun", "tr": "telefon", "e": "📱", "ex": "My phone is in my bag.", "xt": "Telefonum çantamda.", "h": "\"ph\" \"f\" okunur. Cep telefonu: mobile phone.", "g": 3, "m": [["fiil", "telefon etmek", "I will phone you tomorrow.", "Seni yarın ararım."]]}, {"w": "computer", "p": "kımpyuutır", "tr": "bilgisayar", "e": "💻", "ex": "I use a computer at work.", "xt": "İşte bilgisayar kullanırım.", "g": 3}, {"w": "fridge", "p": "fric", "tr": "buzdolabı", "e": "🧊", "c": "soğuk tutar", "ex": "The milk is in the fridge.", "xt": "Süt buzdolabında.", "h": "refrigerator kelimesinin kısaltması.", "g": 3}, {"w": "shower", "p": "şavır", "tr": "duş", "e": "🚿", "ex": "I have a shower every morning.", "xt": "Her sabah duş alırım.", "h": "Kalıp: have / take a shower (duş almak).", "g": 3, "m": [["isim", "sağanak (kısa süreli yağmur)", "There are showers in the afternoon.", "Öğleden sonra sağanak var."]]}, {"w": "toilet", "p": "toylıt", "tr": "tuvalet", "e": "🚽", "ex": "Excuse me, where is the toilet?", "xt": "Affedersiniz, tuvalet nerede?", "h": "Amerikanca restroom ya da bathroom.", "g": 3}, {"w": "stairs", "p": "steırz", "tr": "merdiven (bina)", "e": "🪜", "c": "basamaklar", "ex": "The stairs are very long.", "xt": "Merdivenler çok uzun.", "h": "Hep çoğul kullanılır. Taşınabilen merdiven: ladder.", "g": 3}, {"w": "box", "p": "boks", "tr": "kutu", "e": "📦", "ex": "The box is heavy.", "xt": "Kutu ağır.", "h": "Çoğulu -es alır: boxes.", "g": 3, "m": [["isim", "kutucuk (formda)", "Tick the box.", "Kutucuğu işaretle."]]}, {"w": "bag", "p": "beg", "tr": "çanta", "e": "👜", "ex": "My bag is on the chair.", "xt": "Çantam sandalyenin üstünde.", "g": 3}, {"w": "school", "p": "skuul", "tr": "okul", "e": "🏫", "ex": "My sister goes to school by bus.", "xt": "Kız kardeşim okula otobüsle gider.", "h": "\"ch\" burada \"k\" okunur.", "g": 3, "m": [["isim", "fakülte, yüksekokul", "He is at law school.", "O hukuk fakültesinde."]]}, {"w": "class", "p": "klas", "tr": "sınıf; ders", "e": "🧑‍🏫👥", "c": "öğrenci grubu", "ex": "There are thirty students in my class.", "xt": "Sınıfımda otuz öğrenci var.", "h": "Hem öğrenci grubu hem ders anlamına gelir: I have a class at nine.", "g": 3, "m": [["isim", "ders", "I have an English class at nine.", "Dokuzda İngilizce dersim var."], ["isim", "sınıf (kalite, toplumsal)", "We travel first class.", "Birinci sınıf seyahat ederiz."]]}, {"w": "lesson", "p": "lesın", "tr": "ders", "e": "📖", "ex": "Our English lesson is on Tuesday.", "xt": "İngilizce dersimiz salı günü.", "g": 3, "m": [["isim", "ibret, alınan ders", "I learned my lesson.", "Dersimi aldım."]]}, {"w": "book", "p": "buk", "tr": "kitap", "e": "📕", "ex": "I read a book every week.", "xt": "Her hafta bir kitap okurum.", "h": "\"oo\" burada kısa \"u\" okunur.", "g": 3, "m": [["fiil", "yer ayırtmak, rezervasyon yapmak", "I want to book a table for two.", "İki kişilik masa ayırtmak istiyorum."]]}, {"w": "notebook", "p": "noutbuk", "tr": "defter", "e": "📓", "ex": "Write the new words in your notebook.", "xt": "Yeni kelimeleri defterine yaz.", "h": "note (not) + book. Dizüstü bilgisayara da notebook denir.", "g": 3, "m": [["isim", "dizüstü bilgisayar", "My notebook is on my desk.", "Dizüstü bilgisayarım masamda."]]}], "comic": {"title": "AUNT AYŞE'S NEW FLAT", "main": ["ali", "dad", "aunt", "efe", "zey", "gma", "gpa", "can"], "panels": [{"bg": "morning", "place": "Salı sabahı, kamyonet", "props": ["🚚", "📦", "📦"], "cast": ["dad", "ali"], "lines": [["nar", "Tuesday morning. Aunt Ayşe has a new [[flat]]. Ali and Dad are helping her today.", "Salı sabahı. Ayşe halanın yeni bir dairesi var. Ali ve babası bugün ona yardım ediyor."], ["dad", "There are [[more]] than twenty [[boxes|box]], and [[every]] box is heavy!", "Yirmiden fazla kutu var ve her kutu ağır!"], ["ali", "Don't worry, Dad. [[Both]] of us are strong!", "Merak etme baba. İkimiz de güçlüyüz!"]]}, {"bg": "day", "place": "Apartman merdivenleri", "props": ["🏢"], "cast": ["dad", "ali"], "lines": [["nar", "The flat is on the fifth [[floor]]. There is no lift.", "Daire beşinci katta. Asansör yok."], ["dad", "Oh no! The [[stairs]]! My [[back]]!", "Eyvah! Merdivenler! Sırtım!"], ["ali", "Give me that [[bag]], Dad. I can carry it.", "O çantayı bana ver baba. Ben taşırım."]]}, {"bg": "day", "place": "Yeni daire", "props": ["🔑", "🪟"], "cast": ["aunt", "efe", "zey", "ali"], "lines": [["aunt", "Welcome to my new [[home]]! There are four [[rooms|room]]: a [[kitchen]], a [[bathroom]], a [[bedroom]] and a [[living room]].", "Yeni evime hoş geldiniz! Dört oda var: mutfak, banyo, yatak odası ve oturma odası."], ["aunt", "The bathroom has a [[shower]] and a [[toilet]].", "Banyoda bir duş ve bir tuvalet var."], ["efe", "Our old [[house]] is bigger, but I love this flat.", "Eski evimiz daha büyük ama bu daireyi seviyorum."], ["zey", "And there is a [[garden]] behind the building. Look out of the [[window]]!", "Binanın arkasında bir bahçe de var. Pencereden bak!"]]}, {"bg": "day", "place": "Duvarların rengi", "props": ["🎨", "🖌️"], "cast": ["zey", "aunt", "efe", "ali"], "lines": [["aunt", "What [[colour]] is good for the [[walls|wall]]?", "Duvarlar için hangi renk iyi olur?"], ["zey", "[[Pink]]! Or [[purple]]!", "Pembe! Ya da mor!"], ["efe", "No! [[Blue]] or [[green]]!", "Hayır! Mavi ya da yeşil!"], ["ali", "[[White]] is good for a small room.", "Küçük bir oda için beyaz iyidir."]]}, {"bg": "day", "place": "Mobilyalar", "props": ["🛋️", "🛏️", "🪑"], "cast": ["dad", "aunt", "efe", "ali"], "lines": [["dad", "Where does the [[sofa]] go?", "Kanepe nereye gidiyor?"], ["aunt", "In the living room, in front of the [[television]].", "Oturma odasına, televizyonun önüne."], ["ali", "And the [[table]] and the [[chairs|chair]]?", "Peki masa ve sandalyeler?"], ["aunt", "In the kitchen. The [[bed]] goes in the bedroom, and the [[desk]] goes in Efe's room.", "Mutfağa. Yatak yatak odasına, çalışma masası da Efe'nin odasına gidiyor."], ["efe", "I always put my [[lamp]] on my desk. I read there every night.", "Lambamı hep çalışma masama koyarım. Her gece orada okurum."]]}, {"bg": "day", "place": "Renkli kutular", "props": ["📦", "📦", "📦"], "cast": ["aunt", "zey"], "lines": [["aunt", "The [[red]] box is for the kitchen, the [[black]] box is for the bathroom and the [[brown]] box is for the bedroom.", "Kırmızı kutu mutfak için, siyah kutu banyo için, kahverengi kutu da yatak odası için."], ["zey", "And where is my [[grey]] cat? Is she in a box too?", "Peki benim gri kedim nerede? O da mı bir kutuda?"], ["aunt", "No, Zeynep! She is sleeping on the sofa.", "Hayır Zeynep! Kanepede uyuyor."]]}, {"bg": "day", "place": "Anahtar ve resim", "props": ["🔑", "🖼️"], "cast": ["aunt", "ali", "zey"], "lines": [["aunt", "Here is the [[key]] for the [[door]], Ali.", "Al Ali, bu kapının anahtarı."], ["ali", "Thanks. Where do I put this [[picture]]?", "Sağ ol. Bu resmi nereye koyayım?"], ["zey", "On the wall, please! It is my picture of a [[yellow]] sun.", "Duvara lütfen! O benim sarı güneş resmim."]]}, {"bg": "day", "place": "Kayıp telefon", "props": ["📱", "💻"], "cast": ["efe", "aunt"], "lines": [["efe", "Mum, where is the [[computer]]? I want to play a game!", "Anne, bilgisayar nerede? Oyun oynamak istiyorum!"], ["aunt", "It is in that [[box]]. But wait, I am looking for my [[phone]]!", "O kutunun içinde. Ama bekle, ben telefonumu arıyorum!"], ["efe", "Your phone is on the floor, Mum!", "Telefonun yerde anne!"]]}, {"bg": "afternoon", "place": "Boş buzdolabı", "props": ["🧊"], "cast": ["aunt", "dad", "ali"], "lines": [["aunt", "Oh no! The [[fridge]] is empty. We have only [[some]] [[milk]] and [[water]].", "Eyvah! Buzdolabı boş. Sadece biraz süt ve su var."], ["dad", "I am [[hungry]]!", "Acıktım!"], ["ali", "And I am [[thirsty]]!", "Ben de susadım!"]]}, {"bg": "afternoon", "place": "Dedemle ninem geliyor", "props": ["🧺", "🚗"], "cast": ["gma", "can", "gpa"], "lines": [["nar", "Grandma and Grandpa arrive with baby Can and a big basket of [[food]].", "Büyükanne ve büyükbaba, bebek Can ve kocaman bir sepet yiyecekle geliyor."], ["gma", "Here is [[bread]], [[cheese]], [[eggs|egg]], [[butter]] and [[tea]] for [[breakfast]] tomorrow.", "Yarın kahvaltı için ekmek, peynir, yumurta, tereyağı ve çay."], ["gpa", "And for [[lunch]] today: [[chicken]], [[rice]], [[soup]] and a [[salad]].", "Bugün öğle yemeği için de: tavuk, pilav, çorba ve salata."]]}, {"bg": "afternoon", "place": "Çiftlikten gelenler", "props": ["🧺", "🍅", "🥔"], "cast": ["efe", "gpa", "gma"], "lines": [["efe", "No [[meat]]? No [[fish]]?", "Et yok mu? Balık yok mu?"], ["gpa", "Fish is for [[dinner]], Efe!", "Balık akşam yemeği için Efe!"], ["gma", "And [[fruit]] and [[vegetables|vegetable]]: [[apples|apple]], [[bananas|banana]]...", "Bir de meyve ve sebze: elma, muz..."], ["gpa", "The [[tomatoes|tomato]] and the [[potatoes|potato]] are from our farm. The bananas are not!", "Domatesler ve patatesler bizim çiftlikten. Muzlar değil!"], ["efe", "And an [[orange]] for me!", "Bir portakal da benim için!"]]}, {"bg": "afternoon", "place": "Sofrayı kurmak", "props": ["🍽️", "🍴", "🥄"], "cast": ["aunt", "ali"], "lines": [["aunt", "Ali, please put the [[plates|plate]], [[knives|knife]], [[forks|fork]] and [[spoons|spoon]] on the table.", "Ali, tabakları, bıçakları, çatalları ve kaşıkları masaya koyar mısın lütfen."], ["ali", "How many [[glasses|glass]]?", "Kaç bardak?"], ["aunt", "Eight glasses and one big [[bottle]] of water.", "Sekiz bardak ve bir büyük şişe su."]]}, {"bg": "restaurant", "place": "Öğle yemeği", "props": ["🍲", "🍗", "🥗"], "cast": ["dad", "gma", "aunt"], "lines": [["dad", "What a [[meal]]! Is there a [[menu]]? Ha ha!", "Ne yemek ama! Menü var mı? Ha ha!"], ["gma", "This is not a restaurant! What do you want to [[drink]]? [[Juice]] or [[coffee]]?", "Burası restoran değil! Ne içmek istersin? Meyve suyu mu, kahve mi?"], ["dad", "A [[cup]] of coffee, please. No [[sugar]].", "Bir fincan kahve lütfen. Şekersiz."], ["aunt", "Can you pass the [[salt]], please?", "Tuzu uzatır mısın lütfen?"]]}, {"bg": "restaurant", "place": "Tatlı", "props": ["🍰", "🍫"], "cast": ["zey", "gma"], "lines": [["zey", "Is there a [[cake]]?", "Pasta var mı?"], ["gma", "Yes, a [[chocolate]] cake! But not [[much]] for you, Zeynep.", "Evet, çikolatalı pasta! Ama sana çok yok Zeynep."]]}, {"bg": "afternoon", "place": "Bebek Can'la oyun", "props": ["🧸"], "cast": ["gma", "can", "gpa"], "lines": [["nar", "After lunch, Grandma plays a game with baby Can.", "Öğle yemeğinden sonra büyükanne bebek Can'la bir oyun oynuyor."], ["gma", "Where is your [[nose]], Can? And your [[mouth]]? Your [[eyes|eye]]? Your [[ears|ear]]?", "Burnun nerede Can? Ya ağzın? Gözlerin? Kulakların?"], ["nar", "Can touches his [[face]] with his little [[hand]].", "Can küçük eliyle yüzüne dokunuyor."], ["gma", "Look! He has two [[teeth|tooth]] now!", "Bak! Artık iki dişi var!"], ["gpa", "And a lot of [[hair]]! Not like me! Ha ha!", "Saçı da bol! Benim gibi değil! Ha ha!"]]}, {"bg": "afternoon", "place": "Kaza", "props": ["📦", "🩹"], "cast": ["efe", "aunt"], "lines": [["efe", "Ouch! My [[finger]]! And the box is on my [[foot]]!", "Ah! Parmağım! Kutu da ayağımın üstünde!"], ["nar", "Aunt Ayşe is a nurse. She looks at Efe.", "Ayşe hala hemşire. Efe'ye bakıyor."], ["aunt", "Your [[arm]] is OK. Your [[leg]] is OK. Your foot is OK. You are fine!", "Kolun iyi. Bacağın iyi. Ayağın iyi. Bir şeyin yok!"]]}, {"bg": "evening", "place": "Akşam", "props": ["🛋️", "🌆"], "cast": ["dad", "ali", "aunt"], "lines": [["dad", "My [[head]]... my whole [[body]] is tired!", "Başım... bütün vücudum yorgun!"], ["ali", "Dad, you are not young! Ha ha!", "Baba, artık genç değilsin! Ha ha!"], ["aunt", "Thank you all. My [[heart]] is full. Now this flat is a home.", "Hepinize teşekkürler. Kalbim dolu. Artık bu daire bir yuva."]]}, {"bg": "night", "place": "Ödev", "props": ["📓", "📕", "💡"], "cast": ["efe", "ali"], "lines": [["efe", "Ali, can you help me? I have an English [[lesson]] tomorrow.", "Ali, bana yardım eder misin? Yarın İngilizce dersim var."], ["ali", "Sure. Get your [[book]] and your [[notebook]].", "Tabii. Kitabını ve defterini getir."], ["efe", "My new [[school]] is near here. There are twenty students in my [[class]].", "Yeni okulum buraya yakın. Sınıfımda yirmi öğrenci var."]]}]}}];
+const CAST={"ali": ["🧑‍🎓", "Ali"], "mom": ["👩‍🏫", "Mum"], "dad": ["👨", "Dad"], "elif": ["👧", "Elif"], "can": ["👶", "Can"], "gma": ["👵", "Grandma"], "gpa": ["👴", "Grandpa"], "uncle": ["👮‍♂️", "Uncle Murat"], "aunt": ["👩‍⚕️", "Aunt Ayşe"], "doc": ["👨‍⚕️", "Doctor"], "kaya": ["👩‍🦳", "Mrs Kaya"], "mrkaya": ["👨‍🦳", "Mr Kaya"], "wk": ["👷", "Worker"], "wk2": ["👷", "Worker"], "waiter": ["🤵", "Waiter"], "efe": ["👦", "Efe"], "zey": ["👱‍♀️", "Zeynep"]};
+const ROLES={"ali": "öğrenci", "mom": "öğretmen", "dad": "taksici", "elif": "kız kardeş", "can": "bebek", "gma": "büyükanne", "gpa": "çiftçi", "uncle": "polis, dayı", "aunt": "hemşire, hala", "efe": "kuzen", "zey": "kuzen", "kaya": "komşu"};
+const DAYNAMES=['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+const MON=['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+DAYS.forEach(d=>d.words.forEach((x,i)=>{x.i=i;x.d=d.n}));
+const DMAP={};DAYS.forEach(d=>DMAP[d.n]=d);
+
+// storage: one key per day (1. günün anahtarı eskisiyle aynı)
+const ST={};
+DAYS.forEach(d=>{try{ST[d.n]=JSON.parse(localStorage.getItem('ing-kart-g'+d.n)||'{}')||{}}catch(e){ST[d.n]={}}});
+function save(n){try{localStorage.setItem('ing-kart-g'+n,JSON.stringify(ST[n]))}catch(e){}}
+function getS(x){return ST[x.d][x.i]}
+function setS(x,v){if(v)ST[x.d][x.i]=v;else delete ST[x.d][x.i];save(x.d);updBadge()}
+
+// speech
+let voice=null;
+function pick(){try{const v=speechSynthesis.getVoices();voice=v.find(x=>/en[-_]GB/i.test(x.lang))||v.find(x=>/^en/i.test(x.lang))||null}catch(e){}}
+try{pick();speechSynthesis.onvoiceschanged=pick}catch(e){}
+const canSay=(()=>{try{return 'speechSynthesis' in window}catch(e){return false}})();
+function utt(t){const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.85;if(voice)u.voice=voice;return u}
+function say(t){try{speechSynthesis.cancel();speechSynthesis.speak(utt(t))}catch(e){}}
+
+// current day
+function todayIso(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+let D=DAYS.find(d=>d.iso===todayIso());
+if(!D){let last=null;try{last=+localStorage.getItem('ing-kart-day')}catch(e){}D=DMAP[last]||DAYS[DAYS.length-1]}
+let W=D.words, tab='cards';
+
+// visuals
+function visual(x,noMine){
+  let h='';
+  if(x.e)h+='<div class="emo">'+x.e+'</div>';
+  const v=x.v;
+  if(v){
+    if(v[0]==='w')h+='<div class="strip">'+DAYNAMES.map((d,i)=>'<span class="'+(v[1].includes(i)?'h':'')+'">'+d+'</span>').join('')+'</div>';
+    if(v[0]==='m')h+='<div class="grid12">'+MON.map((d,i)=>'<span class="'+(v[1].includes(i)?'h':'')+'">'+d+'</span>').join('')+'</div>';
+    if(v[0]==='d')h+='<div class="strip">'+['Dün','Bugün','Yarın'].map((d,i)=>'<span style="min-width:62px;padding:10px 4px" class="'+(i===v[1]?'h':'')+'">'+d+'</span>').join('')+'</div>';
+    if(v[0]==='n'){h+='<div class="bignum">'+v[1]+'</div>';if(typeof v[1]==='number'&&v[1]<=12)h+='<div class="dots">'+'<i></i>'.repeat(v[1])+'</div>'}
+    if(v[0]==='c')h+='<div class="sw" style="background:'+v[1]+'"></div>';
+    if(v[0]==='s'&&v[1]==='table')h+='<svg width="150" height="100" viewBox="0 0 150 100"><rect x="10" y="22" width="130" height="14" rx="3" fill="#a0683f" stroke="#2b2622" stroke-width="3"/><rect x="22" y="36" width="10" height="56" fill="#8a5632" stroke="#2b2622" stroke-width="3"/><rect x="118" y="36" width="10" height="56" fill="#8a5632" stroke="#2b2622" stroke-width="3"/><text x="45" y="18" font-size="20">🍽️ 🍞</text></svg>';
+  }
+  if(x.c)h+='<div class="cap">'+esc(x.c)+'</div>';
+  if(!noMine&&DRAW[dkey(x)])h+='<div class="mine"><img src="'+DRAW[dkey(x)]+'" alt=""><span>senin çizimin</span></div>';
+  return '<div class="pic">'+h+'</div>';
+}
+function mini(x){
+  const v=x.v;
+  if(v&&v[0]==='n')return '<div class="e n">'+(v[1]==='1.000.000'?'1M':v[1])+'</div>';
+  if(v&&v[0]==='c')return '<div class="e"><span class="mini-sw" style="background:'+v[1]+'"></span></div>';
+  if(x.e)return '<div class="e">'+x.e.split(' ')[0]+'</div>';
+  if(v&&v[0]==='s')return '<div class="e">🪵</div>';
+  if(v&&(v[0]==='w'||v[0]==='d'))return '<div class="e">📆</div>';
+  if(v&&v[0]==='m')return '<div class="e">🗓️</div>';
+  return '<div class="e">•</div>';
+}
+
+// filters (per day)
+let cf='all',ci=0,open=false,tf='all',T=null,lf='all';
+function FILT(){return [['all','Tümü']].concat(D.chips.map((c,i)=>[String(i),c])).concat([['y','Yeni kelimeler'],['n','Bakılmayanlar']])}
+function pass(x,f){if(f==='all')return true;if(f==='y')return getS(x)==='y';if(f==='n')return !getS(x);return String(x.g)===f}
+function deck(f){return W.filter(x=>pass(x,f))}
+function chips(id,list,cur,fn){const el=document.getElementById(id);el.innerHTML=list.map(([k,l])=>'<button class="chip'+(k===cur?' on':'')+'" data-k="'+k+'">'+l+'</button>').join('');el.querySelectorAll('.chip').forEach(b=>b.onclick=()=>fn(b.dataset.k))}
+
+function renderHead(){
+  document.getElementById('sub').textContent=D.n+'. gün, '+D.date+' · '+D.level+' · '+W.length+' kelime';
+  document.getElementById('days').innerHTML=DAYS.map(d=>'<button class="day'+(d===D?' on':'')+'" data-n="'+d.n+'">'+d.n+'. gün<small>'+d.short+'</small></button>').join('');
+  document.querySelectorAll('.day').forEach(b=>b.onclick=()=>{D=DMAP[+b.dataset.n];W=D.words;cf='all';ci=0;open=false;tf='all';T=null;lf='all';zf='all';Z=null;DW=null;df=null;try{localStorage.setItem('ing-kart-day',D.n)}catch(e){}buildComic();renderHead();renderTab()});
+  const sel=document.querySelector('.day.on');if(sel)sel.scrollIntoView({inline:'center',block:'nearest'});
+}
+function updBadge(){const n=revItems('all').length;document.getElementById('revBadge').textContent=n}
+
+// ---- cards
+function renderStats(){
+  const k=W.filter(x=>getS(x)==='k').length,y=W.filter(x=>getS(x)==='y').length;
+  document.getElementById('stats').innerHTML='<span>Biliyordum: <b>'+k+'</b></span><span>Yeni: <b>'+y+'</b></span><span>Bakılmadı: <b>'+(W.length-k-y)+'</b></span>';
+  document.getElementById('barI').style.width=((k+y)/W.length*100)+'%';
+}
+function cardHTML(x,num,tagHTML,backBtns){
+  let h='<div class="card"><div class="num">'+num+'</div>'+tagHTML;
+  h+=visual(x)+'<div class="word">'+esc(x.w)+'</div><div class="pron">okunuşu: '+esc(x.p);
+  if(canSay)h+=' <button class="say sm" data-say="'+esc(x.w)+'" aria-label="Dinle">🔊</button>';
+  h+='</div>';
+  if(x.m)h+='<div class="more">'+(x.m.length+1)+' farklı anlamı var</div>';
+  if(!open)h+='<button class="reveal" id="rev">Önce tahmin et, sonra anlamını göster</button>';
+  else{
+    h+='<div class="back"><div class="trm">'+esc(x.tr)+'</div><div class="ex"><div class="en">'+esc(x.ex)+(canSay?' <button class="say sm" data-say="'+esc(x.ex)+'" aria-label="Cümleyi dinle">🔊</button>':'')+'</div><div class="t">'+esc(x.xt)+'</div></div>';
+    if(x.m)h+='<div class="mm"><h4>Diğer anlamları</h4>'+x.m.map(r=>'<div class="mrow"><div class="mt"><i>'+esc(r[0])+'</i>'+esc(r[1])+'</div><div class="me">'+esc(r[2])+(canSay?' <button class="say sm" data-say="'+esc(r[2])+'" aria-label="Dinle">🔊</button>':'')+'</div><div class="mx">'+esc(r[3])+'</div></div>').join('')+'</div>';
+    if(x.h)h+='<div class="hook"><b>İpucu:</b> '+esc(x.h)+'</div>';
+    h+='<div class="acts">'+backBtns+'</div></div>';
+  }
+  return h+'</div>';
+}
+function wireSay(box){box.querySelectorAll('[data-say]').forEach(b=>b.onclick=e=>{e.stopPropagation();say(b.dataset.say)})}
+function renderCard(){
+  chips('chipsC',FILT(),cf,k=>{cf=k;ci=0;open=false;renderCard()});
+  renderStats();
+  const d=deck(cf),box=document.getElementById('cardBox');
+  if(!d.length){box.innerHTML='<div class="card empty">'+(cf==='y'?'Bu günde "yeni" işaretlediğin kelime yok.':cf==='n'?'Bütün kelimelere baktın. Şimdi teste geç.':'Kelime yok.')+'</div>';document.getElementById('pos').textContent='';return}
+  if(ci>=d.length)ci=d.length-1;if(ci<0)ci=0;
+  const x=d[ci],s=getS(x);
+  const tag=s?'<div class="tag '+s+'">'+(s==='k'?'Biliyordum':'Yeni')+'</div>':'';
+  box.innerHTML=cardHTML(x,(x.i+1)+' / '+W.length,tag,'<button class="b-ok" id="bk">✓ Biliyordum</button><button class="b-no" id="by">✗ Yeni kelime</button>');
+  document.getElementById('pos').textContent=(ci+1)+' / '+d.length;
+  wireSay(box);
+  const r=document.getElementById('rev');if(r)r.onclick=()=>{open=true;renderCard()};
+  const mark=v=>{setS(x,v);open=false;if(cf==='n'||cf==='y'){if(!deck(cf).includes(x)){renderCard();return}}ci++;const n=deck(cf).length;if(ci>=n)ci=n-1;renderCard()};
+  const bk=document.getElementById('bk'),by=document.getElementById('by');
+  if(bk)bk.onclick=()=>mark('k');if(by)by.onclick=()=>mark('y');
+}
+document.getElementById('prev').onclick=()=>{ci--;open=false;renderCard()};
+document.getElementById('next').onclick=()=>{ci++;open=false;const n=deck(cf).length;if(ci>=n)ci=n-1;renderCard()};
+
+// ---- day test
+function qHTML(mode,x,opts,n,total){
+  let h='<div class="card"><div class="num">'+n+' / '+total+'</div>';
+  if(x.d!==D.n||tab==='review')h+='<div class="tag d">'+x.d+'. gün</div>';
+  if(mode==='p')h+='<div class="q" style="margin-top:14px">Bu resim hangi kelime?</div>'+visual(x);
+  else if(mode==='t')h+='<div class="q" style="margin-top:14px">İngilizcesi hangisi?</div><div class="qtr">'+esc(x.tr)+'</div>';
+  else h+='<div class="q" style="margin-top:14px">Dinle ve anlamını seç</div><div style="margin:18px 0 6px"><button class="say" id="ps" style="width:70px;height:70px;font-size:30px">🔊</button></div>';
+  h+='<div class="opts">'+opts.map(o=>'<button data-i="'+o.d+'-'+o.i+'">'+esc(mode==='s'?o.tr:o.w)+'</button>').join('')+'</div><div class="fb" id="fb"></div>';
+  return h;
+}
+function optsFor(x){const pool=DMAP[x.d].words.filter(y=>y.g===x.g&&y!==x);return shuffle([x].concat(shuffle(pool).slice(0,3)))}
+function testStart(mode){const pool=deck(tf);if(!pool.length){T=null;renderTest();return}T={mode,qs:shuffle(pool).slice(0,Math.min(20,pool.length)),n:0,ok:0,done:false,wrong:[]};renderTest()}
+function renderTest(){
+  chips('chipsT',FILT(),tf,k=>{tf=k;T=null;renderTest()});
+  const box=document.getElementById('testBox');
+  if(!T){
+    const n=deck(tf).length;
+    box.innerHTML='<div class="card"><p class="q" style="font-size:15px">Seçili grupta '+n+' kelime var. Her testte en fazla 20 soru gelir. Yanlış yaptığın kelimeler Tekrar sekmesine düşer.</p>'+(n?'<button class="go" data-m="p">Resimden İngilizcesini bul</button><button class="go alt" data-m="t">Türkçeden İngilizcesini bul</button><button class="go alt" data-m="s">Dinle, anlamını bul</button>':'<p class="empty">Bu grupta kelime yok.</p>')+'</div>';
+    box.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>testStart(b.dataset.m));return;
+  }
+  if(T.done){
+    let h='<div class="card"><div class="q">Sonuç</div><div class="score">'+T.ok+' / '+T.qs.length+'</div>';
+    h+=T.wrong.length?'<p class="q" style="margin-top:12px">Yanlış yaptıkların Tekrar sekmesine gönderildi:</p><div style="font-weight:700">'+T.wrong.map(x=>esc(x.w)+' ('+esc(x.tr)+')').join(', ')+'</div>':'<p class="q" style="margin-top:12px">Hepsi doğru.</p>';
+    box.innerHTML=h+'<button class="go" id="again">Yeni test</button></div>';document.getElementById('again').onclick=()=>{T=null;renderTest()};return;
+  }
+  const x=T.qs[T.n];
+  box.innerHTML=qHTML(T.mode,x,optsFor(x),T.n+1,T.qs.length)+'</div>';
+  const ps=document.getElementById('ps');if(ps)ps.onclick=()=>say(x.w);
+  if(T.mode==='s'&&!canSay)document.getElementById('fb').textContent='Bu cihazda ses çalışmıyor, başka bir test seç.';
+  let done=false;
+  box.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{
+    if(done)return;done=true;const right=b.dataset.i===x.d+'-'+x.i;
+    box.querySelectorAll('.opts button').forEach(o=>{if(o.dataset.i===x.d+'-'+x.i)o.classList.add('r')});
+    if(right){T.ok++;if(!getS(x))setS(x,'k')}else{b.classList.add('w');T.wrong.push(x);setS(x,'y')}
+    document.getElementById('fb').innerHTML=(right?'✓ Doğru. ':'✗ Doğrusu: ')+'<b>'+esc(x.w)+'</b> = '+esc(x.tr);
+    if(canSay)say(x.w);
+    setTimeout(()=>{T.n++;if(T.n>=T.qs.length)T.done=true;renderTest()},right?1100:2200);
+  });
+}
+
+// ---- day list
+function renderList(){
+  chips('chipsL',FILT(),lf,k=>{lf=k;renderList()});
+  const d=deck(lf),box=document.getElementById('listBox');
+  box.innerHTML=d.length?d.map(x=>{const y=getS(x)==='y';return '<div class="li '+(getS(x)||'')+'" data-d="'+x.d+'" data-i="'+x.i+'">'+mini(x)+'<div class="lt"><div class="w">'+esc(x.w)+(DRAW[dkey(x)]?'<span class="pen">✏️</span>':'')+'</div><div class="m">'+esc(x.tr)+(x.m?' <b style="color:#5d3d8f">+'+x.m.length+' anlam</b>':'')+'</div></div><button class="rb'+(y?' on':'')+'">'+(y?'✓ Tekrarda':'+ Tekrar')+'</button></div>'}).join(''):'<div class="empty">Bu filtrede kelime yok.</div>';
+  box.querySelectorAll('.li').forEach(r=>{const x=DMAP[+r.dataset.d].words[+r.dataset.i];
+    r.querySelector('.rb').onclick=e=>{e.stopPropagation();setS(x,getS(x)==='y'?'k':'y');renderList()};
+    r.onclick=()=>shOpen(x)});
+}
+
+// ---- comic
+function plain(s){return s.replace(/\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g,'$1')}
+function marked(s){return esc(s).replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g,(m,a,b)=>'<span class="cm-kw" data-w="'+(b||a).toLowerCase()+'">'+a+'</span>')}
+function buildComic(){
+  const C=D.comic;
+  document.getElementById('cmTitle').textContent=C.title;
+  document.getElementById('cmCast').innerHTML=C.main.map(k=>'<div><span>'+CAST[k][0]+'</span>'+esc(CAST[k][1])+'<em>'+ROLES[k]+'</em></div>').join('');
+  let h='';
+  C.panels.forEach((p,i)=>{
+    const n=p.cast.length,size=n>8?30:n>5?40:n>3?50:60;
+    h+='<div class="cm-panel"><div class="cm-ph"><b>'+(i+1)+'</b><span>'+esc(p.place)+'</span></div><div class="cm-scene cm-'+p.bg+'"><div class="cm-props">'+p.props.join('')+'</div>';
+    p.lines.forEach(([sp,en,tr],li)=>{
+      const sb=canSay?'<button class="cm-spk" data-p="'+i+'" data-l="'+li+'" aria-label="Dinle">🔊</button>':'';
+      if(sp==='nar'){h+='<div class="cm-cap">'+marked(en)+sb+'<div class="cm-tr">'+esc(tr)+'</div></div>';return}
+      let side='C',who='Everyone';
+      if(sp!=='all'){const k=p.cast.indexOf(sp),pos=(k+.5)/n;side=pos<.4?'L':pos>.6?'R':'C';who=CAST[sp][1]}
+      h+='<div class="cm-bub '+side+(sp==='all'?' shout':'')+'"><span class="cm-who">'+esc(who)+'</span>'+marked(en)+sb+'<div class="cm-tr">'+esc(tr)+'</div></div>';
+    });
+    h+='<div class="cm-stage">'+p.cast.map(k=>'<div class="cm-ch"><span style="font-size:'+size+'px">'+CAST[k][0]+'</span><em>'+esc(CAST[k][1])+'</em></div>').join('')+'</div></div></div>';
+  });
+  document.getElementById('cmBox').innerHTML=h;
+}
+function wordByKey(k){return W.find(x=>x.w.toLowerCase()===k)}
+function paintComic(){document.querySelectorAll('.cm-kw').forEach(e=>{const x=wordByKey(e.dataset.w);const s=x?getS(x):'';e.classList.toggle('y',s==='y');e.classList.toggle('k',s==='k')})}
+document.getElementById('cmBox').addEventListener('click',e=>{
+  const k=e.target.closest('.cm-kw');if(k){const x=wordByKey(k.dataset.w);if(x)shOpen(x);return}
+  const s=e.target.closest('.cm-spk');if(s)say(plain(D.comic.panels[+s.dataset.p].lines[+s.dataset.l][1]));
+});
+const cmSec=document.getElementById('comic');
+document.getElementById('cmTr').onclick=e=>{cmSec.classList.toggle('cm-showtr');e.currentTarget.classList.toggle('on')};
+document.getElementById('cmHl').onclick=e=>{cmSec.classList.toggle('cm-nohl');e.currentTarget.classList.toggle('on')};
+let cmPlaying=false;const cmPlay=document.getElementById('cmPlay');if(!canSay)cmPlay.style.display='none';
+function cmStop(){try{speechSynthesis.cancel()}catch(e){}cmPlaying=false;cmPlay.classList.remove('on');cmPlay.textContent='🔊 Sırayla dinle'}
+cmPlay.onclick=()=>{try{if(cmPlaying){cmStop();return}speechSynthesis.cancel();cmPlaying=true;cmPlay.classList.add('on');cmPlay.textContent='■ Durdur';
+  const all=[];D.comic.panels.forEach(p=>p.lines.forEach(l=>all.push(plain(l[1]))));
+  all.forEach((t,i)=>{const u=utt(t);if(i===all.length-1)u.onend=()=>cmStop();speechSynthesis.speak(u)})}catch(e){}};
+
+// ---- sheet
+const sheet=document.getElementById('sheet');let shCur=null;
+function shPaint(){const s=shCur?getS(shCur):'';document.getElementById('shK').classList.toggle('sel',s==='k');document.getElementById('shY').classList.toggle('sel',s==='y')}
+function shOpen(x){shCur=x;document.getElementById('shW').textContent=x.w;document.getElementById('shP').textContent='okunuşu: '+x.p;document.getElementById('shT').textContent=x.tr;document.getElementById('shM').innerHTML=x.m?'<b>Diğer anlamları:</b> '+x.m.map(r=>esc(r[1])+' ('+esc(r[0])+')').join(' · '):'';shPaint();sheet.classList.add('on');if(canSay)say(x.w)}
+function shMark(v){if(!shCur)return;setS(shCur,v);shPaint();paintComic();if(tab==='list')renderList();setTimeout(()=>sheet.classList.remove('on'),350)}
+document.getElementById('shK').onclick=()=>shMark('k');
+document.getElementById('shY').onclick=()=>shMark('y');
+document.getElementById('shX').onclick=()=>sheet.classList.remove('on');
+document.getElementById('shS').onclick=()=>{if(shCur)say(shCur.w)};
+if(!canSay)document.getElementById('shS').style.display='none';
+
+// ---- review (Tekrar)
+let rm='test',rd='all',rci=0,RT=null;
+function revItems(f){const out=[];DAYS.forEach(d=>{if(f!=='all'&&String(d.n)!==f)return;d.words.forEach(x=>{if(ST[d.n][x.i]==='y')out.push(x)})});return out}
+function renderReview(){
+  const all=revItems('all');
+  document.getElementById('revHead').innerHTML=all.length?'Tekrar listende <b>'+all.length+'</b> kelime var. "Öğrenildi" diyene kadar her gün burada kalırlar.':'Tekrar listen boş. Kartlarda, testte ya da çizgi romanda "Yeni kelime" işaretlediğin kelimeler buraya düşer.';
+  chips('chipsRM',[['test','Test'],['cards','Kartlar'],['list','Liste']],rm,k=>{rm=k;rci=0;open=false;RT=null;renderReview()});
+  const dl=[['all','Bütün günler']].concat(DAYS.filter(d=>revItems(String(d.n)).length).map(d=>[String(d.n),d.n+'. gün ('+revItems(String(d.n)).length+')']));
+  if(!dl.find(z=>z[0]===rd))rd='all';
+  chips('chipsRD',dl,rd,k=>{rd=k;rci=0;open=false;RT=null;renderReview()});
+  const items=revItems(rd),box=document.getElementById('revBox');
+  if(rm==='cards')revCards(items,box);else if(rm==='list')revList(items,box);else revTest(items,box);
+}
+const RB='<button class="b-ok" id="rk">✓ Öğrenildi</button><button class="b-no" id="ry">↻ Yine tekrar</button>';
+function revCards(items,box){
+  if(!items.length){box.innerHTML='<div class="card empty">Tekrar edilecek kelime yok.</div>';return}
+  if(rci>=items.length)rci=0;
+  const x=items[rci];
+  box.innerHTML=cardHTML(x,(rci+1)+' / '+items.length,'<div class="tag d">'+x.d+'. gün</div>',RB)+'<div class="nav"><button id="rp">‹ Geri</button><span>'+(rci+1)+' / '+items.length+'</span><button id="rn">İleri ›</button></div>';
+  wireSay(box);
+  const r=document.getElementById('rev');if(r)r.onclick=()=>{open=true;renderReview()};
+  const rk=document.getElementById('rk'),ry=document.getElementById('ry');
+  if(rk)rk.onclick=()=>{setS(x,'k');open=false;renderReview()};
+  if(ry)ry.onclick=()=>{open=false;rci++;renderReview()};
+  document.getElementById('rp').onclick=()=>{open=false;rci=(rci-1+items.length)%items.length;renderReview()};
+  document.getElementById('rn').onclick=()=>{open=false;rci=(rci+1)%items.length;renderReview()};
+}
+function revList(items,box){
+  box.innerHTML='<div class="list">'+(items.length?items.map(x=>'<div class="li y" data-d="'+x.d+'" data-i="'+x.i+'">'+mini(x)+'<div class="lt"><div class="w">'+esc(x.w)+'</div><div class="m">'+esc(x.tr)+'</div><div class="dd">'+x.d+'. gün</div></div><button class="rb ok">✓ Öğrenildi</button></div>').join(''):'<div class="empty">Tekrar edilecek kelime yok.</div>')+'</div>';
+  box.querySelectorAll('.li').forEach(r=>{const x=DMAP[+r.dataset.d].words[+r.dataset.i];
+    r.querySelector('.rb').onclick=e=>{e.stopPropagation();setS(x,'k');renderReview()};
+    r.onclick=()=>shOpen(x)});
+}
+function revTest(items,box){
+  if(!RT){
+    box.innerHTML='<div class="card">'+(items.length?'<p class="q" style="font-size:15px">'+items.length+' kelime. Her sorudan sonra sen karar verirsin: "Öğrenildi" ya da "Yine tekrar".</p><button class="go" data-m="t">Türkçeden İngilizcesini bul</button><button class="go alt" data-m="p">Resimden İngilizcesini bul</button><button class="go alt" data-m="s">Dinle, anlamını bul</button>':'<p class="empty">Tekrar edilecek kelime yok.</p>')+'</div>';
+    box.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{RT={mode:b.dataset.m,qs:shuffle(items),n:0,ok:0,learned:[],again:[]};renderReview()});return;
+  }
+  if(RT.n>=RT.qs.length){
+    box.innerHTML='<div class="card"><div class="q">Tekrar bitti</div><div class="score">'+RT.ok+' / '+RT.qs.length+'</div><p class="q">doğru cevap</p><p style="font-size:14.5px;margin:10px 0 0">Öğrenildi: <b>'+RT.learned.length+'</b> · Yine tekrar: <b>'+RT.again.length+'</b></p>'+(RT.again.length?'<p class="q" style="margin-top:8px">Yarın yine gelecekler: '+RT.again.map(x=>esc(x.w)).join(', ')+'</p>':'')+'<button class="go" id="ragain">Yeniden başlat</button></div>';
+    document.getElementById('ragain').onclick=()=>{RT=null;renderReview()};return;
+  }
+  const x=RT.qs[RT.n];
+  box.innerHTML=qHTML(RT.mode,x,optsFor(x),RT.n+1,RT.qs.length)+'<div class="acts hide" id="rdec">'+RB+'</div></div>';
+  const ps=document.getElementById('ps');if(ps)ps.onclick=()=>say(x.w);
+  let done=false;
+  box.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{
+    if(done)return;done=true;const right=b.dataset.i===x.d+'-'+x.i;
+    box.querySelectorAll('.opts button').forEach(o=>{if(o.dataset.i===x.d+'-'+x.i)o.classList.add('r')});
+    if(right)RT.ok++;else b.classList.add('w');
+    document.getElementById('fb').innerHTML=(right?'✓ Doğru. ':'✗ Doğrusu: ')+'<b>'+esc(x.w)+'</b> = '+esc(x.tr)+'<div class="q" style="margin-top:6px">Hiç düşünmeden bildiysen "Öğrenildi", düşündüysen "Yine tekrar".</div>';
+    if(canSay)say(x.w);
+    document.getElementById('rdec').classList.remove('hide');
+    document.getElementById('rk').onclick=()=>{setS(x,'k');RT.learned.push(x);RT.n++;renderReview()};
+    document.getElementById('ry').onclick=()=>{RT.again.push(x);RT.n++;renderReview()};
+  });
+}
+
+// ---- drawings storage (IndexedDB, olmazsa localStorage, o da olmazsa bellek)
+const DRAW={};let idb=null;
+function dkey(x){return x.d+'-'+x.i}
+function idbOpen(){return new Promise(res=>{try{const r=indexedDB.open('ing-cizim',1);r.onupgradeneeded=()=>r.result.createObjectStore('d');r.onsuccess=()=>res(r.result);r.onerror=()=>res(null)}catch(e){res(null)}})}
+function lsLoad(){try{const o=JSON.parse(localStorage.getItem('ing-cizim')||'{}');Object.assign(DRAW,o)}catch(e){}}
+function lsSave(){try{localStorage.setItem('ing-cizim',JSON.stringify(DRAW))}catch(e){}}
+function drawLoad(){return idbOpen().then(db=>{idb=db;if(!db){lsLoad();return}return new Promise(res=>{try{const tx=db.transaction('d','readonly'),st=tx.objectStore('d'),rq=st.openCursor();rq.onsuccess=()=>{const c=rq.result;if(c){DRAW[c.key]=c.value;c.continue()}else res()};rq.onerror=()=>res()}catch(e){res()}})})}
+function drawPut(k,v){if(v)DRAW[k]=v;else delete DRAW[k];if(idb){try{const tx=idb.transaction('d','readwrite');if(v)tx.objectStore('d').put(v,k);else tx.objectStore('d').delete(k)}catch(e){lsSave()}}else lsSave()}
+
+// ---- çiz
+let dm='draw',df=null,DW=null;
+const COLS=['#2b2622','#d93b2b','#2f6fd6','#3e9b4f','#f08a24','#7a4a2a'];
+function ddeck(){return W.filter(x=>df==='u'?!DRAW[dkey(x)]:pass(x,df))}
+function dwNew(){const d=ddeck();if(!d.length){DW=null;return}let pool=d.filter(x=>!DW||x!==DW.x);if(!pool.length)pool=d;const x=pool[Math.floor(Math.random()*pool.length)];
+  DW={x,color:COLS[0],size:6,erase:false,undo:[],drawn:false,checked:false,right:null,hint:false}}
+function renderDraw(){
+  if(df===null)df=W.some(x=>getS(x)==='y')?'y':'all';
+  chips('chipsDM',[['draw','Çiz'],['gal','Çizimlerim ('+W.filter(x=>DRAW[dkey(x)]).length+')']],dm,k=>{dm=k;renderDraw()});
+  const dl=FILT().concat([['u','Çizilmemişler']]);
+  if(dm==='gal'){document.getElementById('chipsD').innerHTML='';renderGallery();return}
+  chips('chipsD',dl,df,k=>{df=k;DW=null;renderDraw()});
+  const box=document.getElementById('drawBox');
+  if(!DW||!ddeck().includes(DW.x)&&!DW.checked)dwNew();
+  if(!DW){box.innerHTML='<div class="card empty">'+(df==='y'?'Bu günde "yeni" işaretlediğin kelime yok. Önce kartlardan bilmediklerini işaretle ya da "Tümü"nü seç.':df==='u'?'Bu filtredeki bütün kelimeleri çizdin.':'Bu filtrede kelime yok.')+'</div>';return}
+  const x=DW.x,B=Math.min(320,(box.clientWidth||340)-6);
+  let h='<div class="card"><div class="dw-q"><div class="l">Bunu çiz, sonra İngilizcesini yaz</div><div class="t">'+esc(x.tr)+'</div>'+(DW.hint&&!DW.checked?'<div class="h">İpucu: '+esc(x.w[0])+' ile başlıyor, '+x.w.length+' harf</div>':'')+'</div>';
+  h+='<canvas class="dw-cv" id="dcv" width="'+(B*2)+'" height="'+(B*2)+'" style="width:'+B+'px;height:'+B+'px"></canvas>';
+  if(!DW.checked){
+    h+='<div class="dw-tools">'+COLS.map(c=>'<span class="dw-col'+(!DW.erase&&DW.color===c?' on':'')+'" data-c="'+c+'" style="background:'+c+'"></span>').join('')+'</div>';
+    h+='<div class="dw-tools"><button class="dw-tb'+(DW.size===6?' on':'')+'" data-s="6">İnce</button><button class="dw-tb'+(DW.size===16?' on':'')+'" data-s="16">Kalın</button><button class="dw-tb'+(DW.erase?' on':'')+'" id="der">Silgi</button><button class="dw-tb" id="dun">Geri al</button><button class="dw-tb" id="dcl">Temizle</button></div>';
+    h+='<input class="dw-in" id="dans" placeholder="İngilizcesi" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">';
+    h+='<button class="go" id="dchk">Kontrol et ve kaydet</button><div class="row" style="display:flex;gap:8px;margin-top:8px"><button class="go alt" id="dhint" style="margin:0">İpucu</button><button class="go alt" id="dskip" style="margin:0">Atla</button></div>';
+  }else{
+    h+='<input class="dw-in '+(DW.right?'r':'w')+'" value="'+esc(DW.typed)+'" disabled>';
+    h+='<div class="dw-fb '+(DW.right?'r':'w')+'"><b>'+(DW.right?'✓ Doğru. ':'✗ Doğrusu:')+'</b><div class="w">'+esc(x.w)+(canSay?' <button class="say sm" data-say="'+esc(x.w)+'">🔊</button>':'')+'</div><div>okunuşu: '+esc(x.p)+'</div></div>';
+    h+='<div class="ex" style="margin-top:10px"><div class="en">'+esc(x.ex)+(canSay?' <button class="say sm" data-say="'+esc(x.ex)+'">🔊</button>':'')+'</div><div class="t">'+esc(x.xt)+'</div></div>';
+    h+='<div class="note" style="text-align:center;margin-top:8px">Çizimin kaydedildi; bu kelimenin kartında da görünecek.</div>';
+    const st0=getS(x);h+='<div class="acts"><button class="b-ok'+(st0==='k'?' sel':'')+'" id="dk">✓ Biliyordum</button><button class="b-no'+(st0==='y'?' sel':'')+'" id="dy">✗ Yeni kelime</button></div><button class="go" id="dnext">Sonraki kelime ›</button>';
+  }
+  box.innerHTML=h+'</div>';
+  wireSay(box);
+  const cv=document.getElementById('dcv'),c=cv.getContext('2d'),k=cv.width/B;
+  c.fillStyle='#fff';c.fillRect(0,0,cv.width,cv.height);
+  if(DW.img){const im=new Image();im.onload=()=>c.drawImage(im,0,0,cv.width,cv.height);im.src=DW.img}
+  if(DW.checked){
+    document.getElementById('dk').onclick=()=>{setS(x,'k');renderDraw()};
+    document.getElementById('dy').onclick=()=>{setS(x,'y');renderDraw()};
+    document.getElementById('dnext').onclick=()=>{const old=DW;DW=null;dwNew();if(DW&&DW.x===old.x&&ddeck().length>1)dwNew();renderDraw();window.scrollTo(0,0)};
+    return;
+  }
+  let drawing=false,last=null;
+  const pos=e=>{const r=cv.getBoundingClientRect();return [(e.clientX-r.left)*k,(e.clientY-r.top)*k]};
+  const snap=()=>{try{DW.undo.push(c.getImageData(0,0,cv.width,cv.height));if(DW.undo.length>15)DW.undo.shift()}catch(e){}};
+  cv.addEventListener('pointerdown',e=>{e.preventDefault();try{cv.setPointerCapture(e.pointerId)}catch(_){}snap();drawing=true;last=pos(e);
+    c.beginPath();c.arc(last[0],last[1],(DW.erase?DW.size*2.2:DW.size)*k/2,0,7);c.fillStyle=DW.erase?'#fff':DW.color;c.fill();if(!DW.erase){DW.drawn=true;upd()}});
+  cv.addEventListener('pointermove',e=>{if(!drawing)return;e.preventDefault();const p=pos(e);c.strokeStyle=DW.erase?'#fff':DW.color;c.lineWidth=(DW.erase?DW.size*2.2:DW.size)*k;c.lineCap='round';c.lineJoin='round';c.beginPath();c.moveTo(last[0],last[1]);c.lineTo(p[0],p[1]);c.stroke();last=p});
+  const end=()=>{if(!drawing)return;drawing=false;try{DW.img=cv.toDataURL('image/png')}catch(e){}};
+  cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);cv.addEventListener('pointerleave',end);
+  box.querySelectorAll('.dw-col').forEach(b=>b.onclick=()=>{DW.color=b.dataset.c;DW.erase=false;keepAns();renderDraw()});
+  box.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{DW.size=+b.dataset.s;keepAns();renderDraw()});
+  document.getElementById('der').onclick=()=>{DW.erase=!DW.erase;keepAns();renderDraw()};
+  document.getElementById('dun').onclick=()=>{const im=DW.undo.pop();if(im){c.putImageData(im,0,0);DW.img=cv.toDataURL('image/png')}};
+  document.getElementById('dcl').onclick=()=>{snap();c.fillStyle='#fff';c.fillRect(0,0,cv.width,cv.height);DW.img=null;DW.drawn=false;upd()};
+  const inp=document.getElementById('dans'),chk=document.getElementById('dchk');
+  if(DW.typedDraft)inp.value=DW.typedDraft;
+  function keepAns(){DW.typedDraft=inp.value}
+  function upd(){chk.disabled=!DW.drawn;chk.textContent=DW.drawn?'Kontrol et ve kaydet':'Önce çiz, sonra kontrol et'}
+  upd();
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter'&&!chk.disabled)chk.click()});
+  document.getElementById('dhint').onclick=()=>{DW.hint=true;keepAns();renderDraw()};
+  document.getElementById('dskip').onclick=()=>{DW=null;renderDraw()};
+  chk.onclick=()=>{
+    const typed=inp.value.trim(),right=typed.toLowerCase().replace(/\s+/g,' ')===x.w.toLowerCase();
+    const t=document.createElement('canvas');t.width=256;t.height=256;const tc=t.getContext('2d');tc.fillStyle='#fff';tc.fillRect(0,0,256,256);tc.drawImage(cv,0,0,256,256);
+    let url;try{url=t.toDataURL('image/jpeg',.6)}catch(e){url=null}
+    if(url)drawPut(dkey(x),url);
+    DW.checked=true;DW.right=right;DW.typed=typed||'(boş)';DW.img=url||DW.img;
+    if(!right)setS(x,'y');
+    if(canSay)say(x.w);
+    renderDraw();
+  };
+}
+function renderGallery(){
+  const box=document.getElementById('drawBox'),items=W.filter(x=>DRAW[dkey(x)]);
+  if(!items.length){box.innerHTML='<div class="card empty">Bu günde henüz çizim yok.</div>';return}
+  box.innerHTML='<div class="gal">'+items.map(x=>'<div class="gi" data-i="'+x.i+'"><img src="'+DRAW[dkey(x)]+'" alt=""><div class="w">'+esc(x.w)+'</div><div class="m">'+esc(x.tr)+'</div><button data-del="'+x.i+'">Sil</button></div>').join('')+'</div>';
+  box.querySelectorAll('.gi').forEach(g=>g.onclick=e=>{const x=W[+g.dataset.i];if(e.target.dataset.del!==undefined){drawPut(dkey(x),null);renderDraw();return}shOpen(x)});
+}
+
+// ---- puzzle (yapboz)
+let zf='all',zlv=3,Z=null,zLast=null;
+const EF='"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath()}
+function fitEmoji(c,t,cx,cy,maxW,maxH){let size=maxH;c.font=size+'px '+EF;let w=c.measureText(t).width;if(w>maxW)size=size*maxW/w;c.font=size+'px '+EF;c.textAlign='center';c.textBaseline='middle';c.globalAlpha=1;c.fillStyle='#000';c.fillText(t,cx,cy)}
+function boxes(c,labels,hi,cx,cy,S,cols){
+  const rows=Math.ceil(labels.length/cols),gap=S*.015,bw=(S*.86-gap*(cols-1))/cols,bh=Math.min(bw*.62,S*.11),x0=cx-(bw*cols+gap*(cols-1))/2,y0=cy-(bh*rows+gap*(rows-1))/2;
+  labels.forEach((l,i)=>{const x=x0+(i%cols)*(bw+gap),y=y0+Math.floor(i/cols)*(bh+gap);rr(c,x,y,bw,bh,S*.02);c.fillStyle=hi.includes(i)?'#b5562f':'#efe9df';c.fill();
+    c.fillStyle=hi.includes(i)?'#fff':'#7a7068';c.font='800 '+Math.round(bh*.42)+'px system-ui,sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText(l,x+bw/2,y+bh/2)});
+}
+function drawVisual(c,x,S){
+  const g=c.createLinearGradient(0,0,S,S);g.addColorStop(0,'#fde3c4');g.addColorStop(.5,'#fff6e6');g.addColorStop(1,'#d3ebe8');c.fillStyle=g;c.fillRect(0,0,S,S);
+  c.fillStyle='rgba(43,38,34,.07)';for(let i=0;i<12;i++)for(let j=0;j<12;j++){if((i+j)%2)continue;c.beginPath();c.arc(S*(i+.5)/12,S*(j+.5)/12,S*.006+S*.0012*((i*7+j*3)%5),0,7);c.fill()}
+  const v=x.v,hasE=!!x.e;
+  const eY=v?S*.30:S*.5,eH=v?S*.34:S*.56,vY=hasE?S*.70:S*.5;
+  if(hasE)fitEmoji(c,x.e,S/2,eY,S*.86,eH);
+  if(!v)return;
+  if(v[0]==='n'){const t=String(v[1]);c.fillStyle='#b5562f';c.font='800 '+Math.round(S*(t.length>4?.17:t.length>2?.3:.4))+'px system-ui,sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText(t,S/2,typeof v[1]==='number'&&v[1]<=12?S*.38:S*.5);
+    if(typeof v[1]==='number'&&v[1]<=12){const n=v[1],per=Math.min(n,6),r=S*.03;for(let i=0;i<n;i++){const row=Math.floor(i/6),col=i%6,cnt=row?n-6:per;c.beginPath();c.arc(S/2+(col-(cnt-1)/2)*r*2.8,S*.72+row*r*2.8,r,0,7);c.fillStyle='#f0c069';c.fill()}}}
+  if(v[0]==='c'){c.beginPath();c.arc(S/2,vY,S*.16,0,7);c.fillStyle=v[1];c.fill();c.lineWidth=S*.014;c.strokeStyle='#2b2622';c.stroke()}
+  if(v[0]==='w')boxes(c,DAYNAMES,v[1],S/2,vY,S,4);
+  if(v[0]==='m')boxes(c,MON,v[1],S/2,vY,S*.8,4);
+  if(v[0]==='d')boxes(c,['Dün','Bugün','Yarın'],[v[1]],S/2,vY,S,3);
+  if(v[0]==='s'){c.fillStyle='#a0683f';c.strokeStyle='#2b2622';c.lineWidth=S*.012;rr(c,S*.14,S*.40,S*.72,S*.08,S*.015);c.fill();c.stroke();[.22,.72].forEach(px=>{c.fillStyle='#8a5632';c.fillRect(S*px,S*.48,S*.06,S*.30);c.strokeRect(S*px,S*.48,S*.06,S*.30)});fitEmoji(c,'🍽️ 🍞',S/2,S*.30,S*.5,S*.14)}
+}
+function pzImage(x){const S=600,cv=document.createElement('canvas');cv.width=S;cv.height=S;drawVisual(cv.getContext('2d'),x,S);return cv.toDataURL('image/png')}
+function pzNew(){
+  const d=deck(zf);if(!d.length){Z=null;return}
+  let pool=d.length>1?d.filter(x=>x!==zLast):d,x=pool[Math.floor(Math.random()*pool.length)];zLast=x;
+  const n=zlv,N=n*n;let order;do{order=shuffle([...Array(N).keys()])}while(order.some((p,i)=>p===i)&&order.filter((p,i)=>p===i).length>Math.floor(N/4));
+  Z={x,url:pzImage(x),n,order,sel:null,moves:0,wrong:[],done:false,atGuess:null,opts:optsFor(x).map(o=>o.w)};
+}
+function pzPlaced(){return Z.order.filter((p,i)=>p===i).length}
+function renderPuzzle(){
+  chips('chipsZ',FILT(),zf,k=>{zf=k;Z=null;renderPuzzle()});
+  chips('chipsZL',[['3','Kolay (3x3)'],['4','Zor (4x4)']],String(zlv),k=>{zlv=+k;Z=null;renderPuzzle()});
+  const box=document.getElementById('pzBox');
+  if(!Z)pzNew();
+  if(!Z){box.innerHTML='<div class="card empty">'+(zf==='y'?'Bu günde "yeni" işaretlediğin kelime yok.':'Bu filtrede kelime yok.')+'</div>';return}
+  const n=Z.n,N=n*n,B=Math.min(320,(document.getElementById('pzBox').clientWidth||340)-6),s=(B-(Z.done?0:3*(n-1)))/n,solved=pzPlaced()===N;
+  let h='<div class="card"><div class="pzbar"><span>Yerinde: <b>'+pzPlaced()+' / '+N+'</b></span><span>Hamle: <b>'+Z.moves+'</b></span></div>';
+  h+='<div class="pz'+(solved||Z.done?' solved':'')+'" id="pz" style="grid-template-columns:repeat('+n+','+s+'px);width:'+(B+(Z.done?0:0))+'px">';
+  Z.order.forEach((p,i)=>{const r=Math.floor(p/n),cI=p%n;h+='<div class="pt'+(p===i?' ok':'')+(Z.sel===i?' sel':'')+'" data-i="'+i+'" style="width:'+s+'px;height:'+s+'px;background-image:url('+Z.url+');background-size:'+(s*n)+'px '+(s*n)+'px;background-position:-'+(cI*s)+'px -'+(r*s)+'px"></div>'});
+  h+='</div>';
+  if(!Z.done){
+    h+='<div class="pzq">'+(solved?'Resim tamam! Bu hangi kelime?':'Bu hangi kelime?')+'</div><div class="pzh">'+(solved?'':'İki parçaya art arda dokun, yerleri değişsin. Resmi bitirmeden de tahmin edebilirsin.')+'</div>';
+    h+='<div class="opts">'+Z.opts.map(o=>'<button data-o="'+esc(o)+'"'+(Z.wrong.includes(o)?' class="w" disabled':'')+'>'+esc(o)+'</button>').join('')+'</div>';
+  }else{
+    const x=Z.x,st0=getS(x);
+    h+='<div class="pzres"><div class="w">'+esc(x.w)+(canSay?' <button class="say sm" data-say="'+esc(x.w)+'">🔊</button>':'')+'</div><div class="pron" style="margin:0">okunuşu: '+esc(x.p)+'</div><div class="tr">'+esc(x.tr)+'</div><div class="sc">'+(Z.wrong.length?Z.wrong.length+' yanlış tahminden sonra buldun.':Z.atGuess+' / '+N+' parça yerindeyken buldun.')+'</div></div>';
+    h+='<div class="ex" style="margin-top:10px"><div class="en">'+esc(x.ex)+(canSay?' <button class="say sm" data-say="'+esc(x.ex)+'">🔊</button>':'')+'</div><div class="t">'+esc(x.xt)+'</div></div>';
+    h+='<div class="acts"><button class="b-ok'+(st0==='k'?' sel':'')+'" id="zk">✓ Biliyordum</button><button class="b-no'+(st0==='y'?' sel':'')+'" id="zy">✗ Yeni kelime</button></div><button class="go" id="znext">Sonraki yapboz ›</button>';
+  }
+  box.innerHTML=h+'</div>';
+  wireSay(box);
+  if(!Z.done){
+    box.querySelectorAll('.pt').forEach(t=>t.onclick=()=>{const i=+t.dataset.i;if(Z.sel===null){Z.sel=i}else if(Z.sel===i){Z.sel=null}else{const a=Z.sel;[Z.order[a],Z.order[i]]=[Z.order[i],Z.order[a]];Z.sel=null;Z.moves++}renderPuzzle()});
+    box.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{
+      const o=b.dataset.o;
+      if(o===Z.x.w){Z.atGuess=pzPlaced();Z.done=true;Z.order=[...Array(N).keys()];Z.sel=null;if(Z.wrong.length)setS(Z.x,'y');else if(!getS(Z.x))setS(Z.x,'k');if(canSay)say(Z.x.w)}
+      else{Z.wrong.push(o)}
+      renderPuzzle()});
+  }else{
+    document.getElementById('zk').onclick=()=>{setS(Z.x,'k');renderPuzzle()};
+    document.getElementById('zy').onclick=()=>{setS(Z.x,'y');renderPuzzle()};
+    document.getElementById('znext').onclick=()=>{Z=null;renderPuzzle()};
+  }
+}
+
+// ---- tabs
+function renderTab(){
+  document.querySelectorAll('#tabs button').forEach(o=>o.classList.toggle('on',o.dataset.tab===tab));
+  ['cards','test','list','puzzle','draw','comic','review','guide'].forEach(id=>document.getElementById(id).classList.toggle('hide',id!==tab));
+  document.getElementById('days').classList.toggle('hide',tab==='review');
+  sheet.classList.remove('on');if(tab!=='comic'&&cmPlaying)cmStop();
+  if(tab==='cards')renderCard();if(tab==='test')renderTest();if(tab==='list')renderList();if(tab==='comic')paintComic();if(tab==='puzzle')renderPuzzle();if(tab==='draw')renderDraw();if(tab==='review')renderReview();
+  updBadge();
+}
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;open=false;renderTab()});
+document.getElementById('reset').onclick=()=>{ST[D.n]={};save(D.n);updBadge();const r=document.getElementById('reset');r.textContent='Sıfırlandı';setTimeout(()=>r.textContent='Seçili günün işaretlemelerini sıfırla',1500)};
+
+buildComic();renderHead();renderTab();
+drawLoad().then(()=>{if(tab==='cards'||tab==='list'||tab==='draw')renderTab()});
+</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}</script>
+</body>
+</html>
