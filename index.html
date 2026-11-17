@@ -20,6 +20,7 @@ a small{display:block;font-weight:600;font-size:13px;color:#7a7068;margin-top:3p
 <h1>İngilizce Kartları</h1><p>İnternetsiz çalışır.</p>
 <a href="kelime.html">Kelime Kartları<small>resimli kartlar, test, çizgi roman, tekrar</small></a>
 <a href="gramer.html">Gramer Kartları<small>konular, alıştırma, tekrar, özet</small></a>
-</div><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}</script>
+</div><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}
+try{if(navigator.storage&&navigator.storage.persist){navigator.storage.persist().catch(function(){})}}catch(e){}</script>
 </body>
 </html>
