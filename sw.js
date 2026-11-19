@@ -1,4 +1,4 @@
-const V='v202611171905';
+const V='v202611192203';
 const FILES=["index.html", "kelime.html", "gramer.html", "manifest.webmanifest", "sw.js", "icon-180.png", "icon-192.png", "icon-512.png"];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(FILES.map(f=>'./'+f))).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
